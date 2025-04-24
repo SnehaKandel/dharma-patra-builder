@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				asklegal: {
+					purple: '#9b87f5',
+					dark: '#080E1E', 
+					light: '#b8a2ff',
+					accent: '#7b68d5'
 				}
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				nepali: ['Mukta', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +95,40 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					from: { 
+						opacity: '0',
+					},
+					to: { 
+						opacity: '1',
+					},
+				},
+				'fade-out': {
+					from: { 
+						opacity: '1',
+					},
+					to: { 
+						opacity: '0',
+					},
+				},
+				'paper-print': {
+					'0%': { 
+						opacity: '0',
+						transform: 'translateY(-20px)'
+					},
+					'100%': { 
+						opacity: '1',
+						transform: 'translateY(0)'
+					},
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.3s ease-out',
+				'fade-out': 'fade-out 0.3s ease-out',
+				'paper-print': 'paper-print 0.5s ease-out',
 			}
 		}
 	},
