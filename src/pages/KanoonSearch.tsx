@@ -1,0 +1,268 @@
+
+import { useState } from "react";
+import MainLayout from "@/components/layout/MainLayout";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Search, FileText, Download } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { LegalDocument } from "@/types/forms";
+
+// Mock data for demonstration
+const MOCK_DOCUMENTS: LegalDocument[] = [
+  {
+    id: "1",
+    title: "अधिकार दुरुपयोग",
+    titleEn: "Adhikar Durupayog",
+    description: "अधिकारको दुरुपयोग सम्बन्धी ऐन",
+    category: "Acts",
+    year: "2058",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/adhikar-durupayog.pdf",
+    isPopular: true
+  },
+  {
+    id: "2",
+    title: "भ्रष्टाचार",
+    titleEn: "Bhrastachar",
+    description: "भ्रष्टाचार निवारण ऐन",
+    category: "Acts",
+    year: "2059",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/bhrastachar.pdf",
+    isPopular: true
+  },
+  {
+    id: "3",
+    title: "अपराधी",
+    titleEn: "Aparadhi",
+    description: "अपराधी संहिता",
+    category: "Acts",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/aparadhi.pdf",
+    isPopular: true
+  },
+  {
+    id: "4",
+    title: "देवानीकायदाह",
+    titleEn: "Dewanikayada",
+    description: "देवानी संहिता",
+    category: "Acts",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/dewanikayada.pdf",
+    isPopular: true
+  },
+  {
+    id: "5",
+    title: "दीवानी",
+    titleEn: "Diwani",
+    description: "दीवानी कार्यविधि संहिता",
+    category: "Acts",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/diwani.pdf",
+    isPopular: true
+  },
+  // Added more items to match screenshot
+  {
+    id: "6",
+    title: "फौजदारी",
+    titleEn: "Faujdari",
+    description: "फौजदारी कार्यविधि संहिता",
+    category: "Acts",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/faujdari.pdf",
+    isPopular: true
+  },
+  {
+    id: "7",
+    title: "चिकित्सा शिक्षा ऐन",
+    titleEn: "Chikitsa Shiksha Ain",
+    description: "चिकित्सा शिक्षा ऐन",
+    category: "Acts",
+    year: "2075",
+    ministry: "शिक्षा, विज्ञान तथा प्रविधि मन्त्रालय",
+    pdfUrl: "/docs/chikitsa-shiksha.pdf",
+    isPopular: true
+  },
+  {
+    id: "8",
+    title: "मानव अधिकार",
+    titleEn: "Manav Adhikar",
+    description: "राष्ट्रिय मानव अधिकार आयोग ऐन",
+    category: "Acts",
+    year: "2068",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/manav-adhikar.pdf",
+    isPopular: true
+  }
+];
+
+const KanoonSearch = () => {
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [selectedDocument, setSelectedDocument] = useState<LegalDocument | null>(null);
+
+  const filteredDocuments = MOCK_DOCUMENTS.filter(doc => {
+    if (searchQuery === "") return true;
+    
+    const matchesSearch = 
+      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.titleEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.description.toLowerCase().includes(searchQuery.toLowerCase());
+      
+    if (activeCategory === "all") return matchesSearch;
+    return matchesSearch && doc.category === activeCategory;
+  });
+
+  const handleDownload = (doc: LegalDocument) => {
+    toast({
+      title: "Downloading Document",
+      description: `Downloading ${doc.title} (${doc.titleEn})...`,
+    });
+    // In a real app, this would trigger actual download
+  };
+
+  return (
+    <MainLayout>
+      <div className="container mx-auto py-8 px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-asklegal-purple">नेपाल कानून खोज (Nepal Kanoon Khoj)</h1>
+          <p className="text-white/70 mt-2">
+            Search and access Nepali laws, acts, and legislative provisions.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Sidebar - Search and Categories */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden">
+              <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30 flex items-center">
+                <Search className="w-5 h-5 text-asklegal-purple mr-2" />
+                <h2 className="text-lg font-medium text-asklegal-purple">
+                  Search Kanoon
+                </h2>
+              </div>
+              <div className="p-6">
+                <div className="relative">
+                  <Input
+                    type="text"
+                    placeholder="Search legal resources..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-transparent border-asklegal-purple/40 text-white focus:border-asklegal-purple focus:ring-asklegal-purple pl-10 pr-4"
+                  />
+                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-asklegal-purple/50" />
+                </div>
+                
+                <div className="mt-6">
+                  <h3 className="font-medium text-white mb-2">Popular searches</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <button 
+                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-white px-3 py-1 rounded-md"
+                      onClick={() => setSearchQuery("Constitution")}
+                    >
+                      Constitution
+                    </button>
+                    <button 
+                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-white px-3 py-1 rounded-md"
+                      onClick={() => setSearchQuery("Acts")}
+                    >
+                      Acts
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden">
+              <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30">
+                <h2 className="text-lg font-medium text-asklegal-purple">
+                  Acts and legislative provisions
+                </h2>
+              </div>
+              <div className="p-4">
+                <Tabs defaultValue="acts" className="w-full">
+                  <TabsList className="grid grid-cols-2 mb-4">
+                    <TabsTrigger value="acts">Acts</TabsTrigger>
+                    <TabsTrigger value="constitution">Constitution</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="acts" className="space-y-4">
+                    {MOCK_DOCUMENTS.map((doc) => (
+                      <div 
+                        key={doc.id}
+                        className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
+                        onClick={() => setSelectedDocument(doc)}
+                      >
+                        <FileText className="h-4 w-4 text-asklegal-purple/70" />
+                        <span className="text-white/80 font-nepali">{doc.title}</span>
+                      </div>
+                    ))}
+                  </TabsContent>
+                  <TabsContent value="constitution" className="space-y-4">
+                    <div className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer">
+                      <FileText className="h-4 w-4 text-asklegal-purple/70" />
+                      <span className="text-white/80 font-nepali">नेपालको संविधान</span>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Document Preview */}
+          <div className="lg:col-span-2">
+            {selectedDocument ? (
+              <div className="bg-white text-gray-900 rounded-lg shadow-lg p-6 min-h-[842px] animate-paper-print">
+                <div className="flex justify-between mb-6">
+                  <h2 className="text-2xl font-bold font-nepali">{selectedDocument.title}</h2>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-2"
+                    onClick={() => handleDownload(selectedDocument)}
+                  >
+                    <Download className="h-4 w-4" />
+                    Download
+                  </Button>
+                </div>
+                
+                <div className="mb-4">
+                  <p className="text-gray-600">{selectedDocument.titleEn}</p>
+                  <p className="text-gray-600">{selectedDocument.year}</p>
+                  <p className="text-gray-600">{selectedDocument.ministry}</p>
+                </div>
+                
+                <div className="border-t border-gray-200 pt-4">
+                  <p className="font-nepali">
+                    यो {selectedDocument.title} सम्बन्धी कानून हो। यसले {selectedDocument.description} को बारेमा व्याख्या गर्दछ। 
+                    यो {selectedDocument.year} सालमा जारी गरिएको थियो। यो दस्तावेज {selectedDocument.ministry} द्वारा प्रकाशित गरिएको हो।
+                  </p>
+                  <div className="text-center mt-20">
+                    <p className="text-gray-400">PDF प्रिभ्यू यहाँ देखाइनेछ। यो केवल डेमो विवरण हो।</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 flex items-center justify-center min-h-[842px]">
+                <div className="text-center p-6">
+                  <FileText className="h-16 w-16 text-asklegal-purple/30 mx-auto mb-4" />
+                  <h3 className="text-xl font-medium text-white mb-2">Select a document to preview</h3>
+                  <p className="text-white/60 max-w-md">
+                    Choose a document from the list on the left to view its contents here.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </MainLayout>
+  );
+};
+
+export default KanoonSearch;
