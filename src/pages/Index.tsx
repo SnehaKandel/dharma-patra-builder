@@ -42,9 +42,11 @@ const Index = () => {
           <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
             <h3 className="text-xl font-medium text-white mb-3">Latest News</h3>
             <p className="text-white/70 mb-4">Stay updated with the latest legal news and updates.</p>
-            <Button variant="outline" className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 w-full">
-              Explore News
-            </Button>
+            <a href="https://onlinekhabar.com" target="_blank" rel="noopener noreferrer" className="w-full block">
+              <Button variant="outline" className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 w-full">
+                Explore News
+              </Button>
+            </a>
           </div>
           
           <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">

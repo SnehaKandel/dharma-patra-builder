@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, PlayCircle, BookOpen, Settings, User, Search } from 'lucide-react';
@@ -12,10 +13,10 @@ const Navbar = () => {
         </Link>
         
         <div className="flex items-center gap-6">
-          <Link to="/news" className="flex items-center text-white/80 hover:text-white gap-2">
+          <a href="https://onlinekhabar.com" target="_blank" rel="noopener noreferrer" className="flex items-center text-white/80 hover:text-white gap-2">
             <FileText size={18} />
             <span className="hidden md:inline">News</span>
-          </Link>
+          </a>
           
           <Link to="/play" className="flex items-center text-white/80 hover:text-white gap-2">
             <PlayCircle size={18} />
@@ -48,7 +49,7 @@ const Navbar = () => {
           </Link>
           
           <Button variant="outline" size="sm" className="ml-2 bg-transparent border-asklegal-purple/50 text-white hover:bg-asklegal-purple/10">
-            Logout
+            Login
           </Button>
         </div>
       </div>
