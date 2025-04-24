@@ -48,17 +48,19 @@ const Index = () => {
           </div>
           
           <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-            <h3 className="text-xl font-medium text-white mb-3">Play Games</h3>
-            <p className="text-white/70 mb-4">Test your legal knowledge with fun MCQ games.</p>
-            <Button variant="outline" className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 w-full">
-              Play Now
-            </Button>
+            <h3 className="text-xl font-medium text-white mb-3">Kanoon Directory</h3>
+            <p className="text-white/70 mb-4">Search and access comprehensive legal document repository.</p>
+            <Link to="/kanoon-search" className="w-full block">
+              <Button className="bg-asklegal-purple hover:bg-asklegal-accent text-white w-full">
+                Browse Laws
+              </Button>
+            </Link>
           </div>
           
           <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-            <h3 className="text-xl font-medium text-white mb-3">Dharma Patra Builder</h3>
+            <h3 className="text-xl font-medium text-white mb-3">Judicial Petitions and Forms</h3>
             <p className="text-white/70 mb-4">Create, customize and download legal petition documents.</p>
-            <Link to="/forms">
+            <Link to="/forms" className="w-full block">
               <Button className="bg-asklegal-purple hover:bg-asklegal-accent text-white w-full">
                 Create Document
               </Button>

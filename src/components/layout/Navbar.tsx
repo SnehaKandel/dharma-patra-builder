@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, PlayCircle, BookOpen, Settings, User } from 'lucide-react';
+import { FileText, PlayCircle, BookOpen, Settings, User, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
@@ -28,9 +27,14 @@ const Navbar = () => {
             <span className="hidden md:inline">Learn</span>
           </Link>
           
-          <Link to="/forms" className="flex items-center text-asklegal-purple hover:text-asklegal-light gap-2">
+          <Link to="/forms" className="flex items-center text-white/80 hover:text-white gap-2">
             <FileText size={18} />
             <span className="hidden md:inline">Forms</span>
+          </Link>
+
+          <Link to="/kanoon-search" className="flex items-center text-asklegal-purple hover:text-asklegal-light gap-2">
+            <Search size={18} />
+            <span className="hidden md:inline">Kanoon</span>
           </Link>
           
           <Link to="/settings" className="flex items-center text-white/80 hover:text-white gap-2">
