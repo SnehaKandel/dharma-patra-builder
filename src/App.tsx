@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Forms from "./pages/Forms";
 import NotFound from "./pages/NotFound";
-import KanoonSearch from "./pages/KanoonSearch";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +19,6 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/forms" element={<Forms />} />
-          <Route path="/kanoon-search" element={<KanoonSearch />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
