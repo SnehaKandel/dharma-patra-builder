@@ -15,7 +15,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </main>
       <footer className="py-4 border-t border-asklegal-purple/20">
         <div className="container mx-auto text-center text-white/40 text-sm">
-          <p>© {new Date().getFullYear()} AskLegal.io - नेपाली कानुनी सहायता प्रणाली</p>
+          <p>© {new Date().getFullYear()} AskLegal.io - Nepal Legal Assistance System</p>
         </div>
       </footer>
     </div>
