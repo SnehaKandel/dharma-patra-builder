@@ -28,11 +28,6 @@ const Navbar = () => {
             <span className="hidden md:inline">Learn</span>
           </Link>
           
-          <Link to="/forms" className="flex items-center text-asklegal-purple hover:text-asklegal-light gap-2">
-            <FileText size={18} />
-            <span className="hidden md:inline">Forms</span>
-          </Link>
-          
           <Link to="/settings" className="flex items-center text-white/80 hover:text-white gap-2">
             <Settings size={18} />
             <span className="hidden md:inline">Settings</span>
@@ -44,7 +39,7 @@ const Navbar = () => {
           </Link>
           
           <Button variant="outline" size="sm" className="ml-2 bg-transparent border-asklegal-purple/50 text-white hover:bg-asklegal-purple/10">
-            Logout
+            Login
           </Button>
         </div>
       </div>

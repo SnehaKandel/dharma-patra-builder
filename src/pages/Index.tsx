@@ -56,13 +56,11 @@ const Index = () => {
           </div>
           
           <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-            <h3 className="text-xl font-medium text-white mb-3">Dharma Patra Builder</h3>
-            <p className="text-white/70 mb-4">Create, customize and download legal petition documents.</p>
-            <Link to="/forms">
-              <Button className="bg-asklegal-purple hover:bg-asklegal-accent text-white w-full">
-                Create Document
-              </Button>
-            </Link>
+            <h3 className="text-xl font-medium text-white mb-3">Legal Resources</h3>
+            <p className="text-white/70 mb-4">Access important legal documents and resources.</p>
+            <Button className="bg-asklegal-purple hover:bg-asklegal-accent text-white w-full">
+              Browse Resources
+            </Button>
           </div>
         </div>
       </div>
