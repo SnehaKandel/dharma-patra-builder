@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { authService } from '@/services/auth';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validate()) {
@@ -63,34 +64,27 @@ const Login = () => {
     
     setIsLoading(true);
     
-    // Mock login - in a real app this would call an API
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      const mockUserData = {
-        id: '1',
-        name: 'User',
-        email: formData.email,
-        role: formData.role,
-      };
-      
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(mockUserData));
+    try {
+      const user = await authService.login(formData);
       
       toast({
         title: "Successfully logged in",
-        description: formData.role === 'admin' 
+        description: user.role === 'admin' 
           ? "Welcome, Administrator" 
           : "Welcome to AskLegal.io",
       });
       
       // Redirect based on role
-      if (formData.role === 'admin') {
+      if (user.role === 'admin') {
         navigate('/admin');
       } else {
         navigate('/');
       }
-    }, 1000);
+    } catch (error) {
+      console.error('Login error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRoleChange = (role: string) => {
