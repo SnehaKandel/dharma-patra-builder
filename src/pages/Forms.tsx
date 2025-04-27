@@ -8,12 +8,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { PetitionFormData } from "@/types/forms";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "react-router-dom";
+import { Search, FileText } from "lucide-react";
 
 const Forms = () => {
   const { toast } = useToast();
   
   const [formData, setFormData] = useState<PetitionFormData>({
-    subject: "",
+    subject: "दाखिल खारेज गरिपाउँ।",
     applicantName: "",
     district: "",
     address: "",
@@ -23,7 +26,32 @@ const Forms = () => {
     opponentOffice: "",
     petitionDetails: "",
     demands: "",
-    date: new Date().toISOString().split('T')[0]
+    date: new Date().toISOString().split('T')[0],
+    
+    // New fields
+    caseNumber: "",
+    issueNumber: "",
+    applicantMunicipality: "",
+    applicantDistrictName: "",
+    applicantAdditionalInfo: "",
+    applicantWardNumber: "",
+    applicantFatherName: "",
+    opponentMunicipality: "",
+    mukuda: "",
+    opponentAdditionalInfo: "",
+    opponentFatherName: "",
+    opponentDistrictName: "",
+    opponentYearsOfResidence: "",
+    opponentWardNumber: "",
+    otherWardNumber: "",
+    otherName: "",
+    otherMunicipality: "",
+    otherWardName: "",
+    shubham: "",
+    day: "",
+    month: "",
+    year: "",
+    dateBS: ""
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -59,11 +87,22 @@ const Forms = () => {
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-asklegal-purple">धर्मपत्र निर्माता (Dharma Patra Builder)</h1>
-          <p className="text-white/70 mt-2">
-            Create, customize, and download legal petition documents.
-          </p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-asklegal-purple">धर्मपत्र निर्माता (Dharma Patra Builder)</h1>
+            <p className="text-white/70 mt-2">
+              Create, customize, and download legal petition documents.
+            </p>
+          </div>
+          
+          <div className="flex items-center">
+            <Link to="/kanoon-search">
+              <Button className="flex items-center gap-2 bg-asklegal-purple hover:bg-asklegal-accent">
+                <Search size={18} />
+                <span>कानून खोज</span>
+              </Button>
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -84,60 +123,208 @@ const Forms = () => {
                   placeholder="Enter petition subject"
                 />
 
-                <FormAccordion title="Applicant Information" defaultOpen={true}>
-                  <FormField
-                    label="Applicant Name"
-                    id="applicantName"
-                    value={formData.applicantName}
-                    onChange={handleInputChange}
-                    placeholder="Enter your full name"
-                  />
-                  <FormField
-                    label="District"
-                    id="district"
-                    value={formData.district}
-                    onChange={handleInputChange}
-                    placeholder="Enter your district"
-                  />
-                  <FormField
-                    label="Address"
-                    id="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    placeholder="Enter your address"
-                  />
-                  <FormField
-                    label="Years of Residence"
-                    id="residentYears"
-                    type="number"
-                    value={formData.residentYears}
-                    onChange={handleInputChange}
-                    placeholder="Enter years of residence"
-                  />
+                <FormAccordion title="CASE DETAILS" defaultOpen={true}>
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      label="CASE NUMBER"
+                      id="caseNumber"
+                      value={formData.caseNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter case number"
+                    />
+                    <FormField
+                      label="ISSUE NUMBER"
+                      id="issueNumber"
+                      value={formData.issueNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter issue number"
+                    />
+                  </div>
                 </FormAccordion>
 
-                <FormAccordion title="Opponent Information">
-                  <FormField
-                    label="Opponent Name"
-                    id="opponentName"
-                    value={formData.opponentName}
-                    onChange={handleInputChange}
-                    placeholder="Enter opponent name"
-                  />
-                  <FormField
-                    label="Opponent Position"
-                    id="opponentPosition"
-                    value={formData.opponentPosition}
-                    onChange={handleInputChange}
-                    placeholder="Enter opponent position"
-                  />
-                  <FormField
-                    label="Opponent Office"
-                    id="opponentOffice"
-                    value={formData.opponentOffice}
-                    onChange={handleInputChange}
-                    placeholder="Enter opponent office"
-                  />
+                <FormAccordion title="APPLICANT DETAILS" defaultOpen={true}>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField
+                      label="ADDITIONAL INFO"
+                      id="applicantAdditionalInfo"
+                      value={formData.applicantAdditionalInfo}
+                      onChange={handleInputChange}
+                      placeholder="Enter additional info"
+                    />
+                    <FormField
+                      label="APPLICANT MUNICIPALITY OR RURAL MUNICIPALITY"
+                      id="applicantMunicipality"
+                      value={formData.applicantMunicipality}
+                      onChange={handleInputChange}
+                      placeholder="Enter municipality"
+                    />
+                    <FormField
+                      label="APPLICANT DISTRICT NAME"
+                      id="applicantDistrictName"
+                      value={formData.applicantDistrictName}
+                      onChange={handleInputChange}
+                      placeholder="Enter district name"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <FormField
+                      label="APPLICANT YEARS OF RESIDENCE"
+                      id="residentYears"
+                      type="number"
+                      value={formData.residentYears}
+                      onChange={handleInputChange}
+                      placeholder="Enter years of residence"
+                    />
+                    <FormField
+                      label="APPLICANT WARD NUMBER"
+                      id="applicantWardNumber"
+                      value={formData.applicantWardNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter ward number"
+                    />
+                    <FormField
+                      label="APPLICANT FATHER NAME"
+                      id="applicantFatherName"
+                      value={formData.applicantFatherName}
+                      onChange={handleInputChange}
+                      placeholder="Enter father's name"
+                    />
+                  </div>
+                </FormAccordion>
+
+                <FormAccordion title="OPPONENT DETAILS">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField
+                      label="OPPONENT MUNICIPALITY OR RURAL MUNICIPALITY"
+                      id="opponentMunicipality"
+                      value={formData.opponentMunicipality}
+                      onChange={handleInputChange}
+                      placeholder="Enter opponent municipality"
+                    />
+                    <FormField
+                      label="MUKUDA"
+                      id="mukuda"
+                      value={formData.mukuda}
+                      onChange={handleInputChange}
+                      placeholder="Enter mukuda"
+                    />
+                    <FormField
+                      label="ADDITIONAL INFO"
+                      id="opponentAdditionalInfo"
+                      value={formData.opponentAdditionalInfo}
+                      onChange={handleInputChange}
+                      placeholder="Enter additional info"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <FormField
+                      label="OPPONENT FATHER NAME"
+                      id="opponentFatherName"
+                      value={formData.opponentFatherName}
+                      onChange={handleInputChange}
+                      placeholder="Enter opponent father's name"
+                    />
+                    <FormField
+                      label="OPPONENT DISTRICT NAME"
+                      id="opponentDistrictName"
+                      value={formData.opponentDistrictName}
+                      onChange={handleInputChange}
+                      placeholder="Enter opponent district name"
+                    />
+                    <FormField
+                      label="OPPONENT YEARS OF RESIDENCE"
+                      id="opponentYearsOfResidence"
+                      value={formData.opponentYearsOfResidence}
+                      onChange={handleInputChange}
+                      placeholder="Enter opponent years of residence"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <FormField
+                      label="OPPONENT WARD NUMBER"
+                      id="opponentWardNumber"
+                      value={formData.opponentWardNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter opponent ward number"
+                    />
+                  </div>
+                </FormAccordion>
+                
+                <FormAccordion title="OTHER DETAILS">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField
+                      label="WARD NUMBER"
+                      id="otherWardNumber"
+                      value={formData.otherWardNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter ward number"
+                    />
+                    <FormField
+                      label="NAME"
+                      id="otherName"
+                      value={formData.otherName}
+                      onChange={handleInputChange}
+                      placeholder="Enter name"
+                    />
+                    <FormField
+                      label="MUNICIPALITY OR RURAL MUNICIPALITY"
+                      id="otherMunicipality"
+                      value={formData.otherMunicipality}
+                      onChange={handleInputChange}
+                      placeholder="Enter municipality"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <FormField
+                      label="WARD NAME"
+                      id="otherWardName"
+                      value={formData.otherWardName}
+                      onChange={handleInputChange}
+                      placeholder="Enter ward name"
+                    />
+                    <FormField
+                      label="SHUBHAM"
+                      id="shubham"
+                      value={formData.shubham}
+                      onChange={handleInputChange}
+                      placeholder="Enter shubham"
+                    />
+                    <FormField
+                      label="DAY"
+                      id="day"
+                      value={formData.day}
+                      onChange={handleInputChange}
+                      placeholder="Enter day"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <FormField
+                      label="MONTH"
+                      id="month"
+                      value={formData.month}
+                      onChange={handleInputChange}
+                      placeholder="Enter month"
+                    />
+                    <FormField
+                      label="YEAR"
+                      id="year"
+                      value={formData.year}
+                      onChange={handleInputChange}
+                      placeholder="Enter year"
+                    />
+                    <FormField
+                      label="DATE IN BS"
+                      id="dateBS"
+                      value={formData.dateBS}
+                      onChange={handleInputChange}
+                      placeholder="Enter date in BS"
+                    />
+                  </div>
                 </FormAccordion>
 
                 <FormAccordion title="Petition Details">
