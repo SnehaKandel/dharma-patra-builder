@@ -39,15 +39,15 @@ const Login = () => {
     const newErrors: {email?: string; password?: string} = {};
     
     if (!formData.email) {
-      newErrors.email = 'इमेल आवश्यक छ';
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'अमान्य इमेल ठेगाना';
+      newErrors.email = 'Invalid email address';
     }
     
     if (!formData.password) {
-      newErrors.password = 'पासवर्ड आवश्यक छ';
+      newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'पासवर्ड कम्तिमा 6 अक्षरको हुनुपर्छ';
+      newErrors.password = 'Password must be at least 6 characters';
     }
     
     setErrors(newErrors);
@@ -69,7 +69,7 @@ const Login = () => {
       
       const mockUserData = {
         id: '1',
-        name: 'प्रयोगकर्ता',
+        name: 'User',
         email: formData.email,
         role: formData.role,
       };
@@ -78,10 +78,10 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(mockUserData));
       
       toast({
-        title: "सफलतापूर्वक लग इन गरियो",
+        title: "Successfully logged in",
         description: formData.role === 'admin' 
-          ? "स्वागत छ, प्रशासक" 
-          : "स्वागत छ, AskLegal.io मा",
+          ? "Welcome, Administrator" 
+          : "Welcome to AskLegal.io",
       });
       
       // Redirect based on role
@@ -104,7 +104,7 @@ const Login = () => {
     <MainLayout>
       <div className="container mx-auto py-16 px-4">
         <div className="max-w-md mx-auto bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-8">
-          <h1 className="text-3xl font-bold text-asklegal-purple mb-6 text-center">लग इन</h1>
+          <h1 className="text-3xl font-bold text-asklegal-purple mb-6 text-center">Login</h1>
           
           <div className="flex justify-center mb-6 gap-2">
             <Button
@@ -113,7 +113,7 @@ const Login = () => {
               className={formData.role === 'user' ? "bg-asklegal-purple" : "bg-transparent border-asklegal-purple/50 text-white"}
               onClick={() => handleRoleChange('user')}
             >
-              प्रयोगकर्ता
+              User
             </Button>
             <Button
               type="button"
@@ -121,13 +121,13 @@ const Login = () => {
               className={formData.role === 'admin' ? "bg-asklegal-purple" : "bg-transparent border-asklegal-purple/50 text-white"}
               onClick={() => handleRoleChange('admin')}
             >
-              प्रशासक
+              Admin
             </Button>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">इमेल</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 name="email"
@@ -141,7 +141,7 @@ const Login = () => {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password">पासवर्ड</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 name="password"
@@ -156,10 +156,10 @@ const Login = () => {
             
             <div className="flex justify-between items-center text-sm">
               <div className="text-white/70 hover:text-white cursor-pointer">
-                पासवर्ड बिर्सनुभयो?
+                Forgot Password?
               </div>
               <div className="text-asklegal-purple hover:text-asklegal-accent cursor-pointer">
-                दर्ता गर्नुहोस्
+                Register
               </div>
             </div>
             
@@ -168,7 +168,7 @@ const Login = () => {
               disabled={isLoading}
               className="w-full bg-asklegal-purple hover:bg-asklegal-accent text-white"
             >
-              {isLoading ? "प्रक्रियामा..." : "लग इन गर्नुहोस्"}
+              {isLoading ? "Processing..." : "Login"}
             </Button>
           </form>
         </div>

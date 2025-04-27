@@ -15,10 +15,10 @@ import { User, Lock, BellRing, BellOff } from 'lucide-react';
 
 const Settings = () => {
   const [profileData, setProfileData] = useState({
-    name: 'प्रयोगकर्ता नाम',
+    name: 'User Name',
     email: 'user@example.com',
     phone: '9841000000',
-    district: 'काठमाडौं',
+    district: 'Kathmandu',
   });
   
   const [passwordData, setPasswordData] = useState({
@@ -51,27 +51,25 @@ const Settings = () => {
   };
   
   const saveProfile = () => {
-    // In a real app, this would save to a backend
     toast({
-      title: "प्रोफाइल अद्यावधिक",
-      description: "तपाईंको प्रोफाइल विवरण सफलतापूर्वक अद्यावधिक गरिएको छ।",
+      title: "Profile Updated",
+      description: "Your profile details have been successfully updated.",
     });
   };
   
   const savePassword = () => {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       toast({
-        title: "त्रुटि",
-        description: "नयाँ पासवर्ड र पुष्टि पासवर्ड मेल खाएन।",
+        title: "Error",
+        description: "New password and confirmation password do not match.",
         variant: "destructive",
       });
       return;
     }
     
-    // In a real app, this would save to a backend
     toast({
-      title: "पासवर्ड अद्यावधिक",
-      description: "तपाईंको पासवर्ड सफलतापूर्वक परिवर्तन गरिएको छ।",
+      title: "Password Updated",
+      description: "Your password has been successfully changed.",
     });
     
     setPasswordData({
@@ -82,10 +80,9 @@ const Settings = () => {
   };
   
   const saveNotifications = () => {
-    // In a real app, this would save to a backend
     toast({
-      title: "सूचना सेटिङ अद्यावधिक",
-      description: "तपाईंको सूचना प्राथमिकताहरू सफलतापूर्वक अद्यावधिक गरिएको छ।",
+      title: "Notification Settings Updated",
+      description: "Your notification preferences have been successfully updated.",
     });
   };
   
@@ -93,30 +90,30 @@ const Settings = () => {
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-asklegal-purple mb-8">सेटिङहरू</h1>
+          <h1 className="text-3xl font-bold text-asklegal-purple mb-8">Settings</h1>
           
           <Tabs defaultValue="profile" className="w-full">
             <TabsList className="grid grid-cols-3 mb-8">
               <TabsTrigger value="profile" className="flex items-center gap-2">
                 <User size={16} />
-                प्रोफाइल
+                Profile
               </TabsTrigger>
               <TabsTrigger value="password" className="flex items-center gap-2">
                 <Lock size={16} />
-                पासवर्ड
+                Password
               </TabsTrigger>
               <TabsTrigger value="notifications" className="flex items-center gap-2">
                 <BellRing size={16} />
-                सूचनाहरू
+                Notifications
               </TabsTrigger>
             </TabsList>
             
             <TabsContent value="profile" className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-white mb-6">प्रोफाइल जानकारी</h2>
+              <h2 className="text-xl font-semibold text-white mb-6">Profile Information</h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name">नाम</Label>
+                    <Label htmlFor="name">Name</Label>
                     <Input 
                       id="name" 
                       name="name" 
@@ -126,7 +123,7 @@ const Settings = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">इमेल</Label>
+                    <Label htmlFor="email">Email</Label>
                     <Input 
                       id="email" 
                       name="email" 
@@ -140,7 +137,7 @@ const Settings = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">फोन</Label>
+                    <Label htmlFor="phone">Phone</Label>
                     <Input 
                       id="phone" 
                       name="phone" 
@@ -150,7 +147,7 @@ const Settings = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="district">जिल्ला</Label>
+                    <Label htmlFor="district">District</Label>
                     <Input 
                       id="district" 
                       name="district" 
@@ -166,17 +163,17 @@ const Settings = () => {
                     onClick={saveProfile}
                     className="bg-asklegal-purple hover:bg-asklegal-accent text-white"
                   >
-                    प्रोफाइल बचत गर्नुहोस्
+                    Save Profile
                   </Button>
                 </div>
               </div>
             </TabsContent>
             
             <TabsContent value="password" className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-white mb-6">पासवर्ड परिवर्तन</h2>
+              <h2 className="text-xl font-semibold text-white mb-6">Change Password</h2>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="currentPassword">वर्तमान पासवर्ड</Label>
+                  <Label htmlFor="currentPassword">Current Password</Label>
                   <Input 
                     id="currentPassword" 
                     name="currentPassword" 
@@ -188,7 +185,7 @@ const Settings = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="newPassword">नयाँ पासवर्ड</Label>
+                  <Label htmlFor="newPassword">New Password</Label>
                   <Input 
                     id="newPassword" 
                     name="newPassword" 
@@ -200,7 +197,7 @@ const Settings = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">पासवर्ड पुष्टि गर्नुहोस्</Label>
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
                   <Input 
                     id="confirmPassword" 
                     name="confirmPassword" 
@@ -216,19 +213,19 @@ const Settings = () => {
                     onClick={savePassword}
                     className="bg-asklegal-purple hover:bg-asklegal-accent text-white"
                   >
-                    पासवर्ड परिवर्तन गर्नुहोस्
+                    Change Password
                   </Button>
                 </div>
               </div>
             </TabsContent>
             
             <TabsContent value="notifications" className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-white mb-6">सूचना प्राथमिकताहरू</h2>
+              <h2 className="text-xl font-semibold text-white mb-6">Notification Preferences</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between py-2">
                   <div>
-                    <h3 className="font-medium text-white">इमेल सूचनाहरू</h3>
-                    <p className="text-sm text-white/70">इमेल मार्फत सूचनाहरू प्राप्त गर्नुहोस्</p>
+                    <h3 className="font-medium text-white">Email Notifications</h3>
+                    <p className="text-sm text-white/70">Receive notifications via email</p>
                   </div>
                   <Button 
                     variant={notifications.email ? "default" : "outline"}
@@ -241,8 +238,8 @@ const Settings = () => {
                 
                 <div className="flex items-center justify-between py-2">
                   <div>
-                    <h3 className="font-medium text-white">एसएमएस सूचनाहरू</h3>
-                    <p className="text-sm text-white/70">एसएमएस मार्फत सूचनाहरू प्राप्त गर्नुहोस्</p>
+                    <h3 className="font-medium text-white">SMS Notifications</h3>
+                    <p className="text-sm text-white/70">Receive notifications via SMS</p>
                   </div>
                   <Button 
                     variant={notifications.sms ? "default" : "outline"}
@@ -255,8 +252,8 @@ const Settings = () => {
                 
                 <div className="flex items-center justify-between py-2">
                   <div>
-                    <h3 className="font-medium text-white">समाचार अपडेटहरू</h3>
-                    <p className="text-sm text-white/70">नयाँ समाचारहरू बारे जानकारी प्राप्त गर्नुहोस्</p>
+                    <h3 className="font-medium text-white">News Updates</h3>
+                    <p className="text-sm text-white/70">Get notified about new articles</p>
                   </div>
                   <Button 
                     variant={notifications.news ? "default" : "outline"}
@@ -269,8 +266,8 @@ const Settings = () => {
                 
                 <div className="flex items-center justify-between py-2">
                   <div>
-                    <h3 className="font-medium text-white">सिस्टम अपडेटहरू</h3>
-                    <p className="text-sm text-white/70">प्रणालीमा भएका परिवर्तनहरू बारे जानकारी प्राप्त गर्नुहोस्</p>
+                    <h3 className="font-medium text-white">System Updates</h3>
+                    <p className="text-sm text-white/70">Get notified about system changes</p>
                   </div>
                   <Button 
                     variant={notifications.updates ? "default" : "outline"}
@@ -286,7 +283,7 @@ const Settings = () => {
                     onClick={saveNotifications}
                     className="bg-asklegal-purple hover:bg-asklegal-accent text-white"
                   >
-                    सेटिङहरू बचत गर्नुहोस्
+                    Save Settings
                   </Button>
                 </div>
               </div>
