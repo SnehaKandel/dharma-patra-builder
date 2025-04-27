@@ -12,7 +12,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: 'user', // 'user' or 'admin'
+    role: 'user' as 'user' | 'admin', // Explicitly type the role
   });
   const [errors, setErrors] = useState<{email?: string; password?: string}>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +65,11 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      const user = await authService.login(formData);
+      const user = await authService.login({
+        email: formData.email,
+        password: formData.password,
+        role: formData.role // Now correctly typed
+      });
       
       toast({
         title: "Successfully logged in",
@@ -87,7 +91,7 @@ const Login = () => {
     }
   };
 
-  const handleRoleChange = (role: string) => {
+  const handleRoleChange = (role: 'user' | 'admin') => {
     setFormData({
       ...formData,
       role,
