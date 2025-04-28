@@ -86,6 +86,14 @@ const Register = () => {
     setIsLoading(true);
     
     try {
+      // Add console log to debug the request
+      console.log('Sending registration request with:', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role
+      });
+      
       const user = await authService.register({
         name: formData.name,
         email: formData.email,
@@ -98,9 +106,20 @@ const Register = () => {
         description: "Welcome to AskLegal.io",
       });
       
+      // Log successful registration
+      console.log('Registration successful, user:', user);
+      
+      // Redirect to home page
       navigate('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Registration error:', error);
+      
+      // Show more detailed error information
+      toast({
+        title: "Registration failed",
+        description: error.response?.data?.message || "An error occurred during registration",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }

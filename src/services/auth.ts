@@ -35,7 +35,10 @@ export const authService = {
 
   async register(data: RegisterData) {
     try {
+      console.log('Auth service sending register request:', data);
       const response = await api.post('/auth/register', data);
+      console.log('Register response:', response.data);
+      
       const { token, refreshToken, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -44,6 +47,7 @@ export const authService = {
       
       return user;
     } catch (error: any) {
+      console.error('Registration error details:', error.response?.data || error.message);
       toast({
         title: 'Registration Failed',
         description: error.response?.data?.message || 'An error occurred during registration',
