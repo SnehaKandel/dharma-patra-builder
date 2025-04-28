@@ -8,15 +8,23 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { authService } from '@/services/auth';
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
-    role: 'user' as 'user' | 'admin', // Explicitly type the role
+    confirmPassword: '',
+    role: 'user' as 'user' | 'admin',
   });
-  const [errors, setErrors] = useState<{email?: string; password?: string}>({});
-  const [isLoading, setIsLoading] = useState(false);
   
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
+  
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -37,7 +45,16 @@ const Login = () => {
   };
 
   const validate = () => {
-    const newErrors: {email?: string; password?: string} = {};
+    const newErrors: {
+      name?: string;
+      email?: string;
+      password?: string;
+      confirmPassword?: string;
+    } = {};
+    
+    if (!formData.name) {
+      newErrors.name = 'Name is required';
+    }
     
     if (!formData.email) {
       newErrors.email = 'Email is required';
@@ -49,6 +66,10 @@ const Login = () => {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
     }
     
     setErrors(newErrors);
@@ -65,65 +86,47 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      const user = await authService.login({
+      const user = await authService.register({
+        name: formData.name,
         email: formData.email,
         password: formData.password,
-        role: formData.role // Now correctly typed
+        role: formData.role
       });
       
       toast({
-        title: "Successfully logged in",
-        description: user.role === 'admin' 
-          ? "Welcome, Administrator" 
-          : "Welcome to AskLegal.io",
+        title: "Successfully registered",
+        description: "Welcome to AskLegal.io",
       });
       
-      // Redirect based on role
-      if (user.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/');
-      }
+      navigate('/');
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Registration error:', error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleRoleChange = (role: 'user' | 'admin') => {
-    setFormData({
-      ...formData,
-      role,
-    });
   };
 
   return (
     <MainLayout>
       <div className="container mx-auto py-16 px-4">
         <div className="max-w-md mx-auto bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-8">
-          <h1 className="text-3xl font-bold text-asklegal-purple mb-6 text-center">Login</h1>
-          
-          <div className="flex justify-center mb-6 gap-2">
-            <Button
-              type="button"
-              variant={formData.role === 'user' ? "default" : "outline"} 
-              className={formData.role === 'user' ? "bg-asklegal-purple" : "bg-transparent border-asklegal-purple/50 text-white"}
-              onClick={() => handleRoleChange('user')}
-            >
-              User
-            </Button>
-            <Button
-              type="button"
-              variant={formData.role === 'admin' ? "default" : "outline"} 
-              className={formData.role === 'admin' ? "bg-asklegal-purple" : "bg-transparent border-asklegal-purple/50 text-white"}
-              onClick={() => handleRoleChange('admin')}
-            >
-              Admin
-            </Button>
-          </div>
+          <h1 className="text-3xl font-bold text-asklegal-purple mb-6 text-center">Register</h1>
           
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Full Name</Label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="John Doe"
+                value={formData.name}
+                onChange={handleChange}
+                className="bg-asklegal-dark/80"
+              />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -152,12 +155,25 @@ const Login = () => {
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
             
-            <div className="flex justify-between items-center text-sm">
-              <div className="text-white/70 hover:text-white cursor-pointer">
-                Forgot Password?
-              </div>
-              <Link to="/register" className="text-asklegal-purple hover:text-asklegal-accent">
-                Register
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="••••••"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="bg-asklegal-dark/80"
+              />
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
+            </div>
+            
+            <div className="flex justify-center text-sm mt-4">
+              <Link to="/login" className="text-asklegal-purple hover:text-asklegal-accent">
+                Already have an account? Login
               </Link>
             </div>
             
@@ -166,7 +182,7 @@ const Login = () => {
               disabled={isLoading}
               className="w-full bg-asklegal-purple hover:bg-asklegal-accent text-white"
             >
-              {isLoading ? "Processing..." : "Login"}
+              {isLoading ? "Processing..." : "Register"}
             </Button>
           </form>
         </div>
@@ -175,4 +191,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
