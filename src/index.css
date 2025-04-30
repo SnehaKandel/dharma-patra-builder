@@ -52,9 +52,13 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
     
     /* Custom AskLegal variables for light mode */
-    --asklegal-dark: 222 40% 98%;
-    --asklegal-purple: 252 82% 75%;
-    --asklegal-accent: 252 70% 62%;
+    --asklegal-dark: 0 0% 98%;
+    --asklegal-purple: 252 82% 58%;
+    --asklegal-accent: 252 70% 50%;
+    --asklegal-card-bg: 252 33% 97%;
+    --asklegal-text: 240 5.9% 10%;
+    --asklegal-chat-bg: 252 33% 92%;
+    --asklegal-chat-text: 240 5.9% 10%;
   }
 
   .dark {
@@ -98,6 +102,10 @@
     --asklegal-dark: 226 50% 8%;
     --asklegal-purple: 252 82% 75%;
     --asklegal-accent: 252 70% 62%;
+    --asklegal-card-bg: 224 40% 12%;
+    --asklegal-text: 0 0% 100%;
+    --asklegal-chat-bg: 252 30% 20%;
+    --asklegal-chat-text: 0 0% 100%;
   }
 }
 
@@ -131,6 +139,47 @@
 
 .hover\:bg-asklegal-accent:hover {
   background-color: hsl(var(--asklegal-accent));
+}
+
+/* Chat section styling */
+.chat-message {
+  background-color: hsl(var(--asklegal-chat-bg));
+  color: hsl(var(--asklegal-chat-text));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card-glassmorphism {
+  @apply backdrop-blur-sm border rounded-lg shadow-md transition-all duration-300;
+  background-color: hsl(var(--asklegal-card-bg) / 0.8);
+  border-color: hsl(var(--asklegal-purple) / 0.3);
+}
+
+/* Theme transition effects */
+.theme-transition {
+  @apply transition-all duration-300;
+}
+
+/* Enhanced button styling */
+.button-primary {
+  @apply bg-transparent border border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 transition-colors duration-300;
+}
+
+/* Enhanced navbar styling for better visibility in light mode */
+.navbar-light {
+  @apply bg-white border-b border-asklegal-purple/20 shadow-sm;
+}
+
+.navbar-dark {
+  @apply bg-asklegal-dark border-b border-asklegal-purple/20;
+}
+
+/* Theme toggle animation */
+.theme-toggle-icon {
+  @apply transition-transform duration-300;
+}
+
+.theme-toggle-icon.active {
+  @apply scale-110;
 }
 
 /* Print styles */

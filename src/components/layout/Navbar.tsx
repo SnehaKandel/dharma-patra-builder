@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FileText, PlayCircle, Settings, User, LogIn, LogOut, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Toggle } from '@/components/ui/toggle';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
@@ -40,6 +41,15 @@ const Navbar = () => {
     const newDarkMode = !isDarkMode;
     setIsDarkMode(newDarkMode);
     applyTheme(newDarkMode);
+    
+    // Show toast notification for better UX
+    toast({
+      title: newDarkMode ? "Dark mode enabled" : "Light mode enabled",
+      description: newDarkMode 
+        ? "The interface has switched to dark mode." 
+        : "The interface has switched to light mode.",
+      duration: 2000,
+    });
   };
   
   const handleLogout = () => {
@@ -53,39 +63,41 @@ const Navbar = () => {
   };
   
   return (
-    <nav className="bg-asklegal-dark p-4 border-b border-asklegal-purple/20">
+    <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} p-4`}>
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-asklegal-purple text-xl font-bold">
+        <Link to="/" className="text-asklegal-purple text-xl font-bold theme-transition">
           AskLegal.io
         </Link>
         
         <div className="flex items-center gap-6">
-          <Toggle 
-            pressed={isDarkMode}
-            onPressedChange={toggleTheme}
-            className="bg-transparent hover:bg-asklegal-purple/10 text-white/80 hover:text-white"
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </Toggle>
+          <div className="flex items-center gap-2">
+            <Moon size={18} className={`text-asklegal-purple ${!isDarkMode ? 'opacity-40' : 'opacity-100'} theme-transition`} />
+            <Switch 
+              checked={isDarkMode}
+              onCheckedChange={toggleTheme}
+              className="theme-transition data-[state=checked]:bg-asklegal-purple"
+              aria-label="Toggle theme"
+            />
+            <Sun size={18} className={`text-asklegal-purple ${isDarkMode ? 'opacity-40' : 'opacity-100'} theme-transition`} />
+          </div>
           
-          <Link to="/news" className="flex items-center text-white/80 hover:text-white gap-2">
+          <Link to="/news" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
             <FileText size={18} />
             <span className="hidden md:inline">News</span>
           </Link>
           
-          <Link to="/play" className="flex items-center text-white/80 hover:text-white gap-2">
+          <Link to="/play" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
             <PlayCircle size={18} />
             <span className="hidden md:inline">Play</span>
           </Link>
           
-          <Link to="/settings" className="flex items-center text-white/80 hover:text-white gap-2">
+          <Link to="/settings" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
             <Settings size={18} />
             <span className="hidden md:inline">Settings</span>
           </Link>
           
           {user?.role === 'admin' && (
-            <Link to="/admin" className="flex items-center text-white/80 hover:text-white gap-2">
+            <Link to="/admin" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
               <User size={18} />
               <span className="hidden md:inline">Admin</span>
             </Link>
@@ -95,7 +107,7 @@ const Navbar = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="ml-2 bg-transparent border-asklegal-purple/50 text-white hover:bg-asklegal-purple/10 flex items-center gap-1"
+              className="ml-2 button-primary"
               onClick={handleLogout}
             >
               <LogOut size={16} />
@@ -106,7 +118,7 @@ const Navbar = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="ml-2 bg-transparent border-asklegal-purple/50 text-white hover:bg-asklegal-purple/10 flex items-center gap-1"
+                className="ml-2 button-primary"
               >
                 <LogIn size={16} />
                 <span>Login</span>
