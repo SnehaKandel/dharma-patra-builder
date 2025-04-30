@@ -45,7 +45,7 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
         </h3>
         
         {state.questions.map((question, index) => (
-          <div key={question.id} className="p-4 border border-asklegal-form-border/30 rounded-lg">
+          <div key={question.id} className="p-4 border border-asklegal-form-border/30 rounded-lg animate-fade-in">
             <div className="mb-2 text-sm text-asklegal-text/60 theme-transition">
               Question {index + 1} / {state.questions.length}
             </div>

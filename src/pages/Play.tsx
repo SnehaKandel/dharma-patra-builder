@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -13,6 +14,7 @@ const Play = () => {
   const [quizState, setQuizState] = useState<QuizState | null>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [score, setScore] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
   
   const startQuiz = () => {
@@ -37,21 +39,29 @@ const Play = () => {
   const handleNextQuestion = () => {
     if (!quizState) return;
     
-    if (quizState.currentQuestionIndex < quizState.questions.length - 1) {
-      // Reset selectedOption when moving to the next question
-      setQuizState({
-        ...quizState,
-        currentQuestionIndex: quizState.currentQuestionIndex + 1
-      });
-    } else {
-      // Quiz finished
-      const calculatedScore = quizService.calculateScore(quizState);
-      setScore(calculatedScore);
-      setQuizState({
-        ...quizState,
-        isQuizComplete: true
-      });
-    }
+    // Start transition animation
+    setIsTransitioning(true);
+    
+    // Use timeout to allow animation to complete
+    setTimeout(() => {
+      if (quizState.currentQuestionIndex < quizState.questions.length - 1) {
+        // Reset selection and move to next question
+        setQuizState({
+          ...quizState,
+          currentQuestionIndex: quizState.currentQuestionIndex + 1
+        });
+      } else {
+        // Quiz finished
+        const calculatedScore = quizService.calculateScore(quizState);
+        setScore(calculatedScore);
+        setQuizState({
+          ...quizState,
+          isQuizComplete: true
+        });
+      }
+      // End transition animation
+      setIsTransitioning(false);
+    }, 300); // Animation duration
   };
   
   const handleRetry = () => {
@@ -99,7 +109,7 @@ const Play = () => {
               </CardContent>
             </Card>
           ) : quizState && !quizState.isQuizComplete ? (
-            <Card className="card-glassmorphism overflow-hidden animate-fade-in">
+            <Card className={`card-glassmorphism overflow-hidden ${isTransitioning ? 'animate-fade-out' : 'animate-fade-in'}`}>
               <CardContent className="p-8">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-bold text-asklegal-heading theme-transition">Legal Quiz</h2>
@@ -116,7 +126,7 @@ const Play = () => {
                   ></div>
                 </div>
                 
-                {currentQuestion && (
+                {currentQuestion && !isTransitioning && (
                   <QuizQuestion 
                     question={currentQuestion}
                     selectedOption={quizState.selectedAnswers[quizState.currentQuestionIndex]}

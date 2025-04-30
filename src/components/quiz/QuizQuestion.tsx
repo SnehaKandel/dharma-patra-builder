@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QuizQuestion as QuestionType } from "@/types/quiz";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -17,24 +17,34 @@ const QuizQuestion = ({
   onSelect,
   showCorrectAnswer = false
 }: QuizQuestionProps) => {
+  // Use local state that syncs with props to ensure clean reset between questions
+  const [localSelectedOption, setLocalSelectedOption] = useState<number | null>(null);
+  
+  // Update local state when selectedOption prop changes or question changes
+  useEffect(() => {
+    setLocalSelectedOption(selectedOption);
+  }, [selectedOption, question.id]); // Reset when question changes
+  
   const handleOptionChange = (value: string) => {
-    onSelect(parseInt(value));
+    const optionIndex = parseInt(value);
+    setLocalSelectedOption(optionIndex);
+    onSelect(optionIndex);
   };
   
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       <h3 className="text-xl font-medium text-asklegal-heading theme-transition mb-4">
         {question.question}
       </h3>
       
       <RadioGroup 
-        value={selectedOption !== null ? selectedOption.toString() : undefined}
+        value={localSelectedOption !== null ? localSelectedOption.toString() : undefined}
         onValueChange={handleOptionChange}
         className="space-y-3"
       >
         {question.options.map((option, index) => {
           const isCorrect = index === question.correctAnswer;
-          const isSelected = selectedOption === index;
+          const isSelected = localSelectedOption === index;
           
           let optionClassName = "rounded-lg p-4 transition-all duration-200 border";
           
@@ -53,7 +63,7 @@ const QuizQuestion = ({
           }
           
           return (
-            <div key={index} className={optionClassName}>
+            <div key={`${question.id}-option-${index}`} className={optionClassName}>
               <div className="flex items-center gap-3">
                 <RadioGroupItem 
                   value={index.toString()}
