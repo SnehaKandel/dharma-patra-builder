@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -39,6 +38,7 @@ const Play = () => {
     if (!quizState) return;
     
     if (quizState.currentQuestionIndex < quizState.questions.length - 1) {
+      // Reset selectedOption when moving to the next question
       setQuizState({
         ...quizState,
         currentQuestionIndex: quizState.currentQuestionIndex + 1
@@ -121,6 +121,7 @@ const Play = () => {
                     question={currentQuestion}
                     selectedOption={quizState.selectedAnswers[quizState.currentQuestionIndex]}
                     onSelect={handleOptionSelect}
+                    showCorrectAnswer={false}
                   />
                 )}
                 

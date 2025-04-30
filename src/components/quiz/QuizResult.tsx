@@ -34,7 +34,7 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
           ) : percentage >= 60 ? (
             <p className="text-asklegal-purple">Good effort! Your legal knowledge is solid.</p>
           ) : (
-            <p className="text-amber-600 dark:text-amber-400">Keep practicing. You can definitely improve.</p>
+            <p className="text-amber-600 dark:text-amber-400">Your score shows room for improvement.</p>
           )}
         </div>
       </div>

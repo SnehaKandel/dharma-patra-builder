@@ -76,7 +76,7 @@ const QuizQuestion = ({
       {showCorrectAnswer && question.explanation && (
         <div className="mt-4 p-4 bg-asklegal-purple/10 rounded-lg border border-asklegal-purple/20">
           <p className="text-asklegal-text theme-transition">
-            <span className="font-medium">व्याख्या:</span> {question.explanation}
+            <span className="font-medium">Explanation:</span> {question.explanation}
           </p>
         </div>
       )}
