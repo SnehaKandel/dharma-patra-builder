@@ -24,8 +24,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <main className="flex-1">
         {children}
       </main>
-      <footer className="py-4 border-t border-asklegal-purple/20 theme-transition">
-        <div className="container mx-auto text-center text-asklegal-purple/60 text-sm">
+      <footer className="py-4 border-t border-gray-200 dark:border-gray-800 theme-transition">
+        <div className="container mx-auto text-center text-asklegal-text/60 text-sm">
           <p>© {new Date().getFullYear()} AskLegal.io - Nepal Legal Assistance System</p>
         </div>
       </footer>

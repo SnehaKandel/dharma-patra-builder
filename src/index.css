@@ -51,14 +51,15 @@
 
     --sidebar-ring: 217.2 91.2% 59.8%;
     
-    /* Custom AskLegal variables for light mode */
-    --asklegal-dark: 0 0% 98%;
-    --asklegal-purple: 252 82% 58%;
+    /* Refined AskLegal variables for light mode */
+    --asklegal-dark: 220 20% 98%;
+    --asklegal-purple: 252 70% 55%;
     --asklegal-accent: 252 70% 50%;
-    --asklegal-card-bg: 252 33% 97%;
-    --asklegal-text: 240 5.9% 10%;
-    --asklegal-chat-bg: 252 33% 92%;
-    --asklegal-chat-text: 240 5.9% 10%;
+    --asklegal-card-bg: 220 33% 96%;
+    --asklegal-text: 220 10% 20%;
+    --asklegal-heading: 220 10% 20%;
+    --asklegal-chat-bg: 252 20% 95%;
+    --asklegal-chat-text: 220 10% 20%;
   }
 
   .dark {
@@ -98,13 +99,14 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     
-    /* Custom AskLegal variables for dark mode */
+    /* Refined AskLegal variables for dark mode */
     --asklegal-dark: 226 50% 8%;
-    --asklegal-purple: 252 82% 75%;
-    --asklegal-accent: 252 70% 62%;
-    --asklegal-card-bg: 224 40% 12%;
+    --asklegal-purple: 252 70% 65%;
+    --asklegal-accent: 252 60% 55%;
+    --asklegal-card-bg: 224 30% 15%;
     --asklegal-text: 0 0% 100%;
-    --asklegal-chat-bg: 252 30% 20%;
+    --asklegal-heading: 0 0% 100%;
+    --asklegal-chat-bg: 252 25% 22%;
     --asklegal-chat-text: 0 0% 100%;
   }
 }
@@ -116,11 +118,6 @@
 
   body {
     @apply bg-background text-foreground transition-colors;
-  }
-  
-  /* Apply AskLegal dark theme colors in dark mode */
-  .dark body {
-    @apply bg-asklegal-dark text-white;
   }
 }
 
@@ -141,17 +138,22 @@
   background-color: hsl(var(--asklegal-accent));
 }
 
+.text-asklegal-heading {
+  color: hsl(var(--asklegal-heading));
+}
+
 /* Chat section styling */
 .chat-message {
   background-color: hsl(var(--asklegal-chat-bg));
   color: hsl(var(--asklegal-chat-text));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .card-glassmorphism {
   @apply backdrop-blur-sm border rounded-lg shadow-md transition-all duration-300;
-  background-color: hsl(var(--asklegal-card-bg) / 0.8);
-  border-color: hsl(var(--asklegal-purple) / 0.3);
+  background-color: hsl(var(--asklegal-card-bg) / 0.9);
+  border-color: hsl(var(--asklegal-purple) / 0.2);
 }
 
 /* Theme transition effects */
@@ -161,16 +163,16 @@
 
 /* Enhanced button styling */
 .button-primary {
-  @apply bg-transparent border border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 transition-colors duration-300;
+  @apply bg-transparent border border-asklegal-purple/30 text-asklegal-purple hover:bg-asklegal-purple/10 transition-colors duration-300;
 }
 
 /* Enhanced navbar styling for better visibility in light mode */
 .navbar-light {
-  @apply bg-white border-b border-asklegal-purple/20 shadow-sm;
+  @apply bg-white border-b border-gray-200 shadow-sm;
 }
 
 .navbar-dark {
-  @apply bg-asklegal-dark border-b border-asklegal-purple/20;
+  @apply bg-asklegal-dark border-b border-asklegal-purple/10;
 }
 
 /* Theme toggle animation */

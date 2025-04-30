@@ -63,41 +63,41 @@ const Navbar = () => {
   };
   
   return (
-    <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} p-4`}>
+    <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} py-3 px-4`}>
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-asklegal-purple text-xl font-bold theme-transition">
+        <Link to="/" className="text-asklegal-heading text-xl font-bold theme-transition">
           AskLegal.io
         </Link>
         
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <Moon size={18} className={`text-asklegal-purple ${!isDarkMode ? 'opacity-40' : 'opacity-100'} theme-transition`} />
+            <Moon size={18} className={`${!isDarkMode ? 'text-gray-400' : 'text-yellow-300'} theme-transition`} />
             <Switch 
               checked={isDarkMode}
               onCheckedChange={toggleTheme}
               className="theme-transition data-[state=checked]:bg-asklegal-purple"
               aria-label="Toggle theme"
             />
-            <Sun size={18} className={`text-asklegal-purple ${isDarkMode ? 'opacity-40' : 'opacity-100'} theme-transition`} />
+            <Sun size={18} className={`${isDarkMode ? 'text-gray-400' : 'text-amber-500'} theme-transition`} />
           </div>
           
-          <Link to="/news" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
+          <Link to="/news" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <FileText size={18} />
             <span className="hidden md:inline">News</span>
           </Link>
           
-          <Link to="/play" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
+          <Link to="/play" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <PlayCircle size={18} />
             <span className="hidden md:inline">Play</span>
           </Link>
           
-          <Link to="/settings" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
+          <Link to="/settings" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <Settings size={18} />
             <span className="hidden md:inline">Settings</span>
           </Link>
           
           {user?.role === 'admin' && (
-            <Link to="/admin" className="flex items-center text-asklegal-purple hover:text-asklegal-accent gap-2 theme-transition">
+            <Link to="/admin" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
               <User size={18} />
               <span className="hidden md:inline">Admin</span>
             </Link>
