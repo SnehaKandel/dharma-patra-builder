@@ -55,8 +55,8 @@ const News = () => {
         if (newItems.length > 0 && silent) {
           setNewItemsCount(newItems.length);
           toast({
-            title: `${newItems.length} नयाँ समाचार`,
-            description: "नयाँ अपडेटहरू उपलब्ध छन्",
+            title: `${newItems.length} new news`,
+            description: "New updates available",
           });
         }
       }
@@ -67,8 +67,8 @@ const News = () => {
       console.error('Failed to fetch news:', error);
       if (!silent) {
         toast({
-          title: "समाचार लोड गर्न सकिएन",
-          description: "केही समयपछि पुनः प्रयास गर्नुहोस्",
+          title: "Failed to load news",
+          description: "Please try again later",
           variant: "destructive",
         });
       }
@@ -110,8 +110,8 @@ const News = () => {
       await fetchNews();
       
       toast({
-        title: "समाचार अद्यावधिक",
-        description: "नयाँ समाचारहरू प्राप्त गरिएको छ।",
+        title: "Latest news",
+        description: "New updates available",
       });
     } catch (error) {
       console.error('News refresh error:', error);
@@ -129,14 +129,14 @@ const News = () => {
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-asklegal-purple">ताजा समाचार</h1>
+          <h1 className="text-3xl font-bold text-asklegal-purple">News</h1>
           <div className="flex items-center gap-2">
             <span className="text-sm text-asklegal-text/60 theme-transition">
-              अन्तिम अद्यावधिक: {lastFetched.toLocaleTimeString()}
+              Last updated: {lastFetched.toLocaleTimeString()}
             </span>
             {newItemsCount > 0 && (
               <span className="bg-asklegal-purple text-white px-2 py-1 rounded-full text-xs animate-pulse">
-                +{newItemsCount} नयाँ
+                +{newItemsCount} new
               </span>
             )}
             <Button 
@@ -146,14 +146,14 @@ const News = () => {
               className="bg-transparent border-asklegal-purple/50 text-asklegal-text hover:bg-asklegal-purple/10 flex items-center gap-2 theme-transition"
             >
               <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-              रिलोड गर्नुहोस्
+              Reload
             </Button>
           </div>
         </div>
 
         {loading && news.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-asklegal-text/70 theme-transition">समाचार फिड अद्यावधिक हुँदैछ...</p>
+            <p className="text-asklegal-text/70 theme-transition">News feed is loading...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -188,7 +188,7 @@ const News = () => {
                         className="text-asklegal-purple hover:text-asklegal-purple/80 p-0 flex items-center gap-1"
                         onClick={() => handleReadMore(item.url)}
                       >
-                        थप पढ्नुहोस् <ExternalLink size={14} />
+                        Read more <ExternalLink size={14} />
                       </Button>
                     </div>
                   </div>

@@ -74,9 +74,9 @@ const Play = () => {
               <CardContent className="p-8">
                 <div className="text-center">
                   <PlayCircle size={80} className="text-asklegal-purple mx-auto mb-6" />
-                  <h1 className="text-3xl font-bold text-asklegal-heading theme-transition mb-4">कानूनी क्विज खेल्नुहोस्</h1>
+                  <h1 className="text-3xl font-bold text-asklegal-heading theme-transition mb-4">Play Legal Quiz</h1>
                   <p className="text-asklegal-text/70 theme-transition mb-8 max-w-lg mx-auto">
-                    यस क्विजमा तपाईंले नेपालको संविधान, फौजदारी कानून, देवानी कानून, न्यायपालिका, र अधिकार सम्बन्धी प्रश्नहरू पाउनुहुनेछ। तपाईंको कानूनी ज्ञान परीक्षण गर्नुहोस्!
+                    Test your knowledge of Nepal's constitution, criminal law, civil law, judiciary, and legal rights with our interactive quiz!
                   </p>
                   
                   <div className="flex justify-center gap-4 flex-wrap">
@@ -84,14 +84,14 @@ const Play = () => {
                       onClick={startQuiz}
                       className="bg-asklegal-purple hover:bg-asklegal-purple/90 text-white px-8 btn-animated"
                     >
-                      क्विज सुरु गर्नुहोस्
+                      Start Quiz
                     </Button>
                     <Button 
                       onClick={() => navigate('/kanoon-search')}
                       variant="outline"
                       className="border-asklegal-purple/50 text-asklegal-text hover:bg-asklegal-purple/10 theme-transition"
                     >
-                      <BookOpen size={18} className="mr-2" /> कानून अध्ययन गर्नुहोस्
+                      <BookOpen size={18} className="mr-2" /> Study Laws
                     </Button>
                   </div>
                 </div>
@@ -101,9 +101,9 @@ const Play = () => {
             <Card className="card-glassmorphism overflow-hidden animate-fade-in">
               <CardContent className="p-8">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-asklegal-heading theme-transition">कानूनी क्विज</h2>
+                  <h2 className="text-2xl font-bold text-asklegal-heading theme-transition">Legal Quiz</h2>
                   <div className="text-asklegal-text/60 theme-transition">
-                    प्रश्न {quizState.currentQuestionIndex + 1} / {quizState.questions.length}
+                    Question {quizState.currentQuestionIndex + 1} / {quizState.questions.length}
                   </div>
                 </div>
                 
@@ -129,7 +129,7 @@ const Play = () => {
                     disabled={!isAnswerSelected}
                     className="bg-asklegal-purple hover:bg-asklegal-purple/90 text-white px-6"
                   >
-                    {isLastQuestion ? 'परिणाम हेर्नुहोस्' : 'अर्को प्रश्न'} 
+                    {isLastQuestion ? 'See Results' : 'Next Question'} 
                     <ArrowRight size={16} className="ml-2" />
                   </Button>
                 </div>

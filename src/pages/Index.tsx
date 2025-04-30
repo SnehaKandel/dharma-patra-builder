@@ -71,7 +71,7 @@ const Index = () => {
           <div className="card-glassmorphism p-6 h-full flex flex-col animate-fade-in" style={{animationDelay: "0.6s"}}>
             <h3 className="text-xl font-medium text-asklegal-heading mb-3 theme-transition flex items-center gap-2">
               <Search size={20} className="text-asklegal-purple" />
-              नेपाल कानून खोज
+              Kanoon Directory
             </h3>
             <p className="text-asklegal-text/70 mb-4 flex-grow theme-transition">
               Search and access comprehensive legal document repository and legislation.
