@@ -39,31 +39,31 @@ const Index = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
+          <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6 h-full flex flex-col">
             <h3 className="text-xl font-medium text-white mb-3">Latest News</h3>
-            <p className="text-white/70 mb-4">Stay updated with the latest legal news and updates.</p>
-            <Link to="/news" className="w-full block">
+            <p className="text-white/70 mb-4 flex-grow">Stay updated with the latest legal news and updates.</p>
+            <Link to="/news" className="w-full block mt-auto">
               <Button variant="outline" className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 w-full">
                 Explore News
               </Button>
             </Link>
           </div>
           
-          <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
+          <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6 h-full flex flex-col">
             <h3 className="text-xl font-medium text-white mb-3">Kanoon Directory</h3>
-            <p className="text-white/70 mb-4">Search and access comprehensive legal document repository.</p>
-            <Link to="/kanoon-search" className="w-full block">
-              <Button className="bg-asklegal-purple hover:bg-asklegal-accent text-white w-full">
+            <p className="text-white/70 mb-4 flex-grow">Search and access comprehensive legal document repository.</p>
+            <Link to="/kanoon-search" className="w-full block mt-auto">
+              <Button variant="outline" className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 w-full">
                 Browse Laws
               </Button>
             </Link>
           </div>
           
-          <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
+          <div className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6 h-full flex flex-col">
             <h3 className="text-xl font-medium text-white mb-3">Judicial Petitions and Forms</h3>
-            <p className="text-white/70 mb-4">Create, customize and download legal petition documents.</p>
-            <Link to="/forms" className="w-full block">
-              <Button className="bg-asklegal-purple hover:bg-asklegal-accent text-white w-full">
+            <p className="text-white/70 mb-4 flex-grow">Create, customize and download legal petition documents.</p>
+            <Link to="/forms" className="w-full block mt-auto">
+              <Button variant="outline" className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10 w-full">
                 Create Document
               </Button>
             </Link>

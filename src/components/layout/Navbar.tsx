@@ -1,12 +1,17 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, PlayCircle, BookOpen, Settings, User, LogIn, LogOut, Search } from 'lucide-react';
+import { FileText, PlayCircle, Settings, User, LogIn, LogOut, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { Toggle } from '@/components/ui/toggle';
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(
+    localStorage.getItem('theme') === 'dark' || 
+    (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  );
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -16,7 +21,26 @@ const Navbar = () => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    
+    // Apply theme on initial load
+    applyTheme(isDarkMode);
   }, []);
+  
+  const applyTheme = (dark: boolean) => {
+    if (dark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+  
+  const toggleTheme = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    applyTheme(newDarkMode);
+  };
   
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -36,6 +60,15 @@ const Navbar = () => {
         </Link>
         
         <div className="flex items-center gap-6">
+          <Toggle 
+            pressed={isDarkMode}
+            onPressedChange={toggleTheme}
+            className="bg-transparent hover:bg-asklegal-purple/10 text-white/80 hover:text-white"
+            aria-label="Toggle theme"
+          >
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </Toggle>
+          
           <Link to="/news" className="flex items-center text-white/80 hover:text-white gap-2">
             <FileText size={18} />
             <span className="hidden md:inline">News</span>
@@ -44,11 +77,6 @@ const Navbar = () => {
           <Link to="/play" className="flex items-center text-white/80 hover:text-white gap-2">
             <PlayCircle size={18} />
             <span className="hidden md:inline">Play</span>
-          </Link>
-          
-          <Link to="/learn" className="flex items-center text-white/80 hover:text-white gap-2">
-            <BookOpen size={18} />
-            <span className="hidden md:inline">Learn</span>
           </Link>
           
           <Link to="/settings" className="flex items-center text-white/80 hover:text-white gap-2">

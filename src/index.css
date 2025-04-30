@@ -50,6 +50,11 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Custom AskLegal variables for light mode */
+    --asklegal-dark: 222 40% 98%;
+    --asklegal-purple: 252 82% 75%;
+    --asklegal-accent: 252 70% 62%;
   }
 
   .dark {
@@ -88,6 +93,11 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Custom AskLegal variables for dark mode */
+    --asklegal-dark: 226 50% 8%;
+    --asklegal-purple: 252 82% 75%;
+    --asklegal-accent: 252 70% 62%;
   }
 }
 
@@ -97,8 +107,30 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors;
   }
+  
+  /* Apply AskLegal dark theme colors in dark mode */
+  .dark body {
+    @apply bg-asklegal-dark text-white;
+  }
+}
+
+/* Custom styles for AskLegal */
+.bg-asklegal-dark {
+  background-color: hsl(var(--asklegal-dark));
+}
+
+.text-asklegal-purple {
+  color: hsl(var(--asklegal-purple));
+}
+
+.bg-asklegal-purple {
+  background-color: hsl(var(--asklegal-purple));
+}
+
+.hover\:bg-asklegal-accent:hover {
+  background-color: hsl(var(--asklegal-accent));
 }
 
 /* Print styles */
