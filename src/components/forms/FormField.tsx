@@ -24,7 +24,7 @@ const FormField = ({
 }: FormFieldProps) => {
   return (
     <div className={cn("space-y-2", className)}>
-      <Label htmlFor={id} className="text-white/80">
+      <Label htmlFor={id} className="form-label">
         {label}
       </Label>
       <Input
@@ -33,7 +33,7 @@ const FormField = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="bg-transparent border-asklegal-purple/40 text-white focus:border-asklegal-purple focus:ring-asklegal-purple"
+        className="form-input"
       />
     </div>
   );

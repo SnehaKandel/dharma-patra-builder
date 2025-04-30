@@ -15,8 +15,8 @@ interface FormAccordionProps {
 const FormAccordion = ({ title, children, defaultOpen = false }: FormAccordionProps) => {
   return (
     <Accordion type="single" collapsible defaultValue={defaultOpen ? "item-1" : undefined}>
-      <AccordionItem value="item-1" className="border-asklegal-purple/30">
-        <AccordionTrigger className="text-lg font-medium text-asklegal-purple hover:text-asklegal-light">
+      <AccordionItem value="item-1" className="border-asklegal-form-border">
+        <AccordionTrigger className="accordion-title hover:no-underline">
           {title}
         </AccordionTrigger>
         <AccordionContent>

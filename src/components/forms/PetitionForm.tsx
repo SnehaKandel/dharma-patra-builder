@@ -47,11 +47,11 @@ const PetitionForm = ({ formData, onFormChange }: PetitionFormProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden">
-        <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30">
-          <h2 className="text-lg font-medium text-asklegal-purple">Petition Information</h2>
+      <div className="form-container shadow-md">
+        <div className="form-header">
+          <h2 className="form-header-title">Petition Information</h2>
         </div>
-        <div className="p-6 space-y-6">
+        <div className="form-body">
           <FormField
             label="Subject"
             id="subject"
@@ -192,7 +192,7 @@ const PetitionForm = ({ formData, onFormChange }: PetitionFormProps) => {
           
           <FormAccordion title="PETITION DETAILS">
             <div className="space-y-2">
-              <label htmlFor="petitionDetails" className="block text-white/80">
+              <label htmlFor="petitionDetails" className="form-label">
                 Petition Details
               </label>
               <Textarea
@@ -200,11 +200,11 @@ const PetitionForm = ({ formData, onFormChange }: PetitionFormProps) => {
                 value={formData.petitionDetails}
                 onChange={handleInputChange}
                 placeholder="Enter the details of your petition here..."
-                className="h-32 bg-transparent border-asklegal-purple/40 text-white focus:border-asklegal-purple focus:ring-asklegal-purple"
+                className="form-input min-h-32"
               />
             </div>
-            <div className="space-y-2">
-              <label htmlFor="demands" className="block text-white/80">
+            <div className="space-y-2 mt-4">
+              <label htmlFor="demands" className="form-label">
                 Demands
               </label>
               <Textarea
@@ -212,7 +212,7 @@ const PetitionForm = ({ formData, onFormChange }: PetitionFormProps) => {
                 value={formData.demands}
                 onChange={handleInputChange}
                 placeholder="Enter your demands here..."
-                className="h-32 bg-transparent border-asklegal-purple/40 text-white focus:border-asklegal-purple focus:ring-asklegal-purple"
+                className="form-input min-h-32"
               />
             </div>
           </FormAccordion>
@@ -228,14 +228,15 @@ const PetitionForm = ({ formData, onFormChange }: PetitionFormProps) => {
           <div className="flex gap-4 pt-4">
             <Button 
               onClick={handleSaveDraft} 
-              className="bg-asklegal-purple hover:bg-asklegal-accent text-white"
+              variant="default"
+              className="bg-asklegal-purple hover:bg-asklegal-accent text-white font-medium"
             >
               Save Draft
             </Button>
             <Button 
               onClick={handleLoadDraft}
               variant="outline" 
-              className="border-asklegal-purple/50 text-asklegal-purple hover:bg-asklegal-purple/10"
+              className="border-asklegal-purple/50 text-asklegal-heading hover:bg-asklegal-purple/10 font-medium"
             >
               Load Draft
             </Button>

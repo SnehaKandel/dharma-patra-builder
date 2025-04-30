@@ -53,13 +53,19 @@
     
     /* Refined AskLegal variables for light mode */
     --asklegal-dark: 220 20% 98%;
-    --asklegal-purple: 252 70% 45%;
-    --asklegal-accent: 252 70% 40%;
+    --asklegal-purple: 252 40% 45%;
+    --asklegal-accent: 252 40% 40%;
     --asklegal-card-bg: 220 33% 96%;
     --asklegal-text: 220 10% 20%;
     --asklegal-heading: 222 47.4% 11.2%;
     --asklegal-chat-bg: 252 20% 95%;
     --asklegal-chat-text: 220 10% 20%;
+    --asklegal-form-bg: 0 0% 100%;
+    --asklegal-form-border: 240 10% 90%;
+    --asklegal-form-text: 240 10% 20%;
+    --asklegal-form-label: 240 10% 30%;
+    --asklegal-form-placeholder: 240 5% 65%;
+    --asklegal-accordion-title: 252 40% 45%;
   }
 
   .dark {
@@ -101,13 +107,19 @@
     
     /* Refined AskLegal variables for dark mode */
     --asklegal-dark: 226 50% 8%;
-    --asklegal-purple: 252 70% 65%;
+    --asklegal-purple: 252 60% 65%;
     --asklegal-accent: 252 60% 55%;
     --asklegal-card-bg: 224 30% 15%;
     --asklegal-text: 0 0% 100%;
     --asklegal-heading: 0 0% 100%;
     --asklegal-chat-bg: 252 25% 22%;
     --asklegal-chat-text: 0 0% 100%;
+    --asklegal-form-bg: 224 30% 15%;
+    --asklegal-form-border: 252 30% 30%;
+    --asklegal-form-text: 0 0% 100%;
+    --asklegal-form-label: 252 15% 85%;
+    --asklegal-form-placeholder: 252 15% 65%;
+    --asklegal-accordion-title: 0 0% 100%;
   }
 }
 
@@ -186,6 +198,55 @@
 
 .theme-toggle-icon.active {
   @apply scale-110;
+}
+
+/* Form styling improvements */
+.form-container {
+  @apply rounded-lg border overflow-hidden transition-all duration-300;
+  background-color: hsl(var(--asklegal-card-bg));
+  border-color: hsl(var(--asklegal-form-border));
+}
+
+.form-header {
+  @apply p-4 border-b;
+  background-color: hsl(var(--asklegal-form-bg) / 0.6);
+  border-color: hsl(var(--asklegal-form-border));
+}
+
+.form-header-title {
+  @apply text-lg font-medium;
+  color: hsl(var(--asklegal-heading));
+}
+
+.form-body {
+  @apply p-6 space-y-6;
+  background-color: hsl(var(--asklegal-form-bg) / 0.8);
+}
+
+.form-input {
+  @apply bg-white/80 dark:bg-gray-800/80 border rounded-md px-3 py-2 w-full transition-colors duration-200 shadow-sm;
+  border-color: hsl(var(--asklegal-form-border));
+  color: hsl(var(--asklegal-form-text));
+}
+
+.form-input:focus {
+  @apply outline-none ring-1;
+  border-color: hsl(var(--asklegal-purple));
+  ring-color: hsl(var(--asklegal-purple) / 0.5);
+}
+
+.form-label {
+  @apply block mb-1 text-sm font-medium;
+  color: hsl(var(--asklegal-form-label));
+}
+
+.form-input::placeholder {
+  color: hsl(var(--asklegal-form-placeholder));
+}
+
+.accordion-title {
+  color: hsl(var(--asklegal-accordion-title));
+  @apply font-medium;
 }
 
 /* Print styles */

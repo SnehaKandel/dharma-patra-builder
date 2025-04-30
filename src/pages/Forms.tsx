@@ -51,15 +51,15 @@ const Forms = () => {
       <div className="container mx-auto py-8 px-4">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-asklegal-purple">Judicial Petitions and Forms</h1>
-            <p className="text-white/70 mt-2">
+            <h1 className="text-3xl font-bold text-asklegal-heading">Judicial Petitions and Forms</h1>
+            <p className="text-asklegal-text/70 mt-2">
               Create, customize, and download legal petition documents.
             </p>
           </div>
           
           <div className="flex items-center">
             <Link to="/kanoon-search">
-              <Button className="flex items-center gap-2 bg-asklegal-purple hover:bg-asklegal-accent">
+              <Button className="flex items-center gap-2 bg-asklegal-purple hover:bg-asklegal-accent text-white shadow-sm">
                 <Search size={18} />
                 <span>कानून खोज</span>
               </Button>
@@ -75,7 +75,9 @@ const Forms = () => {
 
           {/* Document Preview */}
           <div className="lg:sticky lg:top-4 lg:h-[calc(100vh-8rem)]">
-            <DocumentPreview formData={formData} />
+            <div className="card-glassmorphism shadow-md p-1">
+              <DocumentPreview formData={formData} />
+            </div>
           </div>
         </div>
       </div>
