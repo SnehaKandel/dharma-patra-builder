@@ -4,158 +4,158 @@ import { QuizQuestion } from "@/types/quiz";
 export const quizQuestions: QuizQuestion[] = [
   {
     id: "q1",
-    question: "नेपालको संविधानको धारा १५ ले के प्रत्याभूत गर्छ?",
+    question: "What does Article 15 of Nepal's Constitution guarantee?",
     options: [
-      "समानताको अधिकार",
-      "गोपनीयताको अधिकार",
-      "हतियार राख्ने अधिकार",
-      "अभिव्यक्ति स्वतन्त्रताको अधिकार"
+      "Right to equality",
+      "Right to privacy",
+      "Right to bear arms",
+      "Freedom of expression"
     ],
-    correctAnswer: 0, // Index 0 - समानताको अधिकार
-    explanation: "नेपालको संविधानको धारा १५ ले सबै नागरिकलाई समानताको अधिकार प्रदान गर्दछ।",
+    correctAnswer: 0, // Index 0 - Right to equality
+    explanation: "Article 15 of Nepal's Constitution guarantees the right to equality for all citizens.",
     topic: "Constitution"
   },
   {
     id: "q2",
-    question: "नेपालमा सर्वोच्च अदालतको मुख्य न्यायाधीशको कार्यकाल कति वर्षको हुन्छ?",
+    question: "What is the term of office for the Chief Justice of the Supreme Court in Nepal?",
     options: [
-      "३ वर्ष",
-      "४ वर्ष",
-      "५ वर्ष",
-      "६ वर्ष"
+      "3 years",
+      "4 years",
+      "5 years",
+      "6 years"
     ],
-    correctAnswer: 2, // Index 2 - ५ वर्ष
-    explanation: "नेपालमा सर्वोच्च अदालतका प्रधान न्यायाधीशको कार्यकाल ५ वर्षको हुन्छ।",
+    correctAnswer: 2, // Index 2 - 5 years
+    explanation: "The term of office for the Chief Justice of Nepal's Supreme Court is 5 years.",
     topic: "Judiciary"
   },
   {
     id: "q3",
-    question: "नेपालको फौजदारी कानून अनुसार, निम्न मध्ये कुन अपराध हो?",
+    question: "According to Nepal's criminal law, which of the following is a crime?",
     options: [
-      "करारको उल्लङ्घन",
-      "सम्पत्तिको विवाद",
-      "चोरी",
-      "सम्पत्ति बाँडफाँट"
+      "Breach of contract",
+      "Property dispute",
+      "Theft",
+      "Property division"
     ],
-    correctAnswer: 2, // Index 2 - चोरी
-    explanation: "चोरी फौजदारी कानून अन्तर्गत अपराध हो, जबकि अन्य विकल्पहरू देवानी कानूनसँग सम्बन्धित छन्।",
+    correctAnswer: 2, // Index 2 - Theft
+    explanation: "Theft is a crime under criminal law, while the other options are related to civil law.",
     topic: "Criminal Law"
   },
   {
     id: "q4",
-    question: "नेपालमा वैवाहिक विच्छेद सम्बन्धी मुद्दा कुन कानून अन्तर्गत पर्छ?",
+    question: "Under which law do divorce cases fall in Nepal?",
     options: [
-      "फौजदारी कानून",
-      "देवानी कानून",
-      "संवैधानिक कानून",
-      "अन्तर्राष्ट्रिय कानून"
+      "Criminal law",
+      "Civil law",
+      "Constitutional law",
+      "International law"
     ],
-    correctAnswer: 1, // Index 1 - देवानी कानून
-    explanation: "वैवाहिक विच्छेद सम्बन्धी मुद्दाहरू देवानी कानून अन्तर्गत पर्दछन्।",
+    correctAnswer: 1, // Index 1 - Civil law
+    explanation: "Divorce cases fall under civil law in Nepal.",
     topic: "Civil Law"
   },
   {
     id: "q5",
-    question: "नेपालको संविधानमा मौलिक हकहरू कति वटा छन्?",
+    question: "How many fundamental rights are there in Nepal's Constitution?",
     options: [
-      "२७",
-      "३०",
-      "३१",
-      "३३"
+      "27",
+      "30",
+      "31",
+      "33"
     ],
-    correctAnswer: 2, // Index 2 - ३१
-    explanation: "नेपालको संविधानमा ३१ वटा मौलिक हकहरू छन्।",
+    correctAnswer: 2, // Index 2 - 31
+    explanation: "There are 31 fundamental rights in Nepal's Constitution.",
     topic: "Rights"
   },
   {
     id: "q6",
-    question: "नेपालको न्याय प्रणालीमा कुन अदालत सबैभन्दा माथिल्लो हो?",
+    question: "Which court is the highest in Nepal's judicial system?",
     options: [
-      "जिल्ला अदालत",
-      "उच्च अदालत",
-      "सर्वोच्च अदालत",
-      "संवैधानिक इजलास"
+      "District Court",
+      "High Court",
+      "Supreme Court",
+      "Constitutional Bench"
     ],
-    correctAnswer: 2, // Index 2 - सर्वोच्च अदालत
-    explanation: "नेपालको न्याय प्रणालीमा सर्वोच्च अदालत सबैभन्दा माथिल्लो अदालत हो।",
+    correctAnswer: 2, // Index 2 - Supreme Court
+    explanation: "The Supreme Court is the highest court in Nepal's judicial system.",
     topic: "Judiciary"
   },
   {
     id: "q7",
-    question: "नेपालको संविधान अनुसार, राष्ट्रपति र उपराष्ट्रपति कुन दलबाट हुनुपर्छ?",
+    question: "According to Nepal's Constitution, the President and Vice President must be from:",
     options: [
-      "एउटै दलबाट हुनुपर्छ",
-      "फरक-फरक दलबाट हुनुपर्छ",
-      "राष्ट्रपति निर्दलीय हुनुपर्छ",
-      "कुनै प्रावधान छैन"
+      "The same political party",
+      "Different political parties",
+      "The President must be non-partisan",
+      "There is no such provision"
     ],
-    correctAnswer: 1, // Index 1 - फरक-फरक दलबाट हुनुपर्छ
-    explanation: "नेपालको संविधान अनुसार, राष्ट्रपति र उपराष्ट्रपति फरक-फरक लिङ्ग वा समुदायको हुनुपर्ने र फरक-फरक दलबाट हुनुपर्छ।",
+    correctAnswer: 1, // Index 1 - Different political parties
+    explanation: "According to Nepal's Constitution, the President and Vice President must be from different political parties, genders, or communities.",
     topic: "Constitution"
   },
   {
     id: "q8",
-    question: "नेपालमा ज्यान मार्ने अपराधमा अधिकतम के सजाय हुन्छ?",
+    question: "What is the maximum punishment for homicide in Nepal?",
     options: [
-      "१० वर्ष कैद",
-      "जन्मकैद",
-      "जन्मकैद र सम्पूर्ण सम्पत्ति जफत",
-      "मृत्युदण्ड"
+      "10 years imprisonment",
+      "Life imprisonment",
+      "Life imprisonment and confiscation of all property",
+      "Death penalty"
     ],
-    correctAnswer: 1, // Index 1 - जन्मकैद
-    explanation: "नेपालमा ज्यान मार्ने अपराधमा अधिकतम जन्मकैद हुन सक्छ, मृत्युदण्डको प्रावधान छैन।",
+    correctAnswer: 1, // Index 1 - Life imprisonment
+    explanation: "The maximum punishment for homicide in Nepal is life imprisonment. There is no death penalty in Nepal.",
     topic: "Criminal Law"
   },
   {
     id: "q9",
-    question: "नेपालको संविधानमा कति वटा अनुसूचीहरू छन्?",
+    question: "How many schedules are there in Nepal's Constitution?",
     options: [
-      "७",
-      "८",
-      "९",
-      "१०"
+      "7",
+      "8",
+      "9",
+      "10"
     ],
-    correctAnswer: 2, // Index 2 - ९
-    explanation: "नेपालको संविधानमा ९ वटा अनुसूचीहरू छन्।",
+    correctAnswer: 2, // Index 2 - 9
+    explanation: "There are 9 schedules in Nepal's Constitution.",
     topic: "Constitution"
   },
   {
     id: "q10",
-    question: "नेपालमा देवानी मुद्दामा पुनरावेदन गर्ने म्याद कति दिनको हुन्छ?",
+    question: "What is the appeal period for civil cases in Nepal?",
     options: [
-      "३० दिन",
-      "३५ दिन",
-      "४५ दिन",
-      "७० दिन"
+      "30 days",
+      "35 days",
+      "45 days",
+      "70 days"
     ],
-    correctAnswer: 2, // Index 2 - ४५ दिन
-    explanation: "नेपालमा देवानी मुद्दामा फैसला भएको मितिले ४५ दिनभित्र पुनरावेदन गर्नुपर्छ।",
+    correctAnswer: 2, // Index 2 - 45 days
+    explanation: "In Nepal, civil case appeals must be filed within 45 days of the judgment date.",
     topic: "Civil Law"
   },
   {
     id: "q11",
-    question: "संविधानको व्याख्या गर्ने अधिकार कुन निकायमा निहित छ?",
+    question: "Who has the authority to interpret the Constitution in Nepal?",
     options: [
-      "महान्यायाधिवक्ता",
-      "राष्ट्रपति",
-      "प्रधानमन्त्री",
-      "सर्वोच्च अदालत"
+      "Attorney General",
+      "President",
+      "Prime Minister",
+      "Supreme Court"
     ],
-    correctAnswer: 3, // Index 3 - सर्वोच्च अदालत
-    explanation: "संविधानको व्याख्या गर्ने अधिकार सर्वोच्च अदालतमा निहित छ।",
+    correctAnswer: 3, // Index 3 - Supreme Court
+    explanation: "The authority to interpret the Constitution in Nepal is vested in the Supreme Court.",
     topic: "Constitution"
   },
   {
     id: "q12",
-    question: "नेपालको सर्वोच्च अदालतमा कति न्यायाधीशहरु हुन्छन्?",
+    question: "How many justices are there in Nepal's Supreme Court?",
     options: [
-      "११",
-      "१५",
-      "२०",
-      "२५"
+      "11",
+      "15",
+      "20",
+      "25"
     ],
-    correctAnswer: 1, // Index 1 - १५
-    explanation: "नेपालको सर्वोच्च अदालतमा प्रधान न्यायाधीश सहित बढीमा १५ जना न्यायाधीश हुन्छन्।",
+    correctAnswer: 1, // Index 1 - 15
+    explanation: "Nepal's Supreme Court has up to 15 justices, including the Chief Justice.",
     topic: "Judiciary"
   }
 ];

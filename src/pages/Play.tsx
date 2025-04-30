@@ -25,6 +25,7 @@ const Play = () => {
   const handleOptionSelect = (optionIndex: number) => {
     if (!quizState) return;
     
+    // Create a new array to avoid modifying the existing one
     const updatedAnswers = [...quizState.selectedAnswers];
     updatedAnswers[quizState.currentQuestionIndex] = optionIndex;
     

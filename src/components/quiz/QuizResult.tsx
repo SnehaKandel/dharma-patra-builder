@@ -17,7 +17,7 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
     <div className="space-y-6">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-asklegal-heading theme-transition mb-2">
-          क्विज परिणाम
+          Quiz Results
         </h2>
         <div className="flex items-center justify-center space-x-2">
           <div className="text-3xl font-bold text-asklegal-purple">
@@ -30,24 +30,24 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
         
         <div className="mt-4">
           {percentage >= 80 ? (
-            <p className="text-green-600 dark:text-green-400">उत्कृष्ट! तपाईंको कानूनी ज्ञान अत्यन्त राम्रो छ।</p>
+            <p className="text-green-600 dark:text-green-400">Excellent! Your legal knowledge is outstanding.</p>
           ) : percentage >= 60 ? (
-            <p className="text-asklegal-purple">राम्रो प्रयास! तपाईंको कानूनी ज्ञान राम्रो छ।</p>
+            <p className="text-asklegal-purple">Good effort! Your legal knowledge is solid.</p>
           ) : (
-            <p className="text-amber-600 dark:text-amber-400">अझै अभ्यास गर्नुहोस्। तपाईं निश्चित रूपमा सुधार गर्न सक्नुहुन्छ।</p>
+            <p className="text-amber-600 dark:text-amber-400">Keep practicing. You can definitely improve.</p>
           )}
         </div>
       </div>
       
       <div className="space-y-8 mb-6">
         <h3 className="text-xl font-medium text-asklegal-heading theme-transition">
-          प्रश्न र उत्तरहरू
+          Questions and Answers
         </h3>
         
         {state.questions.map((question, index) => (
           <div key={question.id} className="p-4 border border-asklegal-form-border/30 rounded-lg">
             <div className="mb-2 text-sm text-asklegal-text/60 theme-transition">
-              प्रश्न {index + 1} / {state.questions.length}
+              Question {index + 1} / {state.questions.length}
             </div>
             <QuizQuestionComponent 
               question={question}
@@ -61,10 +61,10 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
       
       <div className="flex justify-center space-x-4">
         <Button onClick={onRetry} variant="outline" className="border-asklegal-purple text-asklegal-purple">
-          फेरि प्रयास गर्नुहोस्
+          Try Again
         </Button>
         <Button onClick={onGoHome} className="bg-asklegal-purple hover:bg-asklegal-purple/90 text-white">
-          होम पृष्ठमा जानुहोस्
+          Go to Home Page
         </Button>
       </div>
     </div>
