@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { QuizState, QuizQuestion } from "@/types/quiz";
-import QuizQuestion from "./QuizQuestion";
+import { QuizState, QuizQuestion as QuizQuestionType } from "@/types/quiz";
+import QuizQuestionComponent from "./QuizQuestion";
 
 interface QuizResultProps {
   state: QuizState;
@@ -49,7 +49,7 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
             <div className="mb-2 text-sm text-asklegal-text/60 theme-transition">
               प्रश्न {index + 1} / {state.questions.length}
             </div>
-            <QuizQuestion 
+            <QuizQuestionComponent 
               question={question}
               selectedOption={state.selectedAnswers[index]}
               onSelect={() => {}} // No action needed in results view
