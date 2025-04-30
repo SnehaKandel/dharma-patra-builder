@@ -34,9 +34,9 @@ const FormField = ({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className="form-input pl-3 transition-all duration-200 focus:translate-x-1 border-l-2 border-l-asklegal-accent/50 focus:border-l-asklegal-accent"
+          className="form-input pl-3 transition-all duration-200 focus:translate-x-1 border-l-2 border-l-asklegal-purple/50 focus:border-l-asklegal-purple dark:text-gray-900 dark:bg-white/90"
         />
-        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-asklegal-accent transition-all duration-300 group-focus-within:w-full"></div>
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-asklegal-purple transition-all duration-300 group-focus-within:w-full"></div>
       </div>
     </div>
   );

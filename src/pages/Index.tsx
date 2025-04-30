@@ -13,7 +13,7 @@ const Index = () => {
       <div className="container mx-auto py-16 px-4 relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-asklegal-heading mb-4 theme-transition animate-fade-in">
-            Welcome to <span className="text-asklegal-accent">AskLegal.io</span>
+            Welcome to <span className="text-asklegal-purple">AskLegal.io</span>
           </h1>
           <p className="text-xl text-asklegal-text/80 mb-10 theme-transition max-w-2xl mx-auto">
             Your interactive legal assistant for Nepal's legal system - access resources, get answers, and create documents with ease.
@@ -46,9 +46,9 @@ const Index = () => {
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               placeholder="Type your message..." 
-              className="flex-1 p-3 rounded-l-md border-r-0 text-asklegal-text bg-asklegal-chat-bg/40 backdrop-blur-sm border border-asklegal-form-border/50 focus:outline-none focus:ring-1 focus:ring-asklegal-accent/30 theme-transition"
+              className="flex-1 p-3 rounded-l-md border-r-0 text-asklegal-text bg-asklegal-chat-bg/40 backdrop-blur-sm border border-asklegal-form-border/50 focus:outline-none focus:ring-1 focus:ring-asklegal-purple/30 theme-transition dark:text-gray-900 dark:bg-white/90"
             />
-            <button className="bg-asklegal-accent hover:bg-asklegal-purple text-white py-3 px-6 rounded-r-md transition-all duration-300 flex items-center gap-2">
+            <button className="bg-asklegal-purple hover:bg-asklegal-purple/80 text-white py-3 px-6 rounded-r-md transition-all duration-300 flex items-center gap-2">
               <span>Send</span>
               <Send size={18} />
             </button>
@@ -58,7 +58,7 @@ const Index = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="card-glassmorphism p-6 h-full flex flex-col animate-fade-in" style={{animationDelay: "0.4s"}}>
             <h3 className="text-xl font-medium text-asklegal-heading mb-3 theme-transition flex items-center gap-2">
-              <FileText size={20} className="text-asklegal-accent" />
+              <FileText size={20} className="text-asklegal-purple" />
               Latest News
             </h3>
             <p className="text-asklegal-text/70 mb-4 flex-grow theme-transition">
@@ -73,7 +73,7 @@ const Index = () => {
           
           <div className="card-glassmorphism p-6 h-full flex flex-col animate-fade-in" style={{animationDelay: "0.6s"}}>
             <h3 className="text-xl font-medium text-asklegal-heading mb-3 theme-transition flex items-center gap-2">
-              <Search size={20} className="text-asklegal-accent" />
+              <Search size={20} className="text-asklegal-purple" />
               Kanoon Directory
             </h3>
             <p className="text-asklegal-text/70 mb-4 flex-grow theme-transition">
@@ -88,7 +88,7 @@ const Index = () => {
           
           <div className="card-glassmorphism p-6 h-full flex flex-col animate-fade-in" style={{animationDelay: "0.8s"}}>
             <h3 className="text-xl font-medium text-asklegal-heading mb-3 theme-transition flex items-center gap-2">
-              <BookOpen size={20} className="text-asklegal-accent" />
+              <BookOpen size={20} className="text-asklegal-purple" />
               Judicial Petitions
             </h3>
             <p className="text-asklegal-text/70 mb-4 flex-grow theme-transition">

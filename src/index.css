@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -47,8 +46,8 @@
     /* Refined AskLegal variables for light mode - futuristic theme */
     --asklegal-dark: 220 33% 98%;
     --asklegal-purple: 252 70% 55%;
-    --asklegal-accent: 195 100% 50%; /* Electric blue */
-    --asklegal-accent-green: 145 80% 45%; /* Neon green alternative */
+    --asklegal-accent: 252 70% 55%; /* Changed from blue to purple */
+    --asklegal-accent-green: 252 70% 55%; /* Changed from green to purple */
     --asklegal-card-bg: 220 33% 99%;
     --asklegal-text: 222 47% 15%;
     --asklegal-heading: 222 47% 15%;
@@ -102,8 +101,8 @@
     /* Refined AskLegal variables for dark mode - futuristic theme */
     --asklegal-dark: 230 42% 12%;
     --asklegal-purple: 252 70% 65%;
-    --asklegal-accent: 195 100% 60%; /* Electric blue */
-    --asklegal-accent-green: 145 80% 55%; /* Neon green alternative */
+    --asklegal-accent: 252 70% 65%; /* Changed from blue to purple */
+    --asklegal-accent-green: 252 70% 65%; /* Changed from green to purple */
     --asklegal-card-bg: 230 42% 15%;
     --asklegal-text: 0 0% 95%;
     --asklegal-heading: 0 0% 100%;
@@ -322,8 +321,8 @@
   height: 100%;
   background: linear-gradient(135deg, 
     hsla(var(--asklegal-purple) / 0.05) 0%, 
-    hsla(var(--asklegal-accent) / 0.1) 50%, 
-    hsla(var(--asklegal-accent-green) / 0.05) 100%);
+    hsla(var(--asklegal-purple) / 0.1) 50%, 
+    hsla(var(--asklegal-purple) / 0.05) 100%);
   z-index: -1;
   filter: blur(5px);
   animation: shift-gradient 15s ease-in-out infinite alternate;
@@ -356,7 +355,7 @@
   height: 100%;
   background: linear-gradient(to right, 
     hsla(var(--asklegal-purple) / 0.7) 0%,
-    hsla(var(--asklegal-accent) / 0.7) 50%,
+    hsla(var(--asklegal-purple) / 0.7) 50%,
     hsla(var(--asklegal-purple) / 0.7) 100%);
   z-index: -1;
   background-size: 200% auto;
