@@ -131,8 +131,8 @@ const KanoonSearch = () => {
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-asklegal-purple">नेपाल कानून खोज (Nepal Kanoon Khoj)</h1>
-          <p className="text-white/70 mt-2">
+          <h1 className="text-3xl font-bold text-asklegal-heading">नेपाल कानून खोज (Nepal Kanoon Khoj)</h1>
+          <p className="text-asklegal-text/80 mt-2">
             Search and access Nepali laws, acts, and legislative provisions.
           </p>
         </div>
@@ -140,10 +140,10 @@ const KanoonSearch = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Sidebar - Search and Categories */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden">
+            <div className="card-glassmorphism p-0 overflow-hidden">
               <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30 flex items-center">
                 <Search className="w-5 h-5 text-asklegal-purple mr-2" />
-                <h2 className="text-lg font-medium text-asklegal-purple">
+                <h2 className="text-lg font-medium text-asklegal-heading">
                   Search Kanoon
                 </h2>
               </div>
@@ -154,22 +154,22 @@ const KanoonSearch = () => {
                     placeholder="Search legal resources..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-transparent border-asklegal-purple/40 text-white focus:border-asklegal-purple focus:ring-asklegal-purple pl-10 pr-4"
+                    className="bg-transparent border-asklegal-purple/40 text-asklegal-text pl-10 pr-4 focus-visible:ring-1 focus-visible:ring-asklegal-purple"
                   />
-                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-asklegal-purple/50" />
+                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-asklegal-purple" />
                 </div>
                 
                 <div className="mt-6">
-                  <h3 className="font-medium text-white mb-2">Popular searches</h3>
+                  <h3 className="font-medium text-asklegal-heading mb-2">Popular searches</h3>
                   <div className="flex flex-wrap gap-2">
                     <button 
-                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-white px-3 py-1 rounded-md"
+                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md"
                       onClick={() => setSearchQuery("Constitution")}
                     >
                       Constitution
                     </button>
                     <button 
-                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-white px-3 py-1 rounded-md"
+                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md"
                       onClick={() => setSearchQuery("Acts")}
                     >
                       Acts
@@ -179,17 +179,17 @@ const KanoonSearch = () => {
               </div>
             </div>
 
-            <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden">
+            <div className="card-glassmorphism p-0 overflow-hidden">
               <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30">
-                <h2 className="text-lg font-medium text-asklegal-purple">
+                <h2 className="text-lg font-medium text-asklegal-heading">
                   Acts and legislative provisions
                 </h2>
               </div>
               <div className="p-4">
                 <Tabs defaultValue="acts" className="w-full">
-                  <TabsList className="grid grid-cols-2 mb-4">
-                    <TabsTrigger value="acts">Acts</TabsTrigger>
-                    <TabsTrigger value="constitution">Constitution</TabsTrigger>
+                  <TabsList className="grid grid-cols-2 mb-4 bg-asklegal-card-bg text-asklegal-text">
+                    <TabsTrigger value="acts" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10">Acts</TabsTrigger>
+                    <TabsTrigger value="constitution" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10">Constitution</TabsTrigger>
                   </TabsList>
                   <TabsContent value="acts" className="space-y-4">
                     {MOCK_DOCUMENTS.map((doc) => (
@@ -198,15 +198,15 @@ const KanoonSearch = () => {
                         className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
                         onClick={() => setSelectedDocument(doc)}
                       >
-                        <FileText className="h-4 w-4 text-asklegal-purple/70" />
-                        <span className="text-white/80 font-nepali">{doc.title}</span>
+                        <FileText className="h-4 w-4 text-asklegal-purple" />
+                        <span className="text-asklegal-text font-nepali">{doc.title}</span>
                       </div>
                     ))}
                   </TabsContent>
                   <TabsContent value="constitution" className="space-y-4">
                     <div className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer">
-                      <FileText className="h-4 w-4 text-asklegal-purple/70" />
-                      <span className="text-white/80 font-nepali">नेपालको संविधान</span>
+                      <FileText className="h-4 w-4 text-asklegal-purple" />
+                      <span className="text-asklegal-text font-nepali">नेपालको संविधान</span>
                     </div>
                   </TabsContent>
                 </Tabs>
@@ -217,7 +217,7 @@ const KanoonSearch = () => {
           {/* Right Document Preview */}
           <div className="lg:col-span-2">
             {selectedDocument ? (
-              <div className="bg-white text-gray-900 rounded-lg shadow-lg p-6 min-h-[842px] animate-paper-print">
+              <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg shadow-lg p-6 min-h-[842px] animate-paper-print">
                 <div className="flex justify-between mb-6">
                   <h2 className="text-2xl font-bold font-nepali">{selectedDocument.title}</h2>
                   <Button 
@@ -232,27 +232,27 @@ const KanoonSearch = () => {
                 </div>
                 
                 <div className="mb-4">
-                  <p className="text-gray-600">{selectedDocument.titleEn}</p>
-                  <p className="text-gray-600">{selectedDocument.year}</p>
-                  <p className="text-gray-600">{selectedDocument.ministry}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{selectedDocument.titleEn}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{selectedDocument.year}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{selectedDocument.ministry}</p>
                 </div>
                 
-                <div className="border-t border-gray-200 pt-4">
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                   <p className="font-nepali">
                     यो {selectedDocument.title} सम्बन्धी कानून हो। यसले {selectedDocument.description} को बारेमा व्याख्या गर्दछ। 
                     यो {selectedDocument.year} सालमा जारी गरिएको थियो। यो दस्तावेज {selectedDocument.ministry} द्वारा प्रकाशित गरिएको हो।
                   </p>
                   <div className="text-center mt-20">
-                    <p className="text-gray-400">PDF प्रिभ्यू यहाँ देखाइनेछ। यो केवल डेमो विवरण हो।</p>
+                    <p className="text-gray-500 dark:text-gray-400">PDF प्रिभ्यू यहाँ देखाइनेछ। यो केवल डेमो विवरण हो।</p>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 flex items-center justify-center min-h-[842px]">
+              <div className="card-glassmorphism flex items-center justify-center min-h-[842px]">
                 <div className="text-center p-6">
-                  <FileText className="h-16 w-16 text-asklegal-purple/30 mx-auto mb-4" />
-                  <h3 className="text-xl font-medium text-white mb-2">Select a document to preview</h3>
-                  <p className="text-white/60 max-w-md">
+                  <FileText className="h-16 w-16 text-asklegal-purple/70 mx-auto mb-4" />
+                  <h3 className="text-xl font-medium text-asklegal-heading mb-2">Select a document to preview</h3>
+                  <p className="text-asklegal-text/80 max-w-md">
                     Choose a document from the list on the left to view its contents here.
                   </p>
                 </div>

@@ -53,11 +53,11 @@
     
     /* Refined AskLegal variables for light mode */
     --asklegal-dark: 220 20% 98%;
-    --asklegal-purple: 252 70% 55%;
-    --asklegal-accent: 252 70% 50%;
+    --asklegal-purple: 252 70% 45%;
+    --asklegal-accent: 252 70% 40%;
     --asklegal-card-bg: 220 33% 96%;
     --asklegal-text: 220 10% 20%;
-    --asklegal-heading: 220 10% 20%;
+    --asklegal-heading: 222 47.4% 11.2%;
     --asklegal-chat-bg: 252 20% 95%;
     --asklegal-chat-text: 220 10% 20%;
   }
@@ -142,17 +142,21 @@
   color: hsl(var(--asklegal-heading));
 }
 
+.text-asklegal-text {
+  color: hsl(var(--asklegal-text));
+}
+
 /* Chat section styling */
 .chat-message {
   background-color: hsl(var(--asklegal-chat-bg));
   color: hsl(var(--asklegal-chat-text));
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .card-glassmorphism {
   @apply backdrop-blur-sm border rounded-lg shadow-md transition-all duration-300;
-  background-color: hsl(var(--asklegal-card-bg) / 0.9);
+  background-color: hsl(var(--asklegal-card-bg) / 0.95);
   border-color: hsl(var(--asklegal-purple) / 0.2);
 }
 
