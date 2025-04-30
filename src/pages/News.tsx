@@ -1,10 +1,10 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { newsService } from '@/services/news';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface NewsItem {
   id: string;
@@ -14,32 +14,19 @@ interface NewsItem {
   url: string;
   publishedAt: string;
   summary: string;
+  imageUrl?: string;
 }
 
 const News = () => {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [lastFetched, setLastFetched] = useState(new Date());
+  const [newItemsCount, setNewItemsCount] = useState(0);
   const { toast } = useToast();
 
-  // Fetch news on component mount
-  useEffect(() => {
-    fetchNews();
-  }, []);
-
-  // Auto-refresh news every 5 minutes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('Auto-refreshing news');
-      fetchNews();
-    }, 5 * 60 * 1000); // 5 minutes
-    
-    return () => clearInterval(interval);
-  }, []);
-
   // Function to fetch news from API
-  const fetchNews = async () => {
-    setLoading(true);
+  const fetchNews = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
     
     try {
       const response = await newsService.getNews({ 
@@ -56,20 +43,60 @@ const News = () => {
         url: item.url,
         publishedAt: item.publishedAt,
         summary: item.summary,
+        imageUrl: item.imageUrl,
       }));
+      
+      // Check for new items
+      if (news.length > 0) {
+        const newItems = mappedNews.filter(
+          newItem => !news.some(oldItem => oldItem.id === newItem.id)
+        );
+        
+        if (newItems.length > 0 && silent) {
+          setNewItemsCount(newItems.length);
+          toast({
+            title: `${newItems.length} नयाँ समाचार`,
+            description: "नयाँ अपडेटहरू उपलब्ध छन्",
+          });
+        }
+      }
       
       setNews(mappedNews);
       setLastFetched(new Date());
     } catch (error) {
       console.error('Failed to fetch news:', error);
+      if (!silent) {
+        toast({
+          title: "समाचार लोड गर्न सकिएन",
+          description: "केही समयपछि पुनः प्रयास गर्नुहोस्",
+          variant: "destructive",
+        });
+      }
+      // Keep showing existing news as fallback
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
-  };
+  }, [news, toast]);
+
+  // Fetch news on component mount
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
+  // Auto-refresh news every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('Auto-refreshing news');
+      fetchNews(true); // silent refresh
+    }, 5 * 60 * 1000); // 5 minutes
+    
+    return () => clearInterval(interval);
+  }, [fetchNews]);
 
   // Handle manual refresh
   const handleRefresh = async () => {
     setLoading(true);
+    setNewItemsCount(0);
     
     try {
       // For admin users, try to scrape new content
@@ -93,20 +120,30 @@ const News = () => {
     }
   };
 
+  // Handle clicking "Read More"
+  const handleReadMore = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-asklegal-purple">ताजा समाचार</h1>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-white/60">
+            <span className="text-sm text-asklegal-text/60 theme-transition">
               अन्तिम अद्यावधिक: {lastFetched.toLocaleTimeString()}
             </span>
+            {newItemsCount > 0 && (
+              <span className="bg-asklegal-purple text-white px-2 py-1 rounded-full text-xs animate-pulse">
+                +{newItemsCount} नयाँ
+              </span>
+            )}
             <Button 
               onClick={handleRefresh} 
               disabled={loading} 
               variant="outline" 
-              className="bg-transparent border-asklegal-purple/50 text-white hover:bg-asklegal-purple/10 flex items-center gap-2"
+              className="bg-transparent border-asklegal-purple/50 text-asklegal-text hover:bg-asklegal-purple/10 flex items-center gap-2 theme-transition"
             >
               <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
               रिलोड गर्नुहोस्
@@ -116,34 +153,50 @@ const News = () => {
 
         {loading && news.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-white/70">Loading news...</p>
+            <p className="text-asklegal-text/70 theme-transition">समाचार फिड अद्यावधिक हुँदैछ...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {news.length > 0 ? news.map((item) => (
-              <div key={item.id} className="bg-asklegal-dark/60 border border-asklegal-purple/30 rounded-lg p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-medium text-white">{item.title}</h3>
-                  <span className="text-asklegal-purple text-sm">{item.source}</span>
-                </div>
-                <p className="text-white/70 mb-4">{item.summary}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-white/50 text-sm">
-                    {new Date(item.publishedAt).toLocaleDateString('ne-NP')}
-                  </span>
-                  <a 
-                    href={item.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-asklegal-purple hover:underline"
-                  >
-                    थप पढ्नुहोस्
-                  </a>
-                </div>
-              </div>
+              <Card key={item.id} className="card-glassmorphism overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+                <CardContent className="p-0">
+                  {item.imageUrl && (
+                    <div className="h-48 overflow-hidden">
+                      <img 
+                        src={item.imageUrl} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          // Hide the image container if loading fails
+                          (e.target as HTMLImageElement).parentElement!.style.display = 'none';
+                        }} 
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-xl font-medium text-asklegal-heading theme-transition">{item.title}</h3>
+                      <span className="text-asklegal-purple text-sm">{item.source}</span>
+                    </div>
+                    <p className="text-asklegal-text/70 mb-4 theme-transition line-clamp-2">{item.summary}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-asklegal-text/50 text-sm theme-transition">
+                        {new Date(item.publishedAt).toLocaleDateString('ne-NP')}
+                      </span>
+                      <Button 
+                        variant="link" 
+                        className="text-asklegal-purple hover:text-asklegal-purple/80 p-0 flex items-center gap-1"
+                        onClick={() => handleReadMore(item.url)}
+                      >
+                        थप पढ्नुहोस् <ExternalLink size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             )) : (
               <div className="col-span-2 text-center py-10">
-                <p className="text-white/70">No news articles found.</p>
+                <p className="text-asklegal-text/70 theme-transition">No news articles found.</p>
               </div>
             )}
           </div>

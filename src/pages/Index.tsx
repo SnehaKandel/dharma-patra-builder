@@ -46,7 +46,7 @@ const Index = () => {
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               placeholder="Type your message..." 
-              className="flex-1 p-3 rounded-l-md border-r-0 text-asklegal-text bg-asklegal-chat-bg/40 backdrop-blur-sm border border-asklegal-form-border/50 focus:outline-none focus:ring-1 focus:ring-asklegal-purple/30 theme-transition dark:text-gray-900 dark:bg-white/90"
+              className="flex-1 p-3 rounded-l-md border-r-0 text-asklegal-text bg-asklegal-chat-bg/40 backdrop-blur-sm border border-asklegal-form-border/50 focus:outline-none focus:ring-1 focus:ring-asklegal-purple/30 theme-transition dark:text-asklegal-text dark:bg-asklegal-form-bg/90"
             />
             <button className="bg-asklegal-purple hover:bg-asklegal-purple/80 text-white py-3 px-6 rounded-r-md transition-all duration-300 flex items-center gap-2">
               <span>Send</span>
