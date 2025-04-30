@@ -23,18 +23,21 @@ const FormField = ({
   className,
 }: FormFieldProps) => {
   return (
-    <div className={cn("space-y-2", className)}>
-      <Label htmlFor={id} className="form-label">
+    <div className={cn("space-y-2 relative", className)}>
+      <Label htmlFor={id} className="form-label inline-block pl-1">
         {label}
       </Label>
-      <Input
-        type={type}
-        id={id}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="form-input"
-      />
+      <div className="relative">
+        <Input
+          type={type}
+          id={id}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="form-input pl-3 transition-all duration-200 focus:translate-x-1 border-l-2 border-l-asklegal-accent/50 focus:border-l-asklegal-accent"
+        />
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-asklegal-accent transition-all duration-300 group-focus-within:w-full"></div>
+      </div>
     </div>
   );
 };

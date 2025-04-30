@@ -1,11 +1,10 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, PlayCircle, Settings, User, LogIn, LogOut, Moon, Sun } from 'lucide-react';
+import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
@@ -63,9 +62,13 @@ const Navbar = () => {
   };
   
   return (
-    <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} py-3 px-4`}>
+    <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} py-4 px-4 sticky top-0 z-50`}>
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-asklegal-heading text-xl font-bold theme-transition">
+        <Link to="/" className="text-asklegal-heading text-xl font-bold theme-transition flex items-center gap-2">
+          <div className="relative h-8 w-8 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-asklegal-purple to-asklegal-accent rounded-lg"></div>
+            <div className="absolute inset-0 bg-asklegal-dark/10 backdrop-blur-sm flex items-center justify-center text-white font-bold">A</div>
+          </div>
           AskLegal.io
         </Link>
         
@@ -75,29 +78,34 @@ const Navbar = () => {
             <Switch 
               checked={isDarkMode}
               onCheckedChange={toggleTheme}
-              className="theme-transition data-[state=checked]:bg-asklegal-purple"
+              className="theme-transition data-[state=checked]:bg-asklegal-accent"
               aria-label="Toggle theme"
             />
             <Sun size={18} className={`${isDarkMode ? 'text-gray-400' : 'text-amber-500'} theme-transition`} />
           </div>
           
-          <Link to="/news" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
+          <Link to="/news" className="flex items-center text-asklegal-heading hover:text-asklegal-accent gap-2 theme-transition">
             <FileText size={18} />
             <span className="hidden md:inline">News</span>
           </Link>
           
-          <Link to="/play" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
-            <PlayCircle size={18} />
-            <span className="hidden md:inline">Play</span>
+          <Link to="/kanoon-search" className="flex items-center text-asklegal-heading hover:text-asklegal-accent gap-2 theme-transition">
+            <Search size={18} />
+            <span className="hidden md:inline">Kanoon</span>
           </Link>
           
-          <Link to="/settings" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
+          <Link to="/forms" className="flex items-center text-asklegal-heading hover:text-asklegal-accent gap-2 theme-transition">
+            <BookOpen size={18} />
+            <span className="hidden md:inline">Forms</span>
+          </Link>
+          
+          <Link to="/settings" className="flex items-center text-asklegal-heading hover:text-asklegal-accent gap-2 theme-transition">
             <Settings size={18} />
             <span className="hidden md:inline">Settings</span>
           </Link>
           
           {user?.role === 'admin' && (
-            <Link to="/admin" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
+            <Link to="/admin" className="flex items-center text-asklegal-heading hover:text-asklegal-accent gap-2 theme-transition">
               <User size={18} />
               <span className="hidden md:inline">Admin</span>
             </Link>
@@ -107,7 +115,7 @@ const Navbar = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="ml-2 button-primary"
+              className="ml-2 border border-asklegal-accent/30 text-asklegal-accent hover:bg-asklegal-accent/10"
               onClick={handleLogout}
             >
               <LogOut size={16} />
@@ -118,7 +126,7 @@ const Navbar = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="ml-2 button-primary"
+                className="ml-2 border border-asklegal-accent/30 text-asklegal-accent hover:bg-asklegal-accent/10"
               >
                 <LogIn size={16} />
                 <span>Login</span>
