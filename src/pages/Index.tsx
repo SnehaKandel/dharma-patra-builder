@@ -24,9 +24,6 @@ const Index = () => {
           <h2 className="text-2xl font-medium text-asklegal-heading mb-4 theme-transition">
             Chat with AskLegal
           </h2>
-          <p className="text-asklegal-text/70 mb-6 theme-transition">
-            Ask legal questions or get help navigating AskLegal.io
-          </p>
           
           <div className="space-y-4 mb-6">
             <div className="chat-message p-4 rounded-lg" style={{animationDelay: "0.3s"}}>
@@ -74,7 +71,7 @@ const Index = () => {
           <div className="card-glassmorphism p-6 h-full flex flex-col animate-fade-in" style={{animationDelay: "0.6s"}}>
             <h3 className="text-xl font-medium text-asklegal-heading mb-3 theme-transition flex items-center gap-2">
               <Search size={20} className="text-asklegal-purple" />
-              Kanoon Directory
+              नेपाल कानून खोज
             </h3>
             <p className="text-asklegal-text/70 mb-4 flex-grow theme-transition">
               Search and access comprehensive legal document repository and legislation.

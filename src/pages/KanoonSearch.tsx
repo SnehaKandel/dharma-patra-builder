@@ -131,7 +131,7 @@ const KanoonSearch = () => {
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-asklegal-heading">नेपाल कानून खोज (Nepal Kanoon Khoj)</h1>
+          <h1 className="text-3xl font-bold text-asklegal-heading">नेपाल कानून खोज</h1>
           <p className="text-asklegal-text/80 mt-2">
             Search and access Nepali laws, acts, and legislative provisions.
           </p>
