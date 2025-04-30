@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search } from 'lucide-react';
+import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
@@ -65,10 +65,6 @@ const Navbar = () => {
     <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} py-4 px-4 sticky top-0 z-50`}>
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="text-asklegal-heading text-xl font-bold theme-transition flex items-center gap-2">
-          <div className="relative h-8 w-8 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-asklegal-purple to-asklegal-purple rounded-lg"></div>
-            <div className="absolute inset-0 bg-asklegal-dark/10 backdrop-blur-sm flex items-center justify-center text-white font-bold">A</div>
-          </div>
           AskLegal.io
         </Link>
         
@@ -97,6 +93,11 @@ const Navbar = () => {
           <Link to="/forms" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <BookOpen size={18} />
             <span className="hidden md:inline">Forms</span>
+          </Link>
+          
+          <Link to="/play" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
+            <BookAudio size={18} />
+            <span className="hidden md:inline">Quiz</span>
           </Link>
           
           <Link to="/settings" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
