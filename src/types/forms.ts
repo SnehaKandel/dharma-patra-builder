@@ -54,4 +54,5 @@ export interface LegalDocument {
   ministry: string;
   pdfUrl: string;
   isPopular?: boolean;
+  parts?: string[]; // Added the missing property
 }
