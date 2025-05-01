@@ -5,6 +5,7 @@ import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, B
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
+import DateConverterPopover from '../date-converter/DateConverterPopover';
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
@@ -79,6 +80,8 @@ const Navbar = () => {
             />
             <Sun size={18} className={`${isDarkMode ? 'text-gray-400' : 'text-amber-500'} theme-transition`} />
           </div>
+          
+          <DateConverterPopover />
           
           <Link to="/news" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <FileText size={18} />
