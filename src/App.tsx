@@ -15,6 +15,7 @@ import Admin from "./pages/Admin";
 import Forms from "./pages/Forms";
 import NotFound from "./pages/NotFound";
 import KanoonSearch from "./pages/KanoonSearch";
+import DateConverterPage from "./pages/DateConverter";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/forms" element={<Forms />} />
           <Route path="/kanoon-search" element={<KanoonSearch />} />
+          <Route path="/nepad" element={<DateConverterPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
