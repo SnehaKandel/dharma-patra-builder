@@ -10,6 +10,85 @@ import { LegalDocument } from "@/types/forms";
 
 // Mock data for demonstration
 const MOCK_DOCUMENTS: LegalDocument[] = [
+  // E-commerce documents (new addition)
+  {
+    id: "ecom-1",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन",
+    titleEn: "Electronic Commerce Act",
+    description: "विद्युतीय व्यापार (इ-कमर्स) को सम्बन्धमा व्यवस्था गर्न बनेको ऐन",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/b03bbdd5-6db3-4a51-9d7a-da1d9c37e131.png",
+    isPopular: true
+  },
+  {
+    id: "ecom-2",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग २",
+    titleEn: "Electronic Commerce Act - Part 2",
+    description: "विद्युतीय व्यापार सम्बन्धी परिभाषा तथा प्रावधानहरू",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/9a6482de-ec4e-4c1b-9204-f51586f8108b.png",
+    isPopular: true
+  },
+  {
+    id: "ecom-3",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ३",
+    titleEn: "Electronic Commerce Act - Part 3",
+    description: "विद्युतीय प्लेटफर्म स्थापना र सञ्चालन सम्बन्धी व्यवस्था",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/4492931e-4550-4726-a387-3884fdbf2a0f.png",
+    isPopular: true
+  },
+  {
+    id: "ecom-4",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ४",
+    titleEn: "Electronic Commerce Act - Part 4",
+    description: "सूचीकरण प्रक्रिया र व्यापारिक विवरण",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/fb6aaf25-5a2e-42f7-81dd-e6aa6aae98ed.png",
+    isPopular: true
+  },
+  {
+    id: "ecom-5",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ५",
+    titleEn: "Electronic Commerce Act - Part 5",
+    description: "विवरण खुलाउने र करार भएको मानिने सम्बन्धी व्यवस्था",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/e1a10177-9d9a-4e38-a47c-961c645d175d.png",
+    isPopular: true
+  },
+  {
+    id: "ecom-6",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ६",
+    titleEn: "Electronic Commerce Act - Part 6",
+    description: "विद्युतीय व्यापारको भुक्तानी र वस्तु वा सेवाको हस्तान्तरण",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/cefec219-6879-41e2-92d6-b7e314e44f75.png",
+    isPopular: true
+  },
+  {
+    id: "ecom-7",
+    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ७",
+    titleEn: "Electronic Commerce Act - Part 7",
+    description: "वस्तु वा सेवा फिर्ता गर्न सकिने व्यवस्था",
+    category: "Acts",
+    year: "2061",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "public/lovable-uploads/203bd37b-028c-4184-b46a-d7eea96bbef7.png",
+    isPopular: true
+  },
+  // Original content
   {
     id: "1",
     title: "अधिकार दुरुपयोग",
@@ -107,6 +186,7 @@ const KanoonSearch = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedDocument, setSelectedDocument] = useState<LegalDocument | null>(null);
 
+  // Filter documents
   const filteredDocuments = MOCK_DOCUMENTS.filter(doc => {
     if (searchQuery === "") return true;
     
@@ -125,7 +205,12 @@ const KanoonSearch = () => {
       description: `Downloading ${doc.title} (${doc.titleEn})...`,
     });
     // In a real app, this would trigger actual download
+    window.open(doc.pdfUrl, '_blank');
   };
+
+  // Group documents by category
+  const ecommerceDocuments = MOCK_DOCUMENTS.filter(doc => doc.id.startsWith('ecom'));
+  const otherDocuments = MOCK_DOCUMENTS.filter(doc => !doc.id.startsWith('ecom'));
 
   return (
     <MainLayout>
@@ -174,6 +259,12 @@ const KanoonSearch = () => {
                     >
                       Acts
                     </button>
+                    <button 
+                      className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md"
+                      onClick={() => setSearchQuery("इ-कमर्स")}
+                    >
+                      इ-कमर्स
+                    </button>
                   </div>
                 </div>
               </div>
@@ -186,13 +277,15 @@ const KanoonSearch = () => {
                 </h2>
               </div>
               <div className="p-4">
-                <Tabs defaultValue="acts" className="w-full">
-                  <TabsList className="grid grid-cols-2 mb-4 bg-asklegal-card-bg text-asklegal-text">
-                    <TabsTrigger value="acts" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10">Acts</TabsTrigger>
-                    <TabsTrigger value="constitution" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10">Constitution</TabsTrigger>
+                <Tabs defaultValue="ecommerce" className="w-full">
+                  <TabsList className="grid grid-cols-3 mb-4 bg-asklegal-card-bg text-asklegal-text">
+                    <TabsTrigger value="ecommerce" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs md:text-sm">विद्युतीय व्यापार</TabsTrigger>
+                    <TabsTrigger value="acts" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs md:text-sm">Acts</TabsTrigger>
+                    <TabsTrigger value="constitution" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs md:text-sm">Constitution</TabsTrigger>
                   </TabsList>
-                  <TabsContent value="acts" className="space-y-4">
-                    {MOCK_DOCUMENTS.map((doc) => (
+                  
+                  <TabsContent value="ecommerce" className="space-y-4">
+                    {ecommerceDocuments.map((doc) => (
                       <div 
                         key={doc.id}
                         className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
@@ -203,6 +296,20 @@ const KanoonSearch = () => {
                       </div>
                     ))}
                   </TabsContent>
+                  
+                  <TabsContent value="acts" className="space-y-4">
+                    {otherDocuments.map((doc) => (
+                      <div 
+                        key={doc.id}
+                        className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
+                        onClick={() => setSelectedDocument(doc)}
+                      >
+                        <FileText className="h-4 w-4 text-asklegal-purple" />
+                        <span className="text-asklegal-text font-nepali">{doc.title}</span>
+                      </div>
+                    ))}
+                  </TabsContent>
+                  
                   <TabsContent value="constitution" className="space-y-4">
                     <div className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer">
                       <FileText className="h-4 w-4 text-asklegal-purple" />
@@ -238,13 +345,26 @@ const KanoonSearch = () => {
                 </div>
                 
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                  <p className="font-nepali">
-                    यो {selectedDocument.title} सम्बन्धी कानून हो। यसले {selectedDocument.description} को बारेमा व्याख्या गर्दछ। 
-                    यो {selectedDocument.year} सालमा जारी गरिएको थियो। यो दस्तावेज {selectedDocument.ministry} द्वारा प्रकाशित गरिएको हो।
-                  </p>
-                  <div className="text-center mt-20">
-                    <p className="text-gray-500 dark:text-gray-400">PDF प्रिभ्यू यहाँ देखाइनेछ। यो केवल डेमो विवरण हो।</p>
-                  </div>
+                  {selectedDocument.id.startsWith('ecom') ? (
+                    <div className="flex justify-center">
+                      <img 
+                        src={selectedDocument.pdfUrl} 
+                        alt={selectedDocument.title}
+                        className="max-w-full h-auto border border-gray-200 dark:border-gray-700 rounded"
+                        style={{ maxHeight: '700px' }}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="font-nepali">
+                        यो {selectedDocument.title} सम्बन्धी कानून हो। यसले {selectedDocument.description} को बारेमा व्याख्या गर्दछ। 
+                        यो {selectedDocument.year} सालमा जारी गरिएको थियो। यो दस्तावेज {selectedDocument.ministry} द्वारा प्रकाशित गरिएको हो।
+                      </p>
+                      <div className="text-center mt-20">
+                        <p className="text-gray-500 dark:text-gray-400">PDF प्रिभ्यू यहाँ देखाइनेछ। यो केवल डेमो विवरण हो।</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
