@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Input } from "@/components/ui/input";
@@ -7,12 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, FileText, Download } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { LegalDocument } from "@/types/forms";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Mock data for demonstration
 const MOCK_DOCUMENTS: LegalDocument[] = [
-  // E-commerce documents (new addition)
+  // E-commerce combined document (new addition)
   {
-    id: "ecom-1",
+    id: "ecom-combined",
     title: "विद्युतीय व्यापार (इ-कमर्स) ऐन",
     titleEn: "Electronic Commerce Act",
     description: "विद्युतीय व्यापार (इ-कमर्स) को सम्बन्धमा व्यवस्था गर्न बनेको ऐन",
@@ -20,73 +20,16 @@ const MOCK_DOCUMENTS: LegalDocument[] = [
     year: "2061",
     ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
     pdfUrl: "public/lovable-uploads/b03bbdd5-6db3-4a51-9d7a-da1d9c37e131.png",
-    isPopular: true
-  },
-  {
-    id: "ecom-2",
-    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग २",
-    titleEn: "Electronic Commerce Act - Part 2",
-    description: "विद्युतीय व्यापार सम्बन्धी परिभाषा तथा प्रावधानहरू",
-    category: "Acts",
-    year: "2061",
-    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
-    pdfUrl: "public/lovable-uploads/9a6482de-ec4e-4c1b-9204-f51586f8108b.png",
-    isPopular: true
-  },
-  {
-    id: "ecom-3",
-    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ३",
-    titleEn: "Electronic Commerce Act - Part 3",
-    description: "विद्युतीय प्लेटफर्म स्थापना र सञ्चालन सम्बन्धी व्यवस्था",
-    category: "Acts",
-    year: "2061",
-    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
-    pdfUrl: "public/lovable-uploads/4492931e-4550-4726-a387-3884fdbf2a0f.png",
-    isPopular: true
-  },
-  {
-    id: "ecom-4",
-    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ४",
-    titleEn: "Electronic Commerce Act - Part 4",
-    description: "सूचीकरण प्रक्रिया र व्यापारिक विवरण",
-    category: "Acts",
-    year: "2061",
-    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
-    pdfUrl: "public/lovable-uploads/fb6aaf25-5a2e-42f7-81dd-e6aa6aae98ed.png",
-    isPopular: true
-  },
-  {
-    id: "ecom-5",
-    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ५",
-    titleEn: "Electronic Commerce Act - Part 5",
-    description: "विवरण खुलाउने र करार भएको मानिने सम्बन्धी व्यवस्था",
-    category: "Acts",
-    year: "2061",
-    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
-    pdfUrl: "public/lovable-uploads/e1a10177-9d9a-4e38-a47c-961c645d175d.png",
-    isPopular: true
-  },
-  {
-    id: "ecom-6",
-    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ६",
-    titleEn: "Electronic Commerce Act - Part 6",
-    description: "विद्युतीय व्यापारको भुक्तानी र वस्तु वा सेवाको हस्तान्तरण",
-    category: "Acts",
-    year: "2061",
-    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
-    pdfUrl: "public/lovable-uploads/cefec219-6879-41e2-92d6-b7e314e44f75.png",
-    isPopular: true
-  },
-  {
-    id: "ecom-7",
-    title: "विद्युतीय व्यापार (इ-कमर्स) ऐन - भाग ७",
-    titleEn: "Electronic Commerce Act - Part 7",
-    description: "वस्तु वा सेवा फिर्ता गर्न सकिने व्यवस्था",
-    category: "Acts",
-    year: "2061",
-    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
-    pdfUrl: "public/lovable-uploads/203bd37b-028c-4184-b46a-d7eea96bbef7.png",
-    isPopular: true
+    isPopular: true,
+    parts: [
+      "public/lovable-uploads/b03bbdd5-6db3-4a51-9d7a-da1d9c37e131.png",
+      "public/lovable-uploads/9a6482de-ec4e-4c1b-9204-f51586f8108b.png",
+      "public/lovable-uploads/4492931e-4550-4726-a387-3884fdbf2a0f.png",
+      "public/lovable-uploads/fb6aaf25-5a2e-42f7-81dd-e6aa6aae98ed.png",
+      "public/lovable-uploads/e1a10177-9d9a-4e38-a47c-961c645d175d.png",
+      "public/lovable-uploads/cefec219-6879-41e2-92d6-b7e314e44f75.png",
+      "public/lovable-uploads/203bd37b-028c-4184-b46a-d7eea96bbef7.png",
+    ]
   },
   // Original content
   {
@@ -169,7 +112,7 @@ const MOCK_DOCUMENTS: LegalDocument[] = [
   },
   {
     id: "8",
-    title: "मानव अधिकार",
+    title: "मानव अधिक��र",
     titleEn: "Manav Adhikar",
     description: "राष्ट्रिय मानव अधिकार आयोग ऐन",
     category: "Acts",
@@ -207,10 +150,6 @@ const KanoonSearch = () => {
     // In a real app, this would trigger actual download
     window.open(doc.pdfUrl, '_blank');
   };
-
-  // Group documents by category
-  const ecommerceDocuments = MOCK_DOCUMENTS.filter(doc => doc.id.startsWith('ecom'));
-  const otherDocuments = MOCK_DOCUMENTS.filter(doc => !doc.id.startsWith('ecom'));
 
   return (
     <MainLayout>
@@ -285,20 +224,17 @@ const KanoonSearch = () => {
                   </TabsList>
                   
                   <TabsContent value="ecommerce" className="space-y-4">
-                    {ecommerceDocuments.map((doc) => (
-                      <div 
-                        key={doc.id}
-                        className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
-                        onClick={() => setSelectedDocument(doc)}
-                      >
-                        <FileText className="h-4 w-4 text-asklegal-purple" />
-                        <span className="text-asklegal-text font-nepali">{doc.title}</span>
-                      </div>
-                    ))}
+                    <div 
+                      className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
+                      onClick={() => setSelectedDocument(MOCK_DOCUMENTS.find(doc => doc.id === "ecom-combined") || null)}
+                    >
+                      <FileText className="h-4 w-4 text-asklegal-purple" />
+                      <span className="text-asklegal-text font-nepali">विद्युतीय व्यापार (इ-कमर्स) ऐन</span>
+                    </div>
                   </TabsContent>
                   
                   <TabsContent value="acts" className="space-y-4">
-                    {otherDocuments.map((doc) => (
+                    {MOCK_DOCUMENTS.filter(doc => !doc.id.startsWith('ecom')).map((doc) => (
                       <div 
                         key={doc.id}
                         className="flex items-center gap-2 p-2 hover:bg-asklegal-purple/10 rounded cursor-pointer"
@@ -345,7 +281,21 @@ const KanoonSearch = () => {
                 </div>
                 
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                  {selectedDocument.id.startsWith('ecom') ? (
+                  {selectedDocument.id === "ecom-combined" && selectedDocument.parts ? (
+                    <ScrollArea className="h-[700px] pr-4">
+                      <div className="space-y-6">
+                        {selectedDocument.parts.map((imagePath, index) => (
+                          <div key={index} className="flex justify-center">
+                            <img 
+                              src={imagePath} 
+                              alt={`${selectedDocument.title} - Page ${index + 1}`}
+                              className="max-w-full h-auto border border-gray-200 dark:border-gray-700 rounded"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  ) : selectedDocument.id.startsWith('ecom') ? (
                     <div className="flex justify-center">
                       <img 
                         src={selectedDocument.pdfUrl} 
