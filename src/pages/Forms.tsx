@@ -5,12 +5,12 @@ import PetitionForm from "@/components/forms/PetitionForm";
 import DocumentPreview from "@/components/forms/DocumentPreview";
 import { PetitionFormData } from "@/types/forms";
 import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Forms = () => {
   const [formData, setFormData] = useState<PetitionFormData>({
-    subject: "तारिख सकार गरिपाउँ।", // Updated subject to match screenshot
+    subject: "तारिख सकार गरिपाउँ।",
     applicantName: "",
     district: "",
     address: "",
@@ -46,6 +46,11 @@ const Forms = () => {
     dateBS: ""
   });
 
+  // Handle real-time form changes
+  const handleFormChange = (newData: PetitionFormData) => {
+    setFormData(newData);
+  };
+
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
@@ -70,7 +75,7 @@ const Forms = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Form Section */}
           <div>
-            <PetitionForm formData={formData} onFormChange={setFormData} />
+            <PetitionForm formData={formData} onFormChange={handleFormChange} />
           </div>
 
           {/* Document Preview */}
