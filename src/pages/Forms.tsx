@@ -5,7 +5,7 @@ import PetitionForm from "@/components/forms/PetitionForm";
 import DocumentPreview from "@/components/forms/DocumentPreview";
 import { PetitionFormData } from "@/types/forms";
 import { Link } from "react-router-dom";
-import { Search, FileText } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Forms = () => {

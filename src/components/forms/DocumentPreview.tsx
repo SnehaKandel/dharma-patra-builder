@@ -12,6 +12,21 @@ const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
     return value.trim() ? value : fallback;
   };
 
+  // Format date in a readable format when available
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "___________";
+    
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString; // If invalid date, return as is
+      
+      // Return in YYYY-MM-DD format
+      return date.toISOString().split('T')[0];
+    } catch (error) {
+      return dateString; // If error parsing, return as is
+    }
+  };
+
   return (
     <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden flex flex-col h-full">
       <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30 flex justify-between items-center">
@@ -27,7 +42,7 @@ const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
           
           <div className="mb-6">
             <p className="font-nepali text-center">
-              विषय : {formData.subject}
+              विषय : {displayField(formData.subject)}
             </p>
           </div>
           
@@ -82,7 +97,7 @@ const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
           <div className="text-right mt-12">
             <p className="font-nepali">निवेदक</p>
             <p className="font-nepali">नाम: {displayField(formData.applicantName)}</p>
-            <p className="font-nepali">मिति: {displayField(formData.dateBS) || displayField(formData.date)}</p>
+            <p className="font-nepali">मिति: {formData.dateBS ? displayField(formData.dateBS) : formatDate(formData.date)}</p>
           </div>
           
           <div className="mt-16 text-center text-sm">
