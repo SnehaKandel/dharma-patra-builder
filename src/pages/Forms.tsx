@@ -5,7 +5,7 @@ import PetitionForm from "@/components/forms/PetitionForm";
 import DocumentPreview from "@/components/forms/DocumentPreview";
 import { PetitionFormData } from "@/types/forms";
 import { Link } from "react-router-dom";
-import { Search, Download, RefreshCcw } from "lucide-react";
+import { Search, Download, RefreshCcw, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { pdfService } from "@/services/pdfService";
@@ -53,6 +53,7 @@ const Forms = () => {
   const [generatedPdfId, setGeneratedPdfId] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [lastError, setLastError] = useState<string | null>(null);
+  const [lastRequest, setLastRequest] = useState<string | null>(null);
 
   // Function to handle form submission and PDF generation
   const handleGeneratePdf = async () => {
@@ -67,7 +68,14 @@ const Forms = () => {
         description: "Your petition document is being prepared...",
       });
       
-      console.log("Submitting form data for PDF generation");
+      // Log API URL for debugging
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      console.log("Using API URL:", apiUrl);
+      
+      // Capture request details for debugging
+      const requestUrl = `${apiUrl}/api/petitions/generate`;
+      setLastRequest(requestUrl);
+      console.log("Sending request to:", requestUrl);
       
       // Submit the form data to generate a PDF
       const fileId = await pdfService.submitPetitionForm(formData);
@@ -163,12 +171,28 @@ const Forms = () => {
               )}
             </div>
             
-            {/* Error display */}
+            {/* Error display with enhanced debugging info */}
             {lastError && (
               <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md text-red-700">
-                <h3 className="font-medium">Error Details:</h3>
-                <p className="text-sm mt-1">{lastError}</p>
-                <p className="text-xs mt-2 text-red-500">Make sure the backend server is running at http://localhost:5000 and MongoDB is connected.</p>
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5" />
+                  <div>
+                    <h3 className="font-medium">Error Details:</h3>
+                    <p className="text-sm mt-1">{lastError}</p>
+                    
+                    <div className="mt-3 p-3 bg-red-100 rounded text-xs font-mono">
+                      <p className="font-medium">Debugging Information:</p>
+                      <p className="mt-1">Backend URL: {import.meta.env.VITE_API_URL || 'http://localhost:5000'}</p>
+                      {lastRequest && <p className="mt-1">Last request: {lastRequest}</p>}
+                      <p className="mt-1">Make sure your backend server has the route: /api/petitions/generate</p>
+                    </div>
+                    
+                    <p className="text-xs mt-3 text-red-500">
+                      Based on your backend logs, the route /api/petitions/generate is returning a 404 error.
+                      Check your backend routes configuration.
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
           </div>

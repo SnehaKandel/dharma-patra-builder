@@ -10,7 +10,7 @@ export const pdfService = {
    * @param fileId - The ID or filename of the PDF to open
    */
   openPetitionPdf: (fileId: string): void => {
-    // Construct the URL to the PDF endpoint
+    // Construct the URL to the PDF endpoint - updated path format
     const pdfUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/petitions/download/${fileId}`;
     
     // Open the PDF in a new tab
@@ -25,10 +25,10 @@ export const pdfService = {
   submitPetitionForm: async (formData: any): Promise<string> => {
     try {
       // Log the API URL and form data for debugging
-      console.log('Sending petition form data:', formData);
+      console.log('Sending petition form data to backend');
       
-      // Make the API call to generate the PDF
-      const response = await api.post('/petitions/generate', formData);
+      // Make the API call to generate the PDF - using the correct path
+      const response = await api.post('/api/petitions/generate', formData);
       
       console.log('PDF generation response:', response.data);
       
@@ -39,12 +39,14 @@ export const pdfService = {
       
       // Provide more specific error information based on the error type
       if (error.code === 'ERR_NETWORK') {
-        throw new Error('Cannot connect to the backend server. Please ensure the server is running at http://localhost:5000.');
+        throw new Error('Cannot connect to the backend server. Please check if the server is running at http://localhost:5000.');
       }
       
       // If there's a message in the error response, use it
       if (error.response?.data?.error) {
         throw new Error(`Server error: ${error.response.data.error}`);
+      } else if (error.response?.status === 404) {
+        throw new Error('API endpoint not found. Please check the backend routes configuration.');
       }
       
       // Re-throw with a generic error message if none of the above

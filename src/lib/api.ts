@@ -1,8 +1,8 @@
-
 import axios from 'axios';
 
-// Use a consistent API URL format
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Use a consistent API URL format - remove the '/api' from the base URL
+// since our backend routes already include it
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 console.log('API URL being used:', API_URL); // Log the API URL being used
 
