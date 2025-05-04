@@ -1,19 +1,25 @@
 
 import axios from 'axios';
 
+// Use a consistent API URL format
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-console.log('API URL:', API_URL); // Log the API URL being used
+console.log('API URL being used:', API_URL); // Log the API URL being used
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  // Add timeout to prevent long-hanging requests
+  timeout: 15000,
 });
 
 // Add a request interceptor to inject the auth token
 api.interceptors.request.use((config) => {
+  // Log outgoing requests for debugging
+  console.log(`Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
+  
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -23,8 +29,13 @@ api.interceptors.request.use((config) => {
 
 // Add a response interceptor to handle token expiration
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(`Received response from ${response.config.url}:`, response.status);
+    return response;
+  },
   async (error) => {
+    console.error('API request error:', error.message);
+    
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {

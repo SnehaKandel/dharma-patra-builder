@@ -1,7 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { PetitionFormData } from "@/types/forms";
-import { ArrowDown, Download, Printer } from "lucide-react";
+import { ArrowDown, Download, Printer, RefreshCcw } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { pdfService } from "@/services/pdfService";
@@ -19,6 +18,7 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
 
   const handleDownloadPDF = async () => {
     if (generatedPdfId) {
+      console.log("Opening generated PDF:", generatedPdfId);
       pdfService.openPetitionPdf(generatedPdfId);
     } else if (onGeneratePdf) {
       setIsGenerating(true);
@@ -44,35 +44,60 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
     window.print();
   };
 
+  // Close dropdown when clicking outside
+  const handleClickOutside = () => {
+    if (showDownloadOptions) {
+      setShowDownloadOptions(false);
+    }
+  };
+
   return (
-    <div className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden flex flex-col h-full">
+    <div 
+      className="bg-asklegal-dark rounded-lg border border-asklegal-purple/30 overflow-hidden flex flex-col h-full"
+      onClick={handleClickOutside}
+    >
       <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30 flex justify-between items-center">
         <h3 className="text-lg font-medium text-asklegal-purple">Document Preview</h3>
         <div className="relative">
           <Button 
             variant="outline" 
             size="sm" 
-            className="bg-transparent border-asklegal-purple/40 text-white hover:bg-asklegal-purple/20"
-            onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+            className="bg-transparent border-asklegal-purple/40 text-white hover:bg-asklegal-purple/20 flex items-center gap-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDownloadOptions(!showDownloadOptions);
+            }}
             disabled={isGenerating}
           >
-            {isGenerating ? "Generating..." : "Download"} <ArrowDown size={16} className="ml-2" />
+            {isGenerating ? (
+              <>
+                <RefreshCcw size={16} className="animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                Download <ArrowDown size={16} />
+              </>
+            )}
           </Button>
           
           {showDownloadOptions && (
-            <div className="absolute right-0 mt-2 py-2 w-48 bg-asklegal-dark border border-asklegal-purple/30 rounded-md shadow-lg z-10 animate-fade-in">
+            <div 
+              className="absolute right-0 mt-2 py-2 w-48 bg-asklegal-dark border border-asklegal-purple/30 rounded-md shadow-lg z-10 animate-fade-in"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button 
-                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20"
+                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20 flex items-center"
                 onClick={handleDownloadPDF}
                 disabled={isGenerating}
               >
-                <Download size={16} className="inline-block mr-2" /> {generatedPdfId ? "Open Generated PDF" : "Generate PDF"}
+                <Download size={16} className="mr-2" /> {generatedPdfId ? "Open Generated PDF" : "Generate PDF"}
               </button>
               <button 
-                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20"
+                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20 flex items-center"
                 onClick={handlePrint}
               >
-                <Printer size={16} className="inline-block mr-2" /> Print Document
+                <Printer size={16} className="mr-2" /> Print Document
               </button>
             </div>
           )}

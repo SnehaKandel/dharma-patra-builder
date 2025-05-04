@@ -5,7 +5,7 @@ import PetitionForm from "@/components/forms/PetitionForm";
 import DocumentPreview from "@/components/forms/DocumentPreview";
 import { PetitionFormData } from "@/types/forms";
 import { Link } from "react-router-dom";
-import { Search, Download } from "lucide-react";
+import { Search, Download, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { pdfService } from "@/services/pdfService";
@@ -52,6 +52,7 @@ const Forms = () => {
   // Add state to track the generated PDF file ID
   const [generatedPdfId, setGeneratedPdfId] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [lastError, setLastError] = useState<string | null>(null);
 
   // Function to handle form submission and PDF generation
   const handleGeneratePdf = async () => {
@@ -59,13 +60,19 @@ const Forms = () => {
     
     try {
       setIsGenerating(true);
+      setLastError(null);
+      
       toast({
         title: "Generating PDF",
         description: "Your petition document is being prepared...",
       });
       
+      console.log("Submitting form data for PDF generation");
+      
       // Submit the form data to generate a PDF
       const fileId = await pdfService.submitPetitionForm(formData);
+      console.log("Generated PDF file ID:", fileId);
+      
       setGeneratedPdfId(fileId);
       
       toast({
@@ -73,10 +80,13 @@ const Forms = () => {
         description: "Your petition document is ready for download.",
       });
     } catch (error: any) {
+      const errorMessage = error.message || "There was an error generating your PDF. Please try again.";
+      setLastError(errorMessage);
+      
       toast({
         variant: "destructive",
         title: "Generation Failed",
-        description: error.message || "There was an error generating your PDF. Please try again.",
+        description: errorMessage,
       });
       console.error("Error generating PDF:", error);
     } finally {
@@ -87,6 +97,7 @@ const Forms = () => {
   // Function to open the PDF in a new tab
   const handleOpenPdf = () => {
     if (generatedPdfId) {
+      console.log("Opening PDF with ID:", generatedPdfId);
       pdfService.openPetitionPdf(generatedPdfId);
     } else {
       toast({
@@ -128,9 +139,16 @@ const Forms = () => {
               <Button 
                 onClick={handleGeneratePdf} 
                 disabled={isGenerating}
-                className="bg-asklegal-purple hover:bg-asklegal-accent text-white shadow-sm"
+                className="bg-asklegal-purple hover:bg-asklegal-accent text-white shadow-sm flex items-center gap-2"
               >
-                {isGenerating ? "Generating..." : "Generate PDF"}
+                {isGenerating ? (
+                  <>
+                    <RefreshCcw className="h-4 w-4 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  "Generate PDF"
+                )}
               </Button>
               
               {generatedPdfId && (
@@ -144,6 +162,15 @@ const Forms = () => {
                 </Button>
               )}
             </div>
+            
+            {/* Error display */}
+            {lastError && (
+              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md text-red-700">
+                <h3 className="font-medium">Error Details:</h3>
+                <p className="text-sm mt-1">{lastError}</p>
+                <p className="text-xs mt-2 text-red-500">Make sure the backend server is running at http://localhost:5000 and MongoDB is connected.</p>
+              </div>
+            )}
           </div>
 
           {/* Document Preview */}

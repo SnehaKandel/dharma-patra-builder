@@ -11,7 +11,7 @@ export const pdfService = {
    */
   openPetitionPdf: (fileId: string): void => {
     // Construct the URL to the PDF endpoint
-    const pdfUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/petitions/download/${fileId}`;
+    const pdfUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/petitions/download/${fileId}`;
     
     // Open the PDF in a new tab
     window.open(pdfUrl, '_blank');
@@ -24,14 +24,13 @@ export const pdfService = {
    */
   submitPetitionForm: async (formData: any): Promise<string> => {
     try {
-      // Check if the API URL environment variable is set
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-      
-      // Log the API URL for debugging
-      console.log('Using API URL:', apiUrl);
+      // Log the API URL and form data for debugging
+      console.log('Sending petition form data:', formData);
       
       // Make the API call to generate the PDF
       const response = await api.post('/petitions/generate', formData);
+      
+      console.log('PDF generation response:', response.data);
       
       // Return the file ID from the response
       return response.data.fileId;
@@ -40,7 +39,7 @@ export const pdfService = {
       
       // Provide more specific error information based on the error type
       if (error.code === 'ERR_NETWORK') {
-        throw new Error('Cannot connect to the backend server. Please ensure the server is running at the configured API URL.');
+        throw new Error('Cannot connect to the backend server. Please ensure the server is running at http://localhost:5000.');
       }
       
       // If there's a message in the error response, use it
@@ -50,20 +49,6 @@ export const pdfService = {
       
       // Re-throw with a generic error message if none of the above
       throw new Error('Failed to generate PDF. Please try again later.');
-    }
-  },
-  
-  /**
-   * Check if the backend server is accessible
-   * @returns Promise resolving to boolean indicating if backend is accessible
-   */
-  checkBackendConnection: async (): Promise<boolean> => {
-    try {
-      await api.get('/');
-      return true;
-    } catch (error) {
-      console.error('Backend connection check failed:', error);
-      return false;
     }
   }
 };
