@@ -6,31 +6,100 @@ interface BSCalendarData {
 // Nepali calendar data - mapping BS years to the number of days in each month
 // More comprehensive data for accurate BS-AD conversion
 const bsCalendarData: BSCalendarData = {
-  2070: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-  2071: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-  2072: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-  2073: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2000: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2001: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2002: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2003: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2004: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2005: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2006: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2007: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2008: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
+  2009: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2010: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2011: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2012: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+  2013: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2014: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2015: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2016: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+  2017: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2018: [31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2019: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2020: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+  2021: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2022: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+  2023: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2024: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+  2025: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2026: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2027: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2028: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2029: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2030: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2031: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2032: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2033: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2034: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2035: [30, 32, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
+  2036: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2037: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2038: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2039: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+  2040: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2041: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2042: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2043: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+  2044: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2045: [31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2046: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2047: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+  2048: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2049: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+  2050: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2051: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+  2052: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2053: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+  2054: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2055: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2056: [31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
+  2057: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2058: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2059: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2060: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2061: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2062: [30, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31],
+  2063: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2064: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2065: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2066: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
+  2067: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2068: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2069: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+  2070: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+  2071: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+  2072: [31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+  2073: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
   2074: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
   2075: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-  2076: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-  2077: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+  2076: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+  2077: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
   2078: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
   2079: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-  2080: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-  2081: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-  2082: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],  
-  2083: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-  2084: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-  2085: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-  2086: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-  2087: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-  2088: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-  2089: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-  2090: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-  // Add more years as needed
+  2080: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+  2081: [31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+  2082: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],  
+  2083: [31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
+  2084: [31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
+  2085: [31, 32, 31, 32, 30, 31, 30, 30, 29, 30, 30, 30],
+  2086: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+  2087: [31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30],
+  2088: [30, 31, 32, 32, 30, 31, 30, 30, 29, 30, 30, 30],
+  2089: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+  2090: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
 };
 
-// Reference date for BS-AD conversion
+// Reference date for BS-AD conversion (1943/4/14 = 2000/1/1)
 const BS_REFERENCE_DATE = {
   bs: {
     year: 2000,
@@ -98,33 +167,6 @@ const isLeapYear = (year: number): boolean => {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 };
 
-// Get the total days from a specific date
-const getTotalDaysFromDate = (date: { year: number, month: number, day: number }, isBS: boolean): number => {
-  let totalDays = 0;
-  
-  if (isBS) {
-    // For BS date
-    for (let i = BS_REFERENCE_DATE.bs.year; i < date.year; i++) {
-      for (let j = 1; j <= 12; j++) {
-        totalDays += bsCalendarData[i]?.[j - 1] || 30;
-      }
-    }
-    
-    for (let i = 1; i < date.month; i++) {
-      totalDays += bsCalendarData[date.year]?.[i - 1] || 30;
-    }
-  } else {
-    // For AD date
-    const startDate = new Date(BS_REFERENCE_DATE.ad.year, BS_REFERENCE_DATE.ad.month - 1, BS_REFERENCE_DATE.ad.day);
-    const targetDate = new Date(date.year, date.month - 1, date.day);
-    
-    // Calculate difference in milliseconds and convert to days
-    totalDays = Math.floor((targetDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-  }
-  
-  return totalDays + date.day;
-};
-
 // Convert BS to AD
 export const convertBSToAD = (bsYear: number, bsMonth: number, bsDay: number): { year: number; month: number; day: number } => {
   // Check if the date is valid
@@ -132,97 +174,124 @@ export const convertBSToAD = (bsYear: number, bsMonth: number, bsDay: number): {
     return getTodaysDateAD(); // Return today's date as fallback
   }
   
-  // Calculate total days from BS reference date
-  let totalDays = -1; // Start from -1 to account for the reference day itself
+  // Calculate days from BS reference date to input BS date
+  let totalDays = 0;
   
-  // Add days for years
+  // Add days for complete years
   for (let year = BS_REFERENCE_DATE.bs.year; year < bsYear; year++) {
     if (bsCalendarData[year]) {
-      totalDays += bsCalendarData[year].reduce((sum, days) => sum + days, 0);
-    } else {
-      totalDays += 365; // Approximation for missing years
+      for (let month = 0; month < 12; month++) {
+        totalDays += bsCalendarData[year][month];
+      }
     }
   }
   
-  // Add days for months in the current year
-  for (let month = 1; month < bsMonth; month++) {
-    totalDays += bsCalendarData[bsYear][month - 1] || 30;
+  // Add days for complete months in the current year
+  for (let month = 0; month < bsMonth - 1; month++) {
+    if (bsCalendarData[bsYear]) {
+      totalDays += bsCalendarData[bsYear][month];
+    }
   }
   
-  // Add days of the current month
-  totalDays += bsDay;
+  // Add remaining days
+  totalDays += bsDay - 1; // -1 because we want to count from reference date
   
-  // Calculate the AD date by adding days to the reference AD date
-  let adDate = new Date(BS_REFERENCE_DATE.ad.year, BS_REFERENCE_DATE.ad.month - 1, BS_REFERENCE_DATE.ad.day);
-  adDate.setDate(adDate.getDate() + totalDays);
+  // Calculate AD date
+  const referenceAD = new Date(
+    BS_REFERENCE_DATE.ad.year,
+    BS_REFERENCE_DATE.ad.month - 1,
+    BS_REFERENCE_DATE.ad.day
+  );
+  
+  // Add the calculated days to reference AD date
+  const resultDate = new Date(referenceAD);
+  resultDate.setDate(referenceAD.getDate() + totalDays);
   
   return {
-    year: adDate.getFullYear(),
-    month: adDate.getMonth() + 1,
-    day: adDate.getDate()
+    year: resultDate.getFullYear(),
+    month: resultDate.getMonth() + 1,
+    day: resultDate.getDate()
   };
 };
 
 // Convert AD to BS
 export const convertADToBS = (adYear: number, adMonth: number, adDay: number): { year: number; month: number; day: number } => {
-  // Create JavaScript Date object for the AD date
+  // Create JavaScript Date object for input AD date
   const adDate = new Date(adYear, adMonth - 1, adDay);
   
-  // Calculate days between reference AD date and target AD date
-  const referenceDate = new Date(BS_REFERENCE_DATE.ad.year, BS_REFERENCE_DATE.ad.month - 1, BS_REFERENCE_DATE.ad.day);
-  const daysDifference = Math.floor((adDate.getTime() - referenceDate.getTime()) / (1000 * 60 * 60 * 24));
+  // Reference AD date
+  const referenceAD = new Date(
+    BS_REFERENCE_DATE.ad.year,
+    BS_REFERENCE_DATE.ad.month - 1,
+    BS_REFERENCE_DATE.ad.day
+  );
   
-  // Initialize BS date to reference date
+  // Calculate days between reference AD date and input AD date
+  const diffDays = Math.floor((adDate.getTime() - referenceAD.getTime()) / (1000 * 60 * 60 * 24));
+  
+  if (diffDays < 0) {
+    // Date is before reference date
+    return { year: BS_REFERENCE_DATE.bs.year, month: 1, day: 1 };
+  }
+  
+  // Start from BS reference date
   let bsYear = BS_REFERENCE_DATE.bs.year;
-  let bsMonth = BS_REFERENCE_DATE.bs.month;
-  let bsDay = BS_REFERENCE_DATE.bs.day;
+  let bsMonth = 1;
+  let bsDay = 1;
   
-  // Add the difference in days to the BS reference date
-  let remainingDays = daysDifference;
+  // Count days and increment BS date
+  let daysCount = 0;
   
-  // Advance years
+  // Count years
   while (true) {
-    // Check if we have data for this year
+    // Check if we're still within the valid year range
     if (!bsCalendarData[bsYear]) {
-      // Use approximation for missing years
-      if (remainingDays >= 366) {
-        remainingDays -= 366;
-        bsYear++;
-      } else {
-        break;
-      }
-      continue;
+      break;
     }
     
-    // Calculate total days in the current BS year
-    const daysInYear = bsCalendarData[bsYear].reduce((sum, days) => sum + days, 0);
+    // Calculate days in current BS year
+    let daysInYear = 0;
+    for (let i = 0; i < 12; i++) {
+      daysInYear += bsCalendarData[bsYear][i];
+    }
     
-    if (remainingDays >= daysInYear) {
-      remainingDays -= daysInYear;
+    if (daysCount + daysInYear <= diffDays) {
+      // Increment year and days count
       bsYear++;
+      daysCount += daysInYear;
     } else {
       break;
     }
   }
   
-  // Advance months
-  for (bsMonth = 1; bsMonth <= 12; bsMonth++) {
-    const daysInMonth = bsCalendarData[bsYear]?.[bsMonth - 1] || 30;
+  // Count months
+  for (let i = 0; i < 12; i++) {
+    if (!bsCalendarData[bsYear]) {
+      break;
+    }
     
-    if (remainingDays >= daysInMonth) {
-      remainingDays -= daysInMonth;
+    const daysInMonth = bsCalendarData[bsYear][i];
+    
+    if (daysCount + daysInMonth <= diffDays) {
+      // Increment month and days count
+      bsMonth++;
+      daysCount += daysInMonth;
     } else {
       break;
     }
   }
   
-  // Set day
-  bsDay = remainingDays + 1;
+  // Remaining days
+  bsDay = diffDays - daysCount + 1;
   
-  // Ensure valid values
-  bsMonth = Math.min(bsMonth, 12);
-  const maxDaysInMonth = bsCalendarData[bsYear]?.[bsMonth - 1] || 30;
-  bsDay = Math.min(bsDay, maxDaysInMonth);
+  // Ensure values are within valid range
+  if (bsMonth > 12) {
+    bsMonth = 12;
+  }
+  
+  if (bsCalendarData[bsYear] && bsDay > bsCalendarData[bsYear][bsMonth - 1]) {
+    bsDay = bsCalendarData[bsYear][bsMonth - 1];
+  }
   
   return { year: bsYear, month: bsMonth, day: bsDay };
 };
