@@ -24,41 +24,32 @@ export const pdfService = {
    */
   submitPetitionForm: async (formData: any): Promise<string> => {
     try {
-      // First check if backend is accessible
-      const isBackendConnected = await pdfService.checkBackendConnection();
-      if (!isBackendConnected) {
-        throw new Error("Unable to connect to the backend server. Please ensure the server is running at the configured API URL.");
-      }
-      
       // Check if the API URL environment variable is set
-      const apiUrl = import.meta.env.VITE_API_URL;
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       
       // Log the API URL for debugging
-      console.log('Using API URL:', apiUrl || 'http://localhost:5000/api');
+      console.log('Using API URL:', apiUrl);
       
-      // Attempt to connect to the backend
+      // Make the API call to generate the PDF
       const response = await api.post('/petitions/generate', formData);
+      
+      // Return the file ID from the response
       return response.data.fileId;
     } catch (error: any) {
       console.error('Error generating petition PDF:', error);
       
-      // Provide more specific error information
+      // Provide more specific error information based on the error type
       if (error.code === 'ERR_NETWORK') {
         throw new Error('Cannot connect to the backend server. Please ensure the server is running at the configured API URL.');
       }
       
-      // Check for MongoDB connection error in the error message
-      if (error.response?.data?.error && error.response.data.error.includes('MongoDB')) {
-        throw new Error('Database connection error. The server cannot connect to MongoDB. Please check if your IP is whitelisted in MongoDB Atlas.');
-      }
-      
-      // If there's a message in the error, use it
+      // If there's a message in the error response, use it
       if (error.response?.data?.error) {
         throw new Error(`Server error: ${error.response.data.error}`);
       }
       
-      // Re-throw the original error with a more user-friendly message
-      throw new Error(error.message || 'Failed to generate PDF. Please try again later.');
+      // Re-throw with a generic error message if none of the above
+      throw new Error('Failed to generate PDF. Please try again later.');
     }
   },
   

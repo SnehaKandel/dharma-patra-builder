@@ -9,29 +9,34 @@ import { pdfService } from "@/services/pdfService";
 interface DocumentPreviewProps {
   formData: PetitionFormData;
   generatedPdfId?: string | null;
-  onGeneratePdf?: () => void;
+  onGeneratePdf?: () => Promise<void>;
 }
 
 const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPreviewProps) => {
   const { toast } = useToast();
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (generatedPdfId) {
       pdfService.openPetitionPdf(generatedPdfId);
     } else if (onGeneratePdf) {
-      onGeneratePdf();
-      toast({
-        title: "Generating PDF",
-        description: "Your petition document is being prepared for download.",
-      });
-    } else {
-      toast({
-        title: "Generating PDF",
-        description: "Your petition document is being prepared for download.",
-      });
-      // In a real implementation, we would use a PDF generation library
-      // like jsPDF or html2pdf here
+      setIsGenerating(true);
+      try {
+        await onGeneratePdf();
+        toast({
+          title: "PDF Generated",
+          description: "Your petition document is ready for download.",
+        });
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Generation Failed",
+          description: error instanceof Error ? error.message : "Failed to generate PDF. Please try again.",
+        });
+      } finally {
+        setIsGenerating(false);
+      }
     }
   };
 
@@ -49,8 +54,9 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
             size="sm" 
             className="bg-transparent border-asklegal-purple/40 text-white hover:bg-asklegal-purple/20"
             onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+            disabled={isGenerating}
           >
-            Download <ArrowDown size={16} className="ml-2" />
+            {isGenerating ? "Generating..." : "Download"} <ArrowDown size={16} className="ml-2" />
           </Button>
           
           {showDownloadOptions && (
@@ -58,8 +64,9 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
               <button 
                 className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20"
                 onClick={handleDownloadPDF}
+                disabled={isGenerating}
               >
-                <Download size={16} className="inline-block mr-2" /> {generatedPdfId ? "View Generated PDF" : "Generate PDF"}
+                <Download size={16} className="inline-block mr-2" /> {generatedPdfId ? "Open Generated PDF" : "Generate PDF"}
               </button>
               <button 
                 className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20"

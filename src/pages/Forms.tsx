@@ -55,6 +55,8 @@ const Forms = () => {
 
   // Function to handle form submission and PDF generation
   const handleGeneratePdf = async () => {
+    if (isGenerating) return;
+    
     try {
       setIsGenerating(true);
       toast({
@@ -67,14 +69,14 @@ const Forms = () => {
       setGeneratedPdfId(fileId);
       
       toast({
-        title: "PDF Generated",
+        title: "PDF Generated Successfully",
         description: "Your petition document is ready for download.",
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Generation Failed",
-        description: "There was an error generating your PDF. Please try again.",
+        description: error.message || "There was an error generating your PDF. Please try again.",
       });
       console.error("Error generating PDF:", error);
     } finally {
@@ -138,7 +140,7 @@ const Forms = () => {
                   className="border-asklegal-purple/50 text-asklegal-heading hover:bg-asklegal-purple/10"
                 >
                   <Download size={18} className="mr-2" />
-                  View Petition
+                  Open PDF
                 </Button>
               )}
             </div>
@@ -147,7 +149,11 @@ const Forms = () => {
           {/* Document Preview */}
           <div className="lg:sticky lg:top-4 lg:h-[calc(100vh-8rem)]">
             <div className="card-glassmorphism shadow-md p-1">
-              <DocumentPreview formData={formData} />
+              <DocumentPreview 
+                formData={formData} 
+                generatedPdfId={generatedPdfId}
+                onGeneratePdf={handleGeneratePdf}
+              />
             </div>
           </div>
         </div>
