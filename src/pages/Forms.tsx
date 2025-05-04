@@ -29,7 +29,7 @@ const Forms = () => {
     applicantWardNumber: "",
     applicantFatherName: "",
     opponentMunicipality: "",
-    mukuda: "",
+    mudda: "",
     opponentAdditionalInfo: "",
     opponentFatherName: "",
     opponentDistrictName: "",
@@ -39,10 +39,6 @@ const Forms = () => {
     otherName: "",
     otherMunicipality: "",
     otherWardName: "",
-    shubham: "",
-    day: "",
-    month: "",
-    year: "",
     dateBS: ""
   });
 

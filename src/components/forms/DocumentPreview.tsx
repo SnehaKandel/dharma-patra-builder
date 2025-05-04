@@ -77,7 +77,7 @@ const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
           </div>
           
           <div className="mb-6">
-            <h3 className="font-nepali font-bold mb-2">मुद्दा– {displayField(formData.mukuda)}</h3>
+            <h3 className="font-nepali font-bold mb-2">मुद्दा– {displayField(formData.mudda)}</h3>
             <p className="font-nepali ml-4">
               निवेदनबापत लाग्ने दस्तुर रु.१०।– साथै राखी निम्नानुसार निवेदन गर्दछु/गर्दछौँ :
             </p>
@@ -98,12 +98,6 @@ const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
             <p className="font-nepali">निवेदक</p>
             <p className="font-nepali">नाम: {displayField(formData.applicantName)}</p>
             <p className="font-nepali">मिति: {formData.dateBS ? displayField(formData.dateBS) : formatDate(formData.date)}</p>
-          </div>
-          
-          <div className="mt-16 text-center text-sm">
-            <p className="font-nepali">
-              इति संवत् {displayField(formData.year)} साल {displayField(formData.month)} महिना {displayField(formData.day)} गते रोज {displayField(formData.shubham)} शुभम् ।
-            </p>
           </div>
           
           <div className="mt-16 pt-4 border-t border-gray-300 text-xs text-gray-500">

@@ -140,11 +140,11 @@ const PetitionForm = ({ formData, onFormChange }: PetitionFormProps) => {
                 placeholder="Enter opponent municipality"
               />
               <FormField
-                label="MUKUDA"
-                id="mukuda"
-                value={formData.mukuda}
+                label="MUDDA"
+                id="mudda"
+                value={formData.mudda}
                 onChange={handleInputChange}
-                placeholder="Enter mukuda"
+                placeholder="Enter mudda"
               />
               <FormField
                 label="ADDITIONAL INFO"
