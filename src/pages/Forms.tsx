@@ -5,10 +5,13 @@ import PetitionForm from "@/components/forms/PetitionForm";
 import DocumentPreview from "@/components/forms/DocumentPreview";
 import { PetitionFormData } from "@/types/forms";
 import { Link } from "react-router-dom";
-import { Search, FileText } from "lucide-react";
+import { Search, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { pdfService } from "@/services/pdfService";
 
 const Forms = () => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<PetitionFormData>({
     subject: "दाखिल खारेज गरिपाउँ।",
     applicantName: "",
@@ -45,6 +48,52 @@ const Forms = () => {
     year: "",
     dateBS: ""
   });
+  
+  // Add state to track the generated PDF file ID
+  const [generatedPdfId, setGeneratedPdfId] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Function to handle form submission and PDF generation
+  const handleGeneratePdf = async () => {
+    try {
+      setIsGenerating(true);
+      toast({
+        title: "Generating PDF",
+        description: "Your petition document is being prepared...",
+      });
+      
+      // Submit the form data to generate a PDF
+      const fileId = await pdfService.submitPetitionForm(formData);
+      setGeneratedPdfId(fileId);
+      
+      toast({
+        title: "PDF Generated",
+        description: "Your petition document is ready for download.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Generation Failed",
+        description: "There was an error generating your PDF. Please try again.",
+      });
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  // Function to open the PDF in a new tab
+  const handleOpenPdf = () => {
+    if (generatedPdfId) {
+      pdfService.openPetitionPdf(generatedPdfId);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "No PDF Available",
+        description: "Please generate a PDF first before attempting to download.",
+      });
+    }
+  };
 
   return (
     <MainLayout>
@@ -71,6 +120,28 @@ const Forms = () => {
           {/* Form Section */}
           <div>
             <PetitionForm formData={formData} onFormChange={setFormData} />
+            
+            {/* PDF Generation and Download Buttons */}
+            <div className="mt-6 flex flex-wrap gap-4">
+              <Button 
+                onClick={handleGeneratePdf} 
+                disabled={isGenerating}
+                className="bg-asklegal-purple hover:bg-asklegal-accent text-white shadow-sm"
+              >
+                {isGenerating ? "Generating..." : "Generate PDF"}
+              </Button>
+              
+              {generatedPdfId && (
+                <Button 
+                  onClick={handleOpenPdf}
+                  variant="outline"
+                  className="border-asklegal-purple/50 text-asklegal-heading hover:bg-asklegal-purple/10"
+                >
+                  <Download size={18} className="mr-2" />
+                  View Petition
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Document Preview */}

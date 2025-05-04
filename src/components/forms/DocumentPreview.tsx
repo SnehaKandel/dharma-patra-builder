@@ -3,23 +3,36 @@ import { Button } from "@/components/ui/button";
 import { PetitionFormData } from "@/types/forms";
 import { ArrowDown, Download, Printer } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { pdfService } from "@/services/pdfService";
 
 interface DocumentPreviewProps {
   formData: PetitionFormData;
+  generatedPdfId?: string | null;
+  onGeneratePdf?: () => void;
 }
 
-const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
+const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPreviewProps) => {
   const { toast } = useToast();
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
   const handleDownloadPDF = () => {
-    toast({
-      title: "Generating PDF",
-      description: "Your petition document is being prepared for download.",
-    });
-    // In a real implementation, we would use a PDF generation library
-    // like jsPDF or html2pdf here
+    if (generatedPdfId) {
+      pdfService.openPetitionPdf(generatedPdfId);
+    } else if (onGeneratePdf) {
+      onGeneratePdf();
+      toast({
+        title: "Generating PDF",
+        description: "Your petition document is being prepared for download.",
+      });
+    } else {
+      toast({
+        title: "Generating PDF",
+        description: "Your petition document is being prepared for download.",
+      });
+      // In a real implementation, we would use a PDF generation library
+      // like jsPDF or html2pdf here
+    }
   };
 
   const handlePrint = () => {
@@ -46,7 +59,7 @@ const DocumentPreview = ({ formData }: DocumentPreviewProps) => {
                 className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20"
                 onClick={handleDownloadPDF}
               >
-                <Download size={16} className="inline-block mr-2" /> Download as PDF
+                <Download size={16} className="inline-block mr-2" /> {generatedPdfId ? "View Generated PDF" : "Generate PDF"}
               </button>
               <button 
                 className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20"
