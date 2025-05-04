@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio, Language, CalendarClock, ChevronDown } from 'lucide-react';
+import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio, Languages, CalendarClock, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
@@ -107,14 +106,14 @@ const Navbar = () => {
                 variant="ghost" 
                 className="flex items-center gap-1 text-asklegal-heading hover:text-asklegal-purple hover:bg-transparent"
               >
-                <Language size={18} />
+                <Languages size={18} />
                 <span className="hidden md:inline">Tools</span>
                 <ChevronDown size={14} />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => navigate('/tools?tab=translator')}>
-                <Language className="mr-2 h-4 w-4" />
+                <Languages className="mr-2 h-4 w-4" />
                 <span>Translator</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate('/tools?tab=date-converter')}>

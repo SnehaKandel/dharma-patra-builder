@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Swap, RotateCcw, Loader2 } from "lucide-react";
+import { ArrowLeftRight, RotateCcw, Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 // Mock translations for demo purposes (until API is connected)
@@ -135,7 +135,7 @@ const Translator = () => {
               onClick={handleSwapLanguages}
               className="rounded-full bg-asklegal-purple/10 border-asklegal-purple/30 hover:bg-asklegal-purple/20"
             >
-              <Swap className="h-4 w-4" />
+              <ArrowLeftRight className="h-4 w-4" />
               <span className="sr-only">Swap languages</span>
             </Button>
             

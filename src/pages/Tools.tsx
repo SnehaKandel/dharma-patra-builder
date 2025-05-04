@@ -1,13 +1,22 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Translator from "@/components/tools/Translator";
 import DateConverter from "@/components/date-converter/DateConverter";
-import { CalendarClock, Language } from "lucide-react";
+import { CalendarClock, Languages } from "lucide-react";
 
 const Tools = () => {
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState("translator");
+  
+  useEffect(() => {
+    if (tabParam === 'date-converter' || tabParam === 'translator') {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
 
   return (
     <MainLayout>
@@ -27,7 +36,7 @@ const Tools = () => {
         >
           <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
             <TabsTrigger value="translator" className="flex items-center gap-2">
-              <Language className="h-4 w-4" />
+              <Languages className="h-4 w-4" />
               <span>Translator</span>
             </TabsTrigger>
             <TabsTrigger value="date-converter" className="flex items-center gap-2">
