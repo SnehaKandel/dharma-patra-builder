@@ -7,18 +7,92 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeftRight, RotateCcw, Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
-// Mock translations for demo purposes (until API is connected)
+// Enhanced mock translations with more common words and phrases
 const mockTranslations: Record<string, string> = {
+  // English to Nepali
+  "hello": "नमस्ते",
   "namaste": "नमस्ते",
+  "hi": "नमस्ते",
+  "how are you": "तपाईंलाई कस्तो छ",
   "kasto cha": "कस्तो छ",
   "k cha": "के छ",
+  "what's up": "के छ",
+  "i love you": "म तिमीलाई माया गर्छु",
   "timilai maya cha": "तिमीलाई माया छ",
+  "thank you": "धन्यवाद",
   "dhanyabad": "धन्यवाद",
-  "माया": "Love",
+  "good morning": "शुभ प्रभात",
+  "good night": "शुभ रात्री",
+  "yes": "हो",
+  "no": "होइन",
+  "please": "कृपया",
+  "sorry": "माफ गर्नुहोस्",
+  "water": "पानी",
+  "food": "खाना",
+  "help": "मद्दत",
+  "today": "आज",
+  "tomorrow": "भोलि",
+  "yesterday": "हिजो",
+  "money": "पैसा",
+  "family": "परिवार",
+  "friend": "साथी",
+  "house": "घर",
+  "work": "काम",
+  "school": "विद्यालय",
+  "hospital": "अस्पताल",
+  "court": "अदालत",
+  "lawyer": "वकिल",
+  "judge": "न्यायाधीश",
+  "document": "कागजात",
+  "petition": "निवेदन",
+  "government": "सरकार",
+  "law": "कानून",
+  "rights": "अधिकार",
+  "justice": "न्याय",
+  "witness": "साक्षी",
+  "evidence": "प्रमाण",
+  "penalty": "जरिवाना",
+  "verdict": "फैसला",
+  
+  // Nepali to English
   "नमस्ते": "Hello",
+  "तपाईंलाई कस्तो छ": "How are you",
   "के छ": "What's up",
+  "म तिमीलाई माया गर्छु": "I love you",
   "तिमीलाई माया छ": "I love you",
-  "धन्यवाद": "Thank you"
+  "धन्यवाद": "Thank you",
+  "शुभ प्रभात": "Good morning",
+  "शुभ रात्री": "Good night",
+  "हो": "Yes",
+  "होइन": "No",
+  "कृपया": "Please",
+  "माफ गर्नुहोस्": "Sorry",
+  "पानी": "Water",
+  "खाना": "Food",
+  "मद्दत": "Help",
+  "आज": "Today",
+  "भोलि": "Tomorrow",
+  "हिजो": "Yesterday",
+  "पैसा": "Money",
+  "परिवार": "Family",
+  "साथी": "Friend",
+  "घर": "House",
+  "काम": "Work",
+  "विद्यालय": "School",
+  "अस्पताल": "Hospital",
+  "अदालत": "Court",
+  "वकिल": "Lawyer",
+  "न्यायाधीश": "Judge",
+  "कागजात": "Document",
+  "निवेदन": "Petition",
+  "सरकार": "Government",
+  "कानून": "Law",
+  "अधिकार": "Rights",
+  "न्याय": "Justice",
+  "साक्षी": "Witness",
+  "प्रमाण": "Evidence",
+  "जरिवाना": "Penalty",
+  "फैसला": "Verdict"
 };
 
 const Translator = () => {
@@ -26,42 +100,53 @@ const Translator = () => {
   const [outputText, setOutputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [direction, setDirection] = useState<"en-to-ne" | "ne-to-en">("en-to-ne");
+  const [mode, setMode] = useState<"auto" | "manual">("auto");
   const { toast } = useToast();
 
-  // Debounced translation effect
-  useEffect(() => {
-    if (!inputText) {
+  // Improved translation function with better word recognition
+  const translateText = (text: string) => {
+    if (!text.trim()) {
       setOutputText("");
       return;
     }
 
-    const timer = setTimeout(() => {
-      translateText(inputText);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [inputText, direction]);
-
-  const translateText = (text: string) => {
-    if (!text.trim()) return;
-
     setIsLoading(true);
     
-    // Mock API call (replace with actual API integration)
+    // Simulate API call (replace with actual API integration later)
     setTimeout(() => {
       try {
-        // Check if we have a mock translation
-        const lowerText = text.toLowerCase();
-        if (mockTranslations[lowerText]) {
-          setOutputText(mockTranslations[lowerText]);
+        const processedText = text.trim().toLowerCase();
+        
+        // Check if we have an exact match
+        if (mockTranslations[processedText]) {
+          setOutputText(mockTranslations[processedText]);
         } else {
-          // For words we don't have in our mock database
-          if (direction === "en-to-ne") {
-            // Add some Devanagari characters as placeholder
-            setOutputText("मोक ट्रान्सलेसन");
+          // Try to find partial matches or word-by-word translation
+          const words = processedText.split(/\s+/);
+          if (words.length > 1) {
+            // Try translating each word
+            const translatedParts = words.map(word => {
+              return mockTranslations[word] || word;
+            });
+            
+            // If at least one word was translated, use the word-by-word translation
+            if (translatedParts.some(part => part !== words[translatedParts.indexOf(part)])) {
+              setOutputText(translatedParts.join(" "));
+            } else {
+              // Fallback message
+              if (direction === "en-to-ne") {
+                setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
+              } else {
+                setOutputText("Translation not available");
+              }
+            }
           } else {
-            // Add English text as placeholder
-            setOutputText("Mock translation");
+            // Single word that doesn't have a translation
+            if (direction === "en-to-ne") {
+              setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
+            } else {
+              setOutputText("Translation not available");
+            }
           }
         }
       } catch (error) {
@@ -76,6 +161,20 @@ const Translator = () => {
     }, 500);
   };
 
+  // Debounced translation effect for auto translation mode
+  useEffect(() => {
+    if (mode !== "auto" || !inputText) {
+      if (!inputText) setOutputText("");
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      translateText(inputText);
+    }, 700); // Slight increase in delay for better UX
+
+    return () => clearTimeout(timer);
+  }, [inputText, direction, mode]);
+
   const handleSwapLanguages = () => {
     setDirection(prev => prev === "en-to-ne" ? "ne-to-en" : "en-to-ne");
     setInputText(outputText);
@@ -87,12 +186,25 @@ const Translator = () => {
     setOutputText("");
   };
 
+  const handleTabChange = (value: string) => {
+    setMode(value as "auto" | "manual");
+    // If switching to auto and we already have input, translate immediately
+    if (value === "auto" && inputText.trim()) {
+      translateText(inputText);
+    }
+  };
+
   return (
     <Card className="w-full bg-asklegal-dark border-asklegal-purple/30">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-asklegal-heading">Nepali-English Translator</CardTitle>
-          <Tabs defaultValue="auto" className="w-[200px]">
+          <Tabs 
+            defaultValue="auto" 
+            value={mode}
+            onValueChange={handleTabChange}
+            className="w-[200px]"
+          >
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="auto">Auto</TabsTrigger>
               <TabsTrigger value="manual">Manual</TabsTrigger>
@@ -152,7 +264,7 @@ const Translator = () => {
             <Button
               onClick={() => translateText(inputText)}
               className="bg-asklegal-purple hover:bg-asklegal-accent"
-              disabled={isLoading}
+              disabled={isLoading || !inputText.trim()}
             >
               {isLoading ? (
                 <>
@@ -178,7 +290,7 @@ const Translator = () => {
                   <Loader2 className="h-4 w-4 animate-spin text-asklegal-purple" />
                 </div>
               ) : (
-                <div className={`font-${direction === "ne-to-en" ? "sans" : "nepali"}`}>
+                <div className={`${direction === "ne-to-en" ? "font-sans" : "font-nepali"}`}>
                   {outputText}
                 </div>
               )}

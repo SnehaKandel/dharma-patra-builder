@@ -8,6 +8,7 @@ export interface LegalDocument {
   ministry: string;
   pdfUrl: string;
   parts?: string[];
+  category?: string;
 }
 
 export interface PetitionFormData {
