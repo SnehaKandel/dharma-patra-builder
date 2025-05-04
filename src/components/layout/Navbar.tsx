@@ -1,11 +1,16 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio } from 'lucide-react';
+import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio, Language, CalendarClock, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
-import DateConverterPopover from '../date-converter/DateConverterPopover';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
@@ -81,8 +86,6 @@ const Navbar = () => {
             <Sun size={18} className={`${isDarkMode ? 'text-gray-400' : 'text-amber-500'} theme-transition`} />
           </div>
           
-          <DateConverterPopover />
-          
           <Link to="/news" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <FileText size={18} />
             <span className="hidden md:inline">News</span>
@@ -97,6 +100,29 @@ const Navbar = () => {
             <BookOpen size={18} />
             <span className="hidden md:inline">Forms</span>
           </Link>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="ghost" 
+                className="flex items-center gap-1 text-asklegal-heading hover:text-asklegal-purple hover:bg-transparent"
+              >
+                <Language size={18} />
+                <span className="hidden md:inline">Tools</span>
+                <ChevronDown size={14} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => navigate('/tools?tab=translator')}>
+                <Language className="mr-2 h-4 w-4" />
+                <span>Translator</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/tools?tab=date-converter')}>
+                <CalendarClock className="mr-2 h-4 w-4" />
+                <span>Date Converter</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           
           <Link to="/play" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <BookAudio size={18} />
