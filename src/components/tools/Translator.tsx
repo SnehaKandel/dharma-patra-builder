@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeftRight, RotateCcw, Loader2, Translate } from 'lucide-react';
+import { ArrowLeftRight, RotateCcw, Loader2, Languages } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
 
@@ -223,7 +224,7 @@ const Translator = () => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-asklegal-heading flex items-center gap-2">
-            <Translate className="h-5 w-5" />
+            <Languages className="h-5 w-5" />
             Nepali-English Translator
           </CardTitle>
           <div className="text-sm text-asklegal-text/70 flex items-center">
