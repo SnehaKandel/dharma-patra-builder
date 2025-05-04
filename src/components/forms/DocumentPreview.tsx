@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { PetitionFormData } from "@/types/forms";
 import { ArrowDown, Download, Printer, RefreshCcw } from "lucide-react";
@@ -15,6 +16,7 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
   const { toast } = useToast();
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadPDF = async () => {
     if (generatedPdfId) {
@@ -37,6 +39,26 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
       } finally {
         setIsGenerating(false);
       }
+    }
+  };
+
+  const handleDownloadDirectPDF = async () => {
+    setIsDownloading(true);
+    try {
+      await pdfService.downloadPetitionPdf(formData);
+      toast({
+        title: "Download Started",
+        description: "Your petition PDF is downloading now.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Download Failed",
+        description: error instanceof Error ? error.message : "Failed to download PDF. Please try again.",
+      });
+      console.error("PDF download error:", error);
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -67,12 +89,12 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
               e.stopPropagation();
               setShowDownloadOptions(!showDownloadOptions);
             }}
-            disabled={isGenerating}
+            disabled={isGenerating || isDownloading}
           >
-            {isGenerating ? (
+            {isGenerating || isDownloading ? (
               <>
                 <RefreshCcw size={16} className="animate-spin" />
-                Generating...
+                {isDownloading ? "Downloading..." : "Generating..."}
               </>
             ) : (
               <>
@@ -83,9 +105,16 @@ const DocumentPreview = ({ formData, generatedPdfId, onGeneratePdf }: DocumentPr
           
           {showDownloadOptions && (
             <div 
-              className="absolute right-0 mt-2 py-2 w-48 bg-asklegal-dark border border-asklegal-purple/30 rounded-md shadow-lg z-10 animate-fade-in"
+              className="absolute right-0 mt-2 py-2 w-60 bg-asklegal-dark border border-asklegal-purple/30 rounded-md shadow-lg z-10 animate-fade-in"
               onClick={(e) => e.stopPropagation()}
             >
+              <button 
+                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20 flex items-center"
+                onClick={handleDownloadDirectPDF}
+                disabled={isDownloading}
+              >
+                <Download size={16} className="mr-2" /> Download as PDF (Direct)
+              </button>
               <button 
                 className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-asklegal-purple/20 flex items-center"
                 onClick={handleDownloadPDF}

@@ -54,9 +54,52 @@ export const pdfService = {
         throw new Error(`Server error: ${error.response.data.error}`);
       } 
       
-      // Simulate success for development purposes
-      console.log('Returning mock file ID for development');
-      return 'mock-file-id-for-development';
+      throw error;
+    }
+  },
+
+  /**
+   * Downloads the petition form directly as a PDF without storing it first
+   * @param formData - The petition form data
+   */
+  downloadPetitionPdf: async (formData: any): Promise<void> => {
+    try {
+      console.log('Requesting PDF download with form data');
+      
+      // Make the API call to generate and download the PDF
+      const response = await api.post('/api/petitions/generate-pdf', formData, {
+        responseType: 'blob', // Important: We want the response as a Blob
+      });
+      
+      // Create a blob URL from the response data
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      
+      // Create a temporary link element to trigger the download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `petition-${new Date().toISOString().split('T')[0]}.pdf`;
+      
+      // Append to the document, click, and then remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up the object URL
+      window.URL.revokeObjectURL(url);
+      
+      console.log('PDF download initiated successfully');
+    } catch (error: any) {
+      console.error('Error downloading petition PDF:', error);
+      
+      // Detailed error handling
+      if (error.code === 'ERR_NETWORK') {
+        throw new Error('Cannot connect to the backend server. Please check if the server is running.');
+      } else if (error.response?.status === 404) {
+        throw new Error('PDF generation endpoint not found. Check backend routes configuration.');
+      } else {
+        throw new Error(`Failed to download PDF: ${error.message || 'Unknown error'}`);
+      }
     }
   }
 };

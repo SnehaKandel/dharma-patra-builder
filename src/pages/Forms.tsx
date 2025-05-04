@@ -52,6 +52,7 @@ const Forms = () => {
   // Add state to track the generated PDF file ID
   const [generatedPdfId, setGeneratedPdfId] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [lastError, setLastError] = useState<string | null>(null);
   const [lastRequest, setLastRequest] = useState<string | null>(null);
   const [showDebugPanel, setShowDebugPanel] = useState(false);
@@ -100,6 +101,40 @@ const Forms = () => {
       console.error("Error generating PDF:", error);
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  // Function to download PDF directly
+  const handleDownloadPdf = async () => {
+    if (isDownloading) return;
+    
+    try {
+      setIsDownloading(true);
+      setLastError(null);
+      
+      toast({
+        title: "Downloading PDF",
+        description: "Preparing your petition document for download...",
+      });
+      
+      await pdfService.downloadPetitionPdf(formData);
+      
+      toast({
+        title: "Download Started",
+        description: "Your petition PDF is downloading now.",
+      });
+    } catch (error: any) {
+      const errorMessage = error.message || "There was an error downloading your PDF. Please try again.";
+      setLastError(errorMessage);
+      
+      toast({
+        variant: "destructive",
+        title: "Download Failed",
+        description: errorMessage,
+      });
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -154,7 +189,7 @@ const Forms = () => {
             <h3 className="text-sm font-semibold mb-2">Debug Information</h3>
             <div className="space-y-1">
               <p>API URL: {import.meta.env.VITE_API_URL || 'http://localhost:5000'}</p>
-              <p>Route: /api/petitions/generate</p>
+              <p>Routes: /api/petitions/generate, /api/petitions/generate-pdf, /api/petitions/download/:fileId</p>
               {lastRequest && <p>Last request sent to: {lastRequest}</p>}
               {lastError && (
                 <div className="mt-2 p-2 bg-red-900/30 border border-red-700 rounded">
@@ -168,8 +203,9 @@ const Forms = () => {
               <ol className="list-decimal list-inside space-y-1 pl-2">
                 <li>Check if your backend server is running on port 5000</li>
                 <li>Verify petitionRoutes is registered in app.js with <code className="bg-gray-800 px-1">app.use('/api/petitions', petitionRoutes)</code></li>
-                <li>Ensure the route '/generate' exists in petitionRoutes.js</li>
+                <li>Ensure the routes '/generate', '/generate-pdf', and '/download/:fileId' exist in petitionRoutes.js</li>
                 <li>Check for any CORS issues</li>
+                <li>Verify PDFKit is installed on the server</li>
               </ol>
             </div>
           </div>
@@ -197,6 +233,24 @@ const Forms = () => {
                 )}
               </Button>
               
+              <Button 
+                onClick={handleDownloadPdf}
+                disabled={isDownloading}
+                className="bg-asklegal-purple hover:bg-asklegal-accent text-white shadow-sm flex items-center gap-2"
+              >
+                {isDownloading ? (
+                  <>
+                    <RefreshCcw className="h-4 w-4 animate-spin" />
+                    Downloading...
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4" />
+                    Download as PDF
+                  </>
+                )}
+              </Button>
+              
               {generatedPdfId && (
                 <Button 
                   onClick={handleOpenPdf}
@@ -204,7 +258,7 @@ const Forms = () => {
                   className="border-asklegal-purple/50 text-asklegal-heading hover:bg-asklegal-purple/10"
                 >
                   <Download size={18} className="mr-2" />
-                  Open PDF
+                  Open Generated PDF
                 </Button>
               )}
             </div>
@@ -222,7 +276,7 @@ const Forms = () => {
                       <p className="font-medium">Debugging Information:</p>
                       <p className="mt-1">Backend URL: {import.meta.env.VITE_API_URL || 'http://localhost:5000'}</p>
                       {lastRequest && <p className="mt-1">Last request: {lastRequest}</p>}
-                      <p className="mt-1">Make sure your backend server has the route: /api/petitions/generate</p>
+                      <p className="mt-1">Make sure your backend server has the routes: /api/petitions/generate and /api/petitions/generate-pdf</p>
                     </div>
                   </div>
                 </div>
