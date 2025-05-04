@@ -5,7 +5,7 @@ import PetitionForm from "@/components/forms/PetitionForm";
 import DocumentPreview from "@/components/forms/DocumentPreview";
 import { PetitionFormData } from "@/types/forms";
 import { Link } from "react-router-dom";
-import { Search, Download, RefreshCcw, AlertTriangle } from "lucide-react";
+import { Search, Download, RefreshCcw, AlertTriangle, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { pdfService } from "@/services/pdfService";
@@ -54,6 +54,7 @@ const Forms = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [lastError, setLastError] = useState<string | null>(null);
   const [lastRequest, setLastRequest] = useState<string | null>(null);
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
 
   // Function to handle form submission and PDF generation
   const handleGeneratePdf = async () => {
@@ -127,7 +128,17 @@ const Forms = () => {
             </p>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="flex items-center gap-1"
+              onClick={() => setShowDebugPanel(!showDebugPanel)}
+            >
+              <Terminal size={16} />
+              {showDebugPanel ? 'Hide Debug' : 'Show Debug'}
+            </Button>
+            
             <Link to="/kanoon-search">
               <Button className="flex items-center gap-2 bg-asklegal-purple hover:bg-asklegal-accent text-white shadow-sm">
                 <Search size={18} />
@@ -136,6 +147,33 @@ const Forms = () => {
             </Link>
           </div>
         </div>
+        
+        {/* Debug Panel */}
+        {showDebugPanel && (
+          <div className="mb-6 p-4 bg-gray-900 text-gray-200 rounded-md font-mono text-xs overflow-x-auto">
+            <h3 className="text-sm font-semibold mb-2">Debug Information</h3>
+            <div className="space-y-1">
+              <p>API URL: {import.meta.env.VITE_API_URL || 'http://localhost:5000'}</p>
+              <p>Route: /api/petitions/generate</p>
+              {lastRequest && <p>Last request sent to: {lastRequest}</p>}
+              {lastError && (
+                <div className="mt-2 p-2 bg-red-900/30 border border-red-700 rounded">
+                  <p className="font-semibold text-red-400">Error:</p>
+                  <p>{lastError}</p>
+                </div>
+              )}
+            </div>
+            <div className="mt-4">
+              <h4 className="font-semibold mb-1">Potential Solutions:</h4>
+              <ol className="list-decimal list-inside space-y-1 pl-2">
+                <li>Check if your backend server is running on port 5000</li>
+                <li>Verify petitionRoutes is registered in app.js with <code className="bg-gray-800 px-1">app.use('/api/petitions', petitionRoutes)</code></li>
+                <li>Ensure the route '/generate' exists in petitionRoutes.js</li>
+                <li>Check for any CORS issues</li>
+              </ol>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Form Section */}
@@ -186,11 +224,6 @@ const Forms = () => {
                       {lastRequest && <p className="mt-1">Last request: {lastRequest}</p>}
                       <p className="mt-1">Make sure your backend server has the route: /api/petitions/generate</p>
                     </div>
-                    
-                    <p className="text-xs mt-3 text-red-500">
-                      Based on your backend logs, the route /api/petitions/generate is returning a 404 error.
-                      Check your backend routes configuration.
-                    </p>
                   </div>
                 </div>
               </div>

@@ -10,8 +10,10 @@ export const pdfService = {
    * @param fileId - The ID or filename of the PDF to open
    */
   openPetitionPdf: (fileId: string): void => {
-    // Construct the URL to the PDF endpoint - updated path format
+    // Construct the URL to the PDF endpoint with correct path
     const pdfUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/petitions/download/${fileId}`;
+    
+    console.log("Opening PDF URL:", pdfUrl);
     
     // Open the PDF in a new tab
     window.open(pdfUrl, '_blank');
@@ -24,10 +26,11 @@ export const pdfService = {
    */
   submitPetitionForm: async (formData: any): Promise<string> => {
     try {
-      // Log the API URL and form data for debugging
+      // Log the form data being sent
       console.log('Sending petition form data to backend');
+      console.log('Target endpoint:', '/api/petitions/generate');
       
-      // Make the API call to generate the PDF - using the correct path
+      // Make the API call to generate the PDF with the correct path
       const response = await api.post('/api/petitions/generate', formData);
       
       console.log('PDF generation response:', response.data);

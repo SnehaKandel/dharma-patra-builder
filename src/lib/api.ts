@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 // Use a consistent API URL format - remove the '/api' from the base URL
