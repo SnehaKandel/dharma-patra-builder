@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -19,7 +20,11 @@ mongoose.connect(uri, {
     useUnifiedTopology: true
 }).then(() => {
     console.log('MongoDB connected successfully');
-}).catch(err => console.error('MongoDB connection error:', err));
+}).catch(err => {
+    console.error('Database connection error:', err);
+    // Continue running the app even if MongoDB connection fails
+    console.log('Running in limited mode without database connection');
+});
 
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -30,6 +35,11 @@ const newsRoutes = require('./routes/newsRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const petitionRoutes = require('./routes/petitionRoutes'); // Add this line
+
+// Root endpoint for health check
+app.get('/', (req, res) => {
+    res.json({ status: 'OK', message: 'Server is running' });
+});
 
 // Route setup
 app.use('/api/auth', authRoutes);

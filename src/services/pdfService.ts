@@ -24,6 +24,12 @@ export const pdfService = {
    */
   submitPetitionForm: async (formData: any): Promise<string> => {
     try {
+      // First check if backend is accessible
+      const isBackendConnected = await pdfService.checkBackendConnection();
+      if (!isBackendConnected) {
+        throw new Error("Unable to connect to the backend server. Please ensure the server is running at the configured API URL.");
+      }
+      
       // Check if the API URL environment variable is set
       const apiUrl = import.meta.env.VITE_API_URL;
       
@@ -41,8 +47,18 @@ export const pdfService = {
         throw new Error('Cannot connect to the backend server. Please ensure the server is running at the configured API URL.');
       }
       
-      // Re-throw the original error
-      throw error;
+      // Check for MongoDB connection error in the error message
+      if (error.response?.data?.error && error.response.data.error.includes('MongoDB')) {
+        throw new Error('Database connection error. The server cannot connect to MongoDB. Please check if your IP is whitelisted in MongoDB Atlas.');
+      }
+      
+      // If there's a message in the error, use it
+      if (error.response?.data?.error) {
+        throw new Error(`Server error: ${error.response.data.error}`);
+      }
+      
+      // Re-throw the original error with a more user-friendly message
+      throw new Error(error.message || 'Failed to generate PDF. Please try again later.');
     }
   },
   

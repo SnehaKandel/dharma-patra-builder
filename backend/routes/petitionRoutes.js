@@ -131,4 +131,11 @@ router.get('/download/:fileId', (req, res) => {
   }
 });
 
+/**
+ * Health check endpoint to test if the service is running
+ */
+router.get('/', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Petition service is running' });
+});
+
 module.exports = router;
