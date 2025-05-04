@@ -9,6 +9,8 @@ export interface LegalDocument {
   pdfUrl: string;
   parts?: string[];
   category?: string;
+  isPopular?: boolean;
+  mudda?: string;
 }
 
 export interface PetitionFormData {

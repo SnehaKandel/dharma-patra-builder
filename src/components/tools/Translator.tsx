@@ -1,13 +1,12 @@
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeftRight, RotateCcw, Loader2 } from 'lucide-react';
+import { ArrowLeftRight, RotateCcw, Loader2, Translate } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import api from "@/lib/api";
 
-// Enhanced mock translations with more common words and phrases
+// We'll keep the mock translations as fallback when the API fails
 const mockTranslations: Record<string, string> = {
   // English to Nepali
   "hello": "नमस्ते",
@@ -100,80 +99,113 @@ const Translator = () => {
   const [outputText, setOutputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [direction, setDirection] = useState<"en-to-ne" | "ne-to-en">("en-to-ne");
-  const [mode, setMode] = useState<"auto" | "manual">("auto");
   const { toast } = useToast();
 
-  // Improved translation function with better word recognition
-  const translateText = (text: string) => {
+  // Check if text contains Devanagari script
+  const containsDevanagari = (text: string): boolean => {
+    const devanagariRegex = /[\u0900-\u097F]/;
+    return devanagariRegex.test(text);
+  };
+
+  // Detect language and set direction automatically
+  const detectLanguageAndSetDirection = (text: string) => {
+    if (containsDevanagari(text)) {
+      setDirection("ne-to-en");
+    } else {
+      setDirection("en-to-ne");
+    }
+  };
+
+  // Enhanced translation function using LibreTranslate API
+  const translateText = async (text: string) => {
     if (!text.trim()) {
       setOutputText("");
       return;
     }
 
     setIsLoading(true);
-    
-    // Simulate API call (replace with actual API integration later)
-    setTimeout(() => {
-      try {
-        const processedText = text.trim().toLowerCase();
-        
-        // Check if we have an exact match
-        if (mockTranslations[processedText]) {
-          setOutputText(mockTranslations[processedText]);
-        } else {
-          // Try to find partial matches or word-by-word translation
-          const words = processedText.split(/\s+/);
-          if (words.length > 1) {
-            // Try translating each word
-            const translatedParts = words.map(word => {
-              return mockTranslations[word] || word;
-            });
-            
-            // If at least one word was translated, use the word-by-word translation
-            if (translatedParts.some(part => part !== words[translatedParts.indexOf(part)])) {
-              setOutputText(translatedParts.join(" "));
-            } else {
-              // Fallback message
-              if (direction === "en-to-ne") {
-                setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
-              } else {
-                setOutputText("Translation not available");
-              }
-            }
+    detectLanguageAndSetDirection(text);
+
+    try {
+      // First try online translation API
+      const sourceLang = direction === "en-to-ne" ? "en" : "ne";
+      const targetLang = direction === "en-to-ne" ? "ne" : "en";
+      
+      // Using LibreTranslate public API (with fallback to our mock dictionary)
+      const response = await fetch("https://libretranslate.com/translate", {
+        method: "POST",
+        body: JSON.stringify({
+          q: text,
+          source: sourceLang,
+          target: targetLang,
+          format: "text"
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setOutputText(data.translatedText);
+      } else {
+        // Fallback to our dictionary when API fails
+        fallbackTranslation(text);
+      }
+    } catch (error) {
+      console.error("Translation API error:", error);
+      // Fallback to our dictionary when API fails
+      fallbackTranslation(text);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fallback to dictionary-based translation
+  const fallbackTranslation = (text: string) => {
+    try {
+      const processedText = text.trim().toLowerCase();
+      
+      // Check if we have an exact match
+      if (mockTranslations[processedText]) {
+        setOutputText(mockTranslations[processedText]);
+      } else {
+        // Try to find partial matches or word-by-word translation
+        const words = processedText.split(/\s+/);
+        if (words.length > 1) {
+          // Try translating each word
+          const translatedParts = words.map(word => {
+            return mockTranslations[word] || word;
+          });
+          
+          // If at least one word was translated, use the word-by-word translation
+          if (translatedParts.some(part => part !== words[translatedParts.indexOf(part)])) {
+            setOutputText(translatedParts.join(" "));
           } else {
-            // Single word that doesn't have a translation
+            // Fallback message
             if (direction === "en-to-ne") {
               setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
             } else {
               setOutputText("Translation not available");
             }
           }
+        } else {
+          // Single word that doesn't have a translation
+          if (direction === "en-to-ne") {
+            setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
+          } else {
+            setOutputText("Translation not available");
+          }
         }
-      } catch (error) {
-        toast({
-          variant: "destructive",
-          title: "Translation Failed",
-          description: "Could not translate text. Please try again.",
-        });
-      } finally {
-        setIsLoading(false);
       }
-    }, 500);
-  };
-
-  // Debounced translation effect for auto translation mode
-  useEffect(() => {
-    if (mode !== "auto" || !inputText) {
-      if (!inputText) setOutputText("");
-      return;
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Translation Failed",
+        description: "Could not translate text. Please try again.",
+      });
     }
-
-    const timer = setTimeout(() => {
-      translateText(inputText);
-    }, 700); // Slight increase in delay for better UX
-
-    return () => clearTimeout(timer);
-  }, [inputText, direction, mode]);
+  };
 
   const handleSwapLanguages = () => {
     setDirection(prev => prev === "en-to-ne" ? "ne-to-en" : "en-to-ne");
@@ -186,40 +218,21 @@ const Translator = () => {
     setOutputText("");
   };
 
-  const handleTabChange = (value: string) => {
-    setMode(value as "auto" | "manual");
-    // If switching to auto and we already have input, translate immediately
-    if (value === "auto" && inputText.trim()) {
-      translateText(inputText);
-    }
-  };
-
   return (
     <Card className="w-full bg-asklegal-dark border-asklegal-purple/30">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-asklegal-heading">Nepali-English Translator</CardTitle>
-          <Tabs 
-            defaultValue="auto" 
-            value={mode}
-            onValueChange={handleTabChange}
-            className="w-[200px]"
-          >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="auto">Auto</TabsTrigger>
-              <TabsTrigger value="manual">Manual</TabsTrigger>
-            </TabsList>
-            <TabsContent value="auto">
-              <div className="text-xs text-asklegal-text/70 mt-1">
-                Auto-translating as you type...
-              </div>
-            </TabsContent>
-            <TabsContent value="manual">
-              <div className="text-xs text-asklegal-text/70 mt-1">
-                Click translate button when ready
-              </div>
-            </TabsContent>
-          </Tabs>
+          <CardTitle className="text-asklegal-heading flex items-center gap-2">
+            <Translate className="h-5 w-5" />
+            Nepali-English Translator
+          </CardTitle>
+          <div className="text-sm text-asklegal-text/70 flex items-center">
+            <span>
+              {direction === "en-to-ne" 
+                ? "English → Nepali" 
+                : "Nepali → English"}
+            </span>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
