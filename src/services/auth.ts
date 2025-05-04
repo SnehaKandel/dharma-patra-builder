@@ -15,7 +15,8 @@ interface RegisterData extends LoginCredentials {
 export const authService = {
   async login(credentials: LoginCredentials) {
     try {
-      const response = await api.post('/auth/login', credentials);
+      // Changed from /auth/login to /api/auth/login to match backend routes
+      const response = await api.post('/api/auth/login', credentials);
       const { token, refreshToken, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -24,6 +25,7 @@ export const authService = {
       
       return user;
     } catch (error: any) {
+      console.error('Login error details:', error.response?.data || error.message);
       toast({
         title: 'Login Failed',
         description: error.response?.data?.message || 'An error occurred during login',
@@ -36,7 +38,8 @@ export const authService = {
   async register(data: RegisterData) {
     try {
       console.log('Auth service sending register request:', data);
-      const response = await api.post('/auth/register', data);
+      // Changed from /auth/register to /api/auth/register to match backend routes
+      const response = await api.post('/api/auth/register', data);
       console.log('Register response:', response.data);
       
       const { token, refreshToken, user } = response.data;
@@ -59,7 +62,8 @@ export const authService = {
 
   async logout() {
     try {
-      await api.post('/auth/logout');
+      // Changed from /auth/logout to /api/auth/logout to match backend routes
+      await api.post('/api/auth/logout');
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');

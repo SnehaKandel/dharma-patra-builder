@@ -10,8 +10,8 @@ export const pdfService = {
    * @param fileId - The ID or filename of the PDF to open
    */
   openPetitionPdf: (fileId: string): void => {
-    // Use the /api/users endpoint temporarily since petitions routes don't exist yet
-    const pdfUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/users/documents/${fileId}`;
+    // Updated path to use /api/petitions/download/:fileId
+    const pdfUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/petitions/download/${fileId}`;
     
     console.log("Opening PDF URL:", pdfUrl);
     
@@ -29,11 +29,11 @@ export const pdfService = {
       // Log the form data being sent
       console.log('Sending petition form data to backend');
       
-      // Use the /api/users endpoint since petitions routes don't exist yet
-      console.log('Target endpoint:', '/api/users/documents/generate');
+      // Updated to use the correct API path
+      console.log('Target endpoint:', '/api/petitions/generate');
       
       // Make the API call to generate the PDF with the correct path
-      const response = await api.post('/api/users/documents/generate', formData);
+      const response = await api.post('/api/petitions/generate', formData);
       
       console.log('PDF generation response:', response.data);
       
@@ -49,7 +49,7 @@ export const pdfService = {
       
       // Show detailed error information for debugging
       if (error.response?.status === 404) {
-        throw new Error(`API endpoint not found (404). To fix this issue, you need to create a petitionRoutes.js file in the backend/routes folder and add it to app.js.`);
+        throw new Error(`API endpoint not found (404). To fix this issue, make sure petitionRoutes.js is created and registered in app.js.`);
       } else if (error.response?.data?.error) {
         throw new Error(`Server error: ${error.response.data.error}`);
       } 
