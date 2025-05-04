@@ -1,62 +1,75 @@
 
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const path = require('path');
-require('dotenv').config();
 
-const app = express();
-const port = process.env.PORT || 5000;
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-// Enable CORS for all origins
-app.use(cors());
-
-// MongoDB connection
-const uri = process.env.MONGODB_URI;
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('MongoDB connected successfully');
-}).catch(err => {
-    console.error('Database connection error:', err);
-    // Continue running the app even if MongoDB connection fails
-    console.log('Running in limited mode without database connection');
-});
-
-// Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Import routes
 const authRoutes = require('./routes/authRoutes');
-const newsRoutes = require('./routes/newsRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const petitionRoutes = require('./routes/petitionRoutes'); // Add this line
+const newsRoutes = require('./routes/newsRoutes');
+const petitionRoutes = require('./routes/petitionRoutes');  // Add this line
+const { errorHandler } = require('./middlewares/errorHandler');
+const logger = require('./utils/logger');
 
-// Root endpoint for health check
-app.get('/', (req, res) => {
-    res.json({ status: 'OK', message: 'Server is running' });
+const app = express();
+
+// Enable CORS
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// Security middleware
+app.use(helmet());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
 });
+app.use('/api/', limiter);
 
-// Route setup
+// Body parser
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
+
+// Data sanitization
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp());
+
+// Logging
+app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
+
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));  // Add this line
+
+// Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/news', newsRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/petitions', petitionRoutes); // Add this line
+app.use('/api/news', newsRoutes);
+app.use('/api/petitions', petitionRoutes);  // Add this line
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+app.use(errorHandler);
 
 module.exports = app;

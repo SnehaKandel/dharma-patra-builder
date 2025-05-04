@@ -35,7 +35,13 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.error('API request error:', error.message);
+    if (error.response) {
+      console.error(`API request error: ${error.response.status} ${error.response.statusText} for ${error.config.url}`);
+    } else if (error.request) {
+      console.error(`Network error: No response received for ${error.config.url}`);
+    } else {
+      console.error('API request error:', error.message);
+    }
     
     const originalRequest = error.config;
 
@@ -44,7 +50,7 @@ api.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const response = await axios.post(`${API_URL}/auth/refresh`, {
+        const response = await axios.post(`${API_URL}/api/auth/refresh`, {
           refreshToken,
         });
 
