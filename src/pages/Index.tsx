@@ -13,7 +13,7 @@ const Index = () => {
       <div className="container mx-auto py-16 px-4 relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-asklegal-heading mb-4 theme-transition animate-fade-in">
-            Welcome to <span className="text-asklegal-purple">AskLegal.io</span>
+            Welcome to <span className="text-asklegal-purple">AskLegal</span>
           </h1>
           <p className="text-xl text-asklegal-text/80 mb-10 theme-transition max-w-2xl mx-auto">
             Your interactive legal assistant for Nepal's legal system - access resources, get answers, and create documents with ease.

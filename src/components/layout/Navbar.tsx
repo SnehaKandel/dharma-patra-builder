@@ -71,7 +71,7 @@ const Navbar = () => {
     <nav className={`theme-transition ${isDarkMode ? 'navbar-dark' : 'navbar-light'} py-4 px-4 sticky top-0 z-50`}>
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="text-asklegal-heading text-xl font-bold theme-transition flex items-center gap-2">
-          AskLegal.io
+          AskLegal
         </Link>
         
         <div className="flex items-center gap-6">
