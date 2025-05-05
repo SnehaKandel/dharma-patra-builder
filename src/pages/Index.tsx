@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -28,7 +27,7 @@ const Index = () => {
           <div className="space-y-4 mb-6">
             <div className="chat-message p-4 rounded-lg" style={{animationDelay: "0.3s"}}>
               <p className="text-sm text-asklegal-text/70 mb-1 theme-transition">AskLegal • 03:20 PM</p>
-              <p className="theme-transition">Hello! Welcome to AskLegal.io. I'm AskLegal, your interactive legal assistant. How can I help you today?</p>
+              <p className="theme-transition">Hello! Welcome to AskLegal. I'm AskLegal, your interactive legal assistant. How can I help you today?</p>
             </div>
             
             <div className="chat-message p-4 rounded-lg" style={{animationDelay: "0.5s"}}>
