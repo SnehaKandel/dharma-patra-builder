@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -508,15 +507,6 @@ const Translator = () => {
                 </div>
               )}
             </div>
-          </div>
-
-          {/* Usage Note */}
-          <div className="mt-4 p-3 bg-asklegal-purple/10 border border-asklegal-purple/20 rounded-md">
-            <p className="text-xs text-asklegal-text/70">
-              <strong>Note:</strong> This translator includes extensive legal terminology. 
-              For production use, configure Google Translate API key for enhanced accuracy. 
-              Currently using local dictionary with 200+ legal terms.
-            </p>
           </div>
         </div>
       </CardContent>
