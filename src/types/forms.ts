@@ -1,3 +1,4 @@
+
 export interface LegalDocument {
   id: string;
   title: string;
@@ -7,7 +8,7 @@ export interface LegalDocument {
   ministry: string;
   pdfUrl: string;
   parts?: string[];
-  category: 'civil' | 'criminal' | 'constitutional' | 'commercial' | 'administrative' | 'labor' | 'family' | 'property' | 'tax' | 'environment' | 'ecommerce';
+  category: 'civil' | 'criminal' | 'constitutional' | 'commercial' | 'administrative' | 'labor' | 'family' | 'property' | 'tax' | 'environment' | 'ecommerce' | 'abuse-of-authority' | 'corruption' | 'crime' | 'judicial-procedure' | 'medical-education' | 'human-rights' | 'drug-regulation' | 'electronic-transaction' | 'disaster-risk' | 'disability-rights' | 'personal-privacy' | 'education' | 'communicable-diseases' | 'transportation' | 'cooperatives' | 'public-procurement' | 'good-governance' | 'right-to-information';
   isPopular?: boolean;
   mudda?: string;
   fileSize?: string;
