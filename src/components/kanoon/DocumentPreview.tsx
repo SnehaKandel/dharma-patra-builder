@@ -16,17 +16,46 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
   const handleDirectDownload = () => {
     if (!document) return;
     
-    const link = window.document.createElement('a');
-    link.href = document.pdfUrl;
-    link.download = `${document.titleEn.replace(/\s+/g, '_')}.pdf`;
-    window.document.body.appendChild(link);
-    link.click();
-    window.document.body.removeChild(link);
+    // Check if the document has a valid PDF URL
+    if (!document.pdfUrl || document.pdfUrl.startsWith('/docs/')) {
+      toast({
+        title: "Download Not Available",
+        description: "This document is not currently available for download. Please try again later.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // For image-based documents, show a message instead
+    if (document.id.startsWith('ecom') && document.parts) {
+      toast({
+        title: "Preview Only",
+        description: "This document is available for preview only. Download functionality will be available soon.",
+        variant: "destructive"
+      });
+      return;
+    }
     
-    toast({
-      title: "Download Started",
-      description: `${document.title} is being downloaded to your device.`,
-    });
+    try {
+      const link = window.document.createElement('a');
+      link.href = document.pdfUrl;
+      link.download = `${document.titleEn.replace(/\s+/g, '_')}.pdf`;
+      link.target = '_blank'; // Open in new tab as fallback
+      window.document.body.appendChild(link);
+      link.click();
+      window.document.body.removeChild(link);
+      
+      toast({
+        title: "Download Started",
+        description: `${document.title} is being downloaded to your device.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Download Failed",
+        description: "There was an error downloading the file. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   if (!document) {
@@ -58,7 +87,7 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
           onClick={handleDirectDownload}
         >
           <Download className="h-4 w-4" />
-          Download PDF
+          {document.pdfUrl.startsWith('/docs/') ? 'Preview Only' : 'Download PDF'}
         </Button>
       </div>
       
@@ -110,21 +139,26 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
           <div className="h-[600px] flex items-center justify-center">
             <div className="text-center p-8 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
               <FileText className="h-16 w-16 text-asklegal-purple/70 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-asklegal-heading mb-2">PDF Preview</h3>
+              <h3 className="text-lg font-medium text-asklegal-heading mb-2">Document Preview</h3>
               <p className="text-asklegal-text/80 mb-4 max-w-md">
                 {document.description}
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                Click the download button above to view the full PDF document.
+                {document.pdfUrl.startsWith('/docs/') 
+                  ? 'This document is currently available for preview only.'
+                  : 'Click the download button above to view the full document.'
+                }
               </p>
-              <Button 
-                variant="outline" 
-                onClick={handleDirectDownload}
-                className="border-asklegal-purple text-asklegal-purple hover:bg-asklegal-purple/10"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download {document.titleEn}
-              </Button>
+              {!document.pdfUrl.startsWith('/docs/') && (
+                <Button 
+                  variant="outline" 
+                  onClick={handleDirectDownload}
+                  className="border-asklegal-purple text-asklegal-purple hover:bg-asklegal-purple/10"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download {document.titleEn}
+                </Button>
+              )}
             </div>
           </div>
         )}

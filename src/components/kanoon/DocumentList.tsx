@@ -1,8 +1,8 @@
-
 import { LegalDocument } from "@/types/forms";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 interface DocumentListProps {
   documents: LegalDocument[];
@@ -10,18 +10,55 @@ interface DocumentListProps {
 }
 
 const DocumentList = ({ documents, setSelectedDocument }: DocumentListProps) => {
+  const { toast } = useToast();
+
   const categorizeDocuments = (category: string) => {
     return documents.filter(doc => doc.category === category);
   };
 
   const handleDownload = (doc: LegalDocument, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent document selection when clicking download
-    const link = document.createElement('a');
-    link.href = doc.pdfUrl;
-    link.download = `${doc.titleEn.replace(/\s+/g, '_')}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    
+    // Check if the document has a valid PDF URL
+    if (!doc.pdfUrl || doc.pdfUrl.startsWith('/docs/')) {
+      toast({
+        title: "Download Not Available",
+        description: "This document is not currently available for download.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // For image-based documents, show a message instead
+    if (doc.id.startsWith('ecom') && doc.parts) {
+      toast({
+        title: "Preview Only",
+        description: "This document is available for preview only.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const link = document.createElement('a');
+      link.href = doc.pdfUrl;
+      link.download = `${doc.titleEn.replace(/\s+/g, '_')}.pdf`;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast({
+        title: "Download Started",
+        description: `${doc.title} is being downloaded.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Download Failed",
+        description: "There was an error downloading the file.",
+        variant: "destructive"
+      });
+    }
   };
 
   const DocumentItem = ({ doc }: { doc: LegalDocument }) => (
@@ -46,9 +83,10 @@ const DocumentList = ({ documents, setSelectedDocument }: DocumentListProps) => 
         size="sm"
         className="h-8 w-8 p-0 hover:bg-asklegal-purple/20"
         onClick={(e) => handleDownload(doc, e)}
-        title="Download PDF"
+        title={doc.pdfUrl.startsWith('/docs/') ? 'Preview Only' : 'Download PDF'}
+        disabled={doc.pdfUrl.startsWith('/docs/')}
       >
-        <Download className="h-3 w-3 text-asklegal-purple" />
+        <Download className={`h-3 w-3 ${doc.pdfUrl.startsWith('/docs/') ? 'text-gray-400' : 'text-asklegal-purple'}`} />
       </Button>
     </div>
   );

@@ -9,6 +9,10 @@ interface SearchProps {
 }
 
 const KanoonSearchBar = ({ searchQuery, setSearchQuery }: SearchProps) => {
+  const handlePopularSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
   return (
     <div className="card-glassmorphism p-0 overflow-hidden">
       <div className="p-4 bg-asklegal-purple/10 border-b border-asklegal-purple/30 flex items-center">
@@ -33,22 +37,34 @@ const KanoonSearchBar = ({ searchQuery, setSearchQuery }: SearchProps) => {
           <h3 className="font-medium text-asklegal-heading mb-2">Popular searches</h3>
           <div className="flex flex-wrap gap-2">
             <button 
-              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md"
-              onClick={() => setSearchQuery("Constitution")}
+              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md transition-colors"
+              onClick={() => handlePopularSearch("Constitution")}
             >
               Constitution
             </button>
             <button 
-              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md"
-              onClick={() => setSearchQuery("Acts")}
+              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md transition-colors"
+              onClick={() => handlePopularSearch("Acts")}
             >
               Acts
             </button>
             <button 
-              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md"
-              onClick={() => setSearchQuery("इ-कमर्स")}
+              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md transition-colors"
+              onClick={() => handlePopularSearch("इ-कमर्स")}
             >
               इ-कमर्स
+            </button>
+            <button 
+              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md transition-colors"
+              onClick={() => handlePopularSearch("नागरिक")}
+            >
+              नागरिक
+            </button>
+            <button 
+              className="text-sm bg-asklegal-purple/10 hover:bg-asklegal-purple/20 text-asklegal-text px-3 py-1 rounded-md transition-colors"
+              onClick={() => handlePopularSearch("संविधान")}
+            >
+              संविधान
             </button>
           </div>
         </div>
