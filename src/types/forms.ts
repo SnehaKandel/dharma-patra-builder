@@ -1,4 +1,3 @@
-
 export interface LegalDocument {
   id: string;
   title: string;
@@ -8,9 +7,11 @@ export interface LegalDocument {
   ministry: string;
   pdfUrl: string;
   parts?: string[];
-  category?: string;
+  category: 'civil' | 'criminal' | 'constitutional' | 'commercial' | 'administrative' | 'labor' | 'family' | 'property' | 'tax' | 'environment' | 'ecommerce';
   isPopular?: boolean;
   mudda?: string;
+  fileSize?: string;
+  pages?: number;
 }
 
 export interface PetitionFormData {

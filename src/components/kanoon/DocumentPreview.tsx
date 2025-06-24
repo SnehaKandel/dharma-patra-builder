@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { LegalDocument } from "@/types/forms";
-import { Download } from "lucide-react";
+import { Download, FileText, Calendar, Building, File } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface DocumentPreviewProps {
@@ -11,6 +11,24 @@ interface DocumentPreviewProps {
 }
 
 const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => {
+  const { toast } = useToast();
+
+  const handleDirectDownload = () => {
+    if (!document) return;
+    
+    const link = document.createElement('a');
+    link.href = document.pdfUrl;
+    link.download = `${document.titleEn.replace(/\s+/g, '_')}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast({
+      title: "Download Started",
+      description: `${document.title} is being downloaded to your device.`,
+    });
+  };
+
   if (!document) {
     return (
       <div className="card-glassmorphism flex items-center justify-center min-h-[842px]">
@@ -27,35 +45,53 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
 
   return (
     <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg shadow-lg p-6 min-h-[842px] animate-paper-print">
-      <div className="flex justify-between mb-6">
-        <h2 className="text-2xl font-bold font-nepali">{document.title}</h2>
+      {/* Header */}
+      <div className="flex justify-between items-start mb-6">
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold font-nepali mb-2">{document.title}</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{document.titleEn}</p>
+        </div>
         <Button 
-          variant="outline" 
+          variant="default" 
           size="sm" 
-          className="flex items-center gap-2"
-          onClick={() => handleDownload(document)}
+          className="flex items-center gap-2 bg-asklegal-purple hover:bg-asklegal-purple/90"
+          onClick={handleDirectDownload}
         >
           <Download className="h-4 w-4" />
-          Download
+          Download PDF
         </Button>
       </div>
       
-      <div className="mb-4">
-        <p className="text-gray-600 dark:text-gray-300">{document.titleEn}</p>
-        <p className="text-gray-600 dark:text-gray-300">{document.year}</p>
-        <p className="text-gray-600 dark:text-gray-300">{document.ministry}</p>
+      {/* Document Info */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+        <div className="flex items-center gap-2">
+          <Calendar className="h-4 w-4 text-asklegal-purple" />
+          <span className="text-sm text-gray-600 dark:text-gray-300">Year: {document.year}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Building className="h-4 w-4 text-asklegal-purple" />
+          <span className="text-sm text-gray-600 dark:text-gray-300">{document.ministry}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <File className="h-4 w-4 text-asklegal-purple" />
+          <span className="text-sm text-gray-600 dark:text-gray-300">
+            {document.fileSize && `${document.fileSize}`}
+            {document.pages && ` • ${document.pages} pages`}
+          </span>
+        </div>
       </div>
       
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+      {/* Content */}
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
         {document.id === "ecom-combined" && document.parts ? (
-          <ScrollArea className="h-[700px] pr-4">
+          <ScrollArea className="h-[600px] pr-4">
             <div className="space-y-6">
               {document.parts.map((imagePath, index) => (
                 <div key={index} className="flex justify-center">
                   <img 
                     src={imagePath} 
                     alt={`${document.title} - Page ${index + 1}`}
-                    className="max-w-full h-auto border border-gray-200 dark:border-gray-700 rounded"
+                    className="max-w-full h-auto border border-gray-200 dark:border-gray-700 rounded shadow-sm"
                   />
                 </div>
               ))}
@@ -66,18 +102,29 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
             <img 
               src={document.pdfUrl} 
               alt={document.title}
-              className="max-w-full h-auto border border-gray-200 dark:border-gray-700 rounded"
-              style={{ maxHeight: '700px' }}
+              className="max-w-full h-auto border border-gray-200 dark:border-gray-700 rounded shadow-sm"
+              style={{ maxHeight: '600px' }}
             />
           </div>
         ) : (
-          <div>
-            <p className="font-nepali">
-              यो {document.title} सम्बन्धी कानून हो। यसले {document.description} को बारेमा व्याख्या गर्दछ। 
-              यो {document.year} सालमा जारी गरिएको थियो। यो दस्तावेज {document.ministry} द्वारा प्रकाशित गरिएको हो।
-            </p>
-            <div className="text-center mt-20">
-              <p className="text-gray-500 dark:text-gray-400">PDF प्रिभ्यू यहाँ देखाइनेछ। यो केवल डेमो विवरण हो।</p>
+          <div className="h-[600px] flex items-center justify-center">
+            <div className="text-center p-8 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+              <FileText className="h-16 w-16 text-asklegal-purple/70 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-asklegal-heading mb-2">PDF Preview</h3>
+              <p className="text-asklegal-text/80 mb-4 max-w-md">
+                {document.description}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                Click the download button above to view the full PDF document.
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={handleDirectDownload}
+                className="border-asklegal-purple text-asklegal-purple hover:bg-asklegal-purple/10"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download {document.titleEn}
+              </Button>
             </div>
           </div>
         )}
@@ -85,8 +132,5 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
     </div>
   );
 };
-
-// Fix the missing import
-import { FileText } from "lucide-react";
 
 export default DocumentPreview;

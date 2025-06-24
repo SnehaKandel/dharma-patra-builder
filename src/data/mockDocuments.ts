@@ -3,16 +3,18 @@ import { LegalDocument } from "@/types/forms";
 
 // Mock data for demonstration
 export const MOCK_DOCUMENTS: LegalDocument[] = [
-  // E-commerce combined document (new addition)
+  // E-commerce Laws
   {
     id: "ecom-combined",
     title: "विद्युतीय व्यापार (इ-कमर्स) ऐन",
     titleEn: "Electronic Commerce Act",
     description: "विद्युतीय व्यापार (इ-कमर्स) को सम्बन्धमा व्यवस्था गर्न बनेको ऐन",
-    category: "Acts",
+    category: "ecommerce",
     year: "2061",
     ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
     pdfUrl: "public/lovable-uploads/b03bbdd5-6db3-4a51-9d7a-da1d9c37e131.png",
+    fileSize: "2.5 MB",
+    pages: 7,
     isPopular: true,
     parts: [
       "public/lovable-uploads/b03bbdd5-6db3-4a51-9d7a-da1d9c37e131.png",
@@ -24,94 +26,178 @@ export const MOCK_DOCUMENTS: LegalDocument[] = [
       "public/lovable-uploads/203bd37b-028c-4184-b46a-d7eea96bbef7.png",
     ]
   },
-  // Original content
+  
+  // Civil Laws
   {
-    id: "1",
-    title: "अधिकार दुरुपयोग",
-    titleEn: "Adhikar Durupayog",
-    description: "अधिकारको दुरुपयोग सम्बन्धी ऐन",
-    category: "Acts",
+    id: "civil-code",
+    title: "नागरिक संहिता",
+    titleEn: "Civil Code",
+    description: "नेपालको नागरिक कानुनको मुख्य संहिता",
+    category: "civil",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/civil-code.pdf",
+    fileSize: "5.2 MB",
+    pages: 156,
+    isPopular: true
+  },
+  {
+    id: "civil-procedure",
+    title: "दीवानी कार्यविधि संहिता",
+    titleEn: "Civil Procedure Code",
+    description: "दीवानी अदालती कार्यविधि सम्बन्धी कानुन",
+    category: "civil",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/civil-procedure.pdf",
+    fileSize: "3.8 MB",
+    pages: 98,
+    isPopular: true
+  },
+
+  // Criminal Laws
+  {
+    id: "criminal-code",
+    title: "फौजदारी संहिता",
+    titleEn: "Criminal Code",
+    description: "नेपालको फौजदारी कानुनको मुख्य संहिता",
+    category: "criminal",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/criminal-code.pdf",
+    fileSize: "4.7 MB",
+    pages: 134,
+    isPopular: true
+  },
+  {
+    id: "criminal-procedure",
+    title: "फौजदारी कार्यविधि संहिता",
+    titleEn: "Criminal Procedure Code",
+    description: "फौजदारी अदालती कार्यविधि सम्बन्धी कानुन",
+    category: "criminal",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/criminal-procedure.pdf",
+    fileSize: "3.2 MB",
+    pages: 87,
+    isPopular: true
+  },
+
+  // Constitutional Laws
+  {
+    id: "constitution",
+    title: "नेपालको संविधान",
+    titleEn: "Constitution of Nepal",
+    description: "नेपालको मुख्य संविधान",
+    category: "constitutional",
+    year: "2072",
+    ministry: "संविधान सभा सचिवालय",
+    pdfUrl: "/docs/constitution.pdf",
+    fileSize: "6.8 MB",
+    pages: 308,
+    isPopular: true
+  },
+
+  // Commercial Laws
+  {
+    id: "company-act",
+    title: "कम्पनी ऐन",
+    titleEn: "Company Act",
+    description: "कम्पनी दर्ता र सञ्चालन सम्बन्धी कानुन",
+    category: "commercial",
+    year: "2063",
+    ministry: "उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय",
+    pdfUrl: "/docs/company-act.pdf",
+    fileSize: "2.9 MB",
+    pages: 76,
+    isPopular: true
+  },
+  {
+    id: "banking-act",
+    title: "बैंक तथा वित्तीय संस्था ऐन",
+    titleEn: "Banking and Financial Institution Act",
+    description: "बैंक र वित्तीय संस्था सम्बन्धी कानुन",
+    category: "commercial",
+    year: "2073",
+    ministry: "अर्थ मन्त्रालय",
+    pdfUrl: "/docs/banking-act.pdf",
+    fileSize: "4.1 MB",
+    pages: 112,
+    isPopular: true
+  },
+
+  // Labor Laws
+  {
+    id: "labor-act",
+    title: "श्रम ऐन",
+    titleEn: "Labor Act",
+    description: "श्रमिक र रोजगारदाता सम्बन्धी कानुन",
+    category: "labor",
+    year: "2074",
+    ministry: "श्रम, रोजगार तथा सामाजिक सुरक्षा मन्त्रालय",
+    pdfUrl: "/docs/labor-act.pdf",
+    fileSize: "3.5 MB",
+    pages: 95,
+    isPopular: true
+  },
+
+  // Family Laws
+  {
+    id: "family-law",
+    title: "पारिवारिक कानुन",
+    titleEn: "Family Law",
+    description: "विवाह, सम्बन्धविच्छेद र पारिवारिक सम्बन्धी कानुन",
+    category: "family",
+    year: "2074",
+    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
+    pdfUrl: "/docs/family-law.pdf",
+    fileSize: "2.1 MB",
+    pages: 58,
+    isPopular: false
+  },
+
+  // Property Laws
+  {
+    id: "land-act",
+    title: "भूमि ऐन",
+    titleEn: "Land Act",
+    description: "जग्गा जमिन सम्बन्धी कानुन",
+    category: "property",
+    year: "2021",
+    ministry: "भूमि व्यवस्था, सहकारी तथा गरिबी निवारण मन्त्रालय",
+    pdfUrl: "/docs/land-act.pdf",
+    fileSize: "4.3 MB",
+    pages: 118,
+    isPopular: true
+  },
+
+  // Tax Laws
+  {
+    id: "income-tax-act",
+    title: "आयकर ऐन",
+    titleEn: "Income Tax Act",
+    description: "आयकर सम्बन्धी कानुन",
+    category: "tax",
     year: "2058",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/adhikar-durupayog.pdf",
+    ministry: "अर्थ मन्त्रालय",
+    pdfUrl: "/docs/income-tax-act.pdf",
+    fileSize: "3.7 MB",
+    pages: 89,
     isPopular: true
   },
+
+  // Environment Laws
   {
-    id: "2",
-    title: "भ्रष्टाचार",
-    titleEn: "Bhrastachar",
-    description: "भ्रष्टाचार निवारण ऐन",
-    category: "Acts",
-    year: "2059",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/bhrastachar.pdf",
-    isPopular: true
-  },
-  {
-    id: "3",
-    title: "अपराधी",
-    titleEn: "Aparadhi",
-    description: "अपराधी संहिता",
-    category: "Acts",
-    year: "2074",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/aparadhi.pdf",
-    isPopular: true
-  },
-  {
-    id: "4",
-    title: "देवानीकायदाह",
-    titleEn: "Dewanikayada",
-    description: "देवानी संहिता",
-    category: "Acts",
-    year: "2074",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/dewanikayada.pdf",
-    isPopular: true
-  },
-  {
-    id: "5",
-    title: "दीवानी",
-    titleEn: "Diwani",
-    description: "दीवानी कार्यविधि संहिता",
-    category: "Acts",
-    year: "2074",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/diwani.pdf",
-    isPopular: true
-  },
-  // Added more items to match screenshot
-  {
-    id: "6",
-    title: "फौजदारी",
-    titleEn: "Faujdari",
-    description: "फौजदारी कार्यविधि संहिता",
-    category: "Acts",
-    year: "2074",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/faujdari.pdf",
-    isPopular: true
-  },
-  {
-    id: "7",
-    title: "चिकित्सा शिक्षा ऐन",
-    titleEn: "Chikitsa Shiksha Ain",
-    description: "चिकित्सा शिक्षा ऐन",
-    category: "Acts",
-    year: "2075",
-    ministry: "शिक्षा, विज्ञान तथा प्रविधि मन्त्रालय",
-    pdfUrl: "/docs/chikitsa-shiksha.pdf",
-    isPopular: true
-  },
-  {
-    id: "8",
-    title: "मानव अधिकार",
-    titleEn: "Manav Adhikar",
-    description: "राष्ट्रिय मानव अधिकार आयोग ऐन",
-    category: "Acts",
-    year: "2068",
-    ministry: "कानुन, न्याय तथा संसदीय मामिला मन्त्रालय",
-    pdfUrl: "/docs/manav-adhikar.pdf",
-    isPopular: true
+    id: "environment-act",
+    title: "वातावरण संरक्षण ऐन",
+    titleEn: "Environment Protection Act",
+    description: "वातावरण संरक्षण सम्बन्धी कानुन",
+    category: "environment",
+    year: "2076",
+    ministry: "वन तथा वातावरण मन्त्रालय",
+    pdfUrl: "/docs/environment-act.pdf",
+    fileSize: "2.8 MB",
+    pages: 67,
+    isPopular: false
   }
 ];

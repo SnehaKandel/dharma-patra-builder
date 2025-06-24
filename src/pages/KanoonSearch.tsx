@@ -16,9 +16,7 @@ const KanoonSearch = () => {
 
   // Filter documents
   const filteredDocuments = MOCK_DOCUMENTS.filter(doc => {
-    if (searchQuery === "") return true;
-    
-    const matchesSearch = 
+    const matchesSearch = searchQuery === "" || 
       doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.titleEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -29,11 +27,17 @@ const KanoonSearch = () => {
 
   const handleDownload = (doc: LegalDocument) => {
     toast({
-      title: "Downloading Document",
-      description: `Downloading ${doc.title} (${doc.titleEn})...`,
+      title: "Download Started",
+      description: `${doc.title} (${doc.titleEn}) is being downloaded...`,
     });
-    // In a real app, this would trigger actual download
-    window.open(doc.pdfUrl, '_blank');
+    
+    // Create download link
+    const link = document.createElement('a');
+    link.href = doc.pdfUrl;
+    link.download = `${doc.titleEn.replace(/\s+/g, '_')}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -42,7 +46,7 @@ const KanoonSearch = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-asklegal-heading">नेपाल कानून खोज</h1>
           <p className="text-asklegal-text/80 mt-2">
-            Search and access Nepali laws, acts, and legislative provisions.
+            Search and access Nepali laws, acts, and legislative provisions. Download PDFs directly to your device.
           </p>
         </div>
 
