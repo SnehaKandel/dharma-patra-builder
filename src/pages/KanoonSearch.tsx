@@ -3,34 +3,13 @@ import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { useToast } from "@/components/ui/use-toast";
 import { LegalDocument } from "@/types/forms";
-import KanoonSearchBar from "@/components/kanoon/KanoonSearch";
 import DocumentList from "@/components/kanoon/DocumentList";
 import DocumentPreview from "@/components/kanoon/DocumentPreview";
 import { MOCK_DOCUMENTS } from "@/data/mockDocuments";
 
 const KanoonSearch = () => {
   const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
   const [selectedDocument, setSelectedDocument] = useState<LegalDocument | null>(null);
-
-  // Enhanced filter function with better search logic
-  const filteredDocuments = MOCK_DOCUMENTS.filter(doc => {
-    let matchesSearch = true;
-    
-    if (searchQuery.trim() !== "") {
-      const query = searchQuery.toLowerCase().trim();
-      matchesSearch = 
-        doc.title.toLowerCase().includes(query) ||
-        doc.titleEn.toLowerCase().includes(query) ||
-        doc.description.toLowerCase().includes(query) ||
-        doc.ministry.toLowerCase().includes(query) ||
-        doc.category.toLowerCase().includes(query);
-    }
-      
-    if (activeCategory === "all") return matchesSearch;
-    return matchesSearch && doc.category === activeCategory;
-  });
 
   const handleDownload = (doc: LegalDocument) => {
     // Check if the document has a valid PDF URL
@@ -82,25 +61,15 @@ const KanoonSearch = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-asklegal-heading">नेपाल कानून खोज</h1>
           <p className="text-asklegal-text/80 mt-2">
-            Search and access Nepali laws, acts, and legislative provisions. Download PDFs directly to your device.
+            Access Nepali laws, acts, and legislative provisions. Download PDFs directly to your device.
           </p>
-          {searchQuery && (
-            <p className="text-sm text-asklegal-purple mt-2">
-              Showing {filteredDocuments.length} results for "{searchQuery}"
-            </p>
-          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Sidebar - Search and Categories */}
-          <div className="lg:col-span-1 space-y-6">
-            <KanoonSearchBar 
-              searchQuery={searchQuery} 
-              setSearchQuery={setSearchQuery}
-            />
-            
+          {/* Left Sidebar - Document Categories */}
+          <div className="lg:col-span-1">
             <DocumentList 
-              documents={filteredDocuments} 
+              documents={MOCK_DOCUMENTS} 
               setSelectedDocument={setSelectedDocument} 
             />
           </div>
