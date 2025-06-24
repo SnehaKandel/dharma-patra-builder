@@ -316,10 +316,18 @@ const Translator = () => {
     }
 
     setIsLoading(true);
-    detectLanguageAndSetDirection(text);
+    
+    // Detect language first, then use the detected direction for API calls
+    const isDevanagari = containsDevanagari(text);
+    const currentDirection = isDevanagari ? "ne-to-en" : "en-to-ne";
+    
+    // Update the direction state
+    setDirection(currentDirection);
 
-    const sourceLang = direction === "en-to-ne" ? "en" : "ne";
-    const targetLang = direction === "en-to-ne" ? "ne" : "en";
+    const sourceLang = currentDirection === "en-to-ne" ? "en" : "ne";
+    const targetLang = currentDirection === "en-to-ne" ? "ne" : "en";
+
+    console.log(`Translating from ${sourceLang} to ${targetLang}:`, text);
 
     try {
       let translatedText = "";
@@ -336,14 +344,14 @@ const Translator = () => {
         } catch (error) {
           console.log("MyMemory failed, using local dictionary...");
           // Fallback to local dictionary
-          translatedText = fallbackTranslation(text);
+          translatedText = fallbackTranslation(text, currentDirection);
         }
       }
 
       setOutputText(translatedText);
     } catch (error) {
       console.error("All translation methods failed:", error);
-      const fallbackResult = fallbackTranslation(text);
+      const fallbackResult = fallbackTranslation(text, currentDirection);
       setOutputText(fallbackResult);
     } finally {
       setIsLoading(false);
@@ -351,7 +359,7 @@ const Translator = () => {
   };
 
   // Enhanced fallback translation using local dictionary
-  const fallbackTranslation = (text: string): string => {
+  const fallbackTranslation = (text: string, translationDirection: "en-to-ne" | "ne-to-en"): string => {
     const processedText = text.trim().toLowerCase();
     
     // Check for exact match first
@@ -379,7 +387,7 @@ const Translator = () => {
     }
 
     // If no translation found
-    if (direction === "en-to-ne") {
+    if (translationDirection === "en-to-ne") {
       return "अनुवाद उपलब्ध छैन (Translation not available)";
     } else {
       return "Translation not available";
@@ -395,6 +403,16 @@ const Translator = () => {
   const handleClearText = () => {
     setInputText("");
     setOutputText("");
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = e.target.value;
+    setInputText(newText);
+    
+    // Auto-detect language and update direction
+    if (newText.trim()) {
+      detectLanguageAndSetDirection(newText);
+    }
   };
 
   return (
@@ -428,7 +446,7 @@ const Translator = () => {
             </div>
             <Textarea
               value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
+              onChange={handleInputChange}
               placeholder={direction === "en-to-ne" ? "Type English or Romanized Nepali here..." : "यहाँ नेपाली टाइप गर्नुहोस्..."}
               className="min-h-[100px] bg-asklegal-darker border-asklegal-purple/20 placeholder:text-white/30"
             />
