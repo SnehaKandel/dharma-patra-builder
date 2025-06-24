@@ -24,7 +24,7 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
   const getScoreMessage = () => {
     if (percentage >= 80) return "🎉 Outstanding! You're a legal expert! 🎉";
     if (percentage >= 60) return "👍 Good job! Your legal knowledge is solid! 👍";
-    return "💪 Keep studying! You'll get better! 💪";
+    return "💪 Great effort! Every quiz makes you stronger! 💪";
   };
 
   const triggerCelebrationConfetti = () => {
@@ -65,7 +65,7 @@ const QuizResult = ({ state, score, onRetry, onGoHome }: QuizResultProps) => {
           <p className={`text-lg font-medium ${
             percentage >= 80 ? 'text-green-600 dark:text-green-400' :
             percentage >= 60 ? 'text-asklegal-purple' :
-            'text-amber-600 dark:text-amber-400'
+            'text-blue-600 dark:text-blue-400'
           }`}>
             {getScoreMessage()}
           </p>
