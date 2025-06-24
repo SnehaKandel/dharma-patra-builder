@@ -29,6 +29,30 @@ const DocumentList = ({ documents, setSelectedDocument }: DocumentListProps) => 
       </div>
     </div>
   );
+
+  const categories = [
+    { value: 'abuse-of-authority', label: 'Abuse of Authority (अख्तियार दुरुपयोग)' },
+    { value: 'corruption', label: 'Corruption (भ्रष्टाचार)' },
+    { value: 'crime', label: 'Crime (अपराध)' },
+    { value: 'judicial-procedure', label: 'Judicial Procedure (देवानिकार्यबिधि)' },
+    { value: 'civil', label: 'Civil Law (देवानी)' },
+    { value: 'criminal', label: 'Criminal Law (फौजदारी)' },
+    { value: 'medical-education', label: 'Medical Education Act (चिकित्सा शिक्षा ऐन)' },
+    { value: 'human-rights', label: 'Human Rights (मानव अधिकार)' },
+    { value: 'drug-regulation', label: 'Drug Regulation (लागू औषध)' },
+    { value: 'electronic-transaction', label: 'Electronic Transaction (इलेक्ट्रोनिक ट्रान्जेक्सन)' },
+    { value: 'disaster-risk', label: 'Disaster Risk Management (विपद जोखिम)' },
+    { value: 'disability-rights', label: 'Disability Rights (अपाङ्गता अधिकार)' },
+    { value: 'personal-privacy', label: 'Personal Privacy (व्यक्तिगत गोपनीयता)' },
+    { value: 'education', label: 'Education (शिक्षा)' },
+    { value: 'labor', label: 'Labor (श्रम)' },
+    { value: 'communicable-diseases', label: 'Communicable Diseases (सङ्क्रामक रोग)' },
+    { value: 'transportation', label: 'Transportation (सवारी तथा यातायात)' },
+    { value: 'cooperatives', label: 'Cooperatives (सहकारी)' },
+    { value: 'public-procurement', label: 'Public Procurement Act (सार्वजनिक खरिद ऐन)' },
+    { value: 'good-governance', label: 'Good Governance (सुशासन)' },
+    { value: 'right-to-information', label: 'Right to Information (सूचना को हक)' }
+  ];
   
   return (
     <div className="card-glassmorphism p-0 overflow-hidden">
@@ -39,177 +63,27 @@ const DocumentList = ({ documents, setSelectedDocument }: DocumentListProps) => 
       </div>
       <div className="p-4">
         <Tabs defaultValue="abuse-of-authority" className="w-full">
-          {/* Main categories in a 4-column grid */}
-          <TabsList className="grid grid-cols-4 mb-4 bg-asklegal-card-bg text-asklegal-text h-auto">
-            <TabsTrigger value="abuse-of-authority" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">अख्तियार दुरुपयोग</TabsTrigger>
-            <TabsTrigger value="corruption" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">भ्रष्टाचार</TabsTrigger>
-            <TabsTrigger value="crime" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">अपराध</TabsTrigger>
-            <TabsTrigger value="judicial-procedure" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">देवानिकार्यबिधि</TabsTrigger>
-          </TabsList>
-          
-          {/* Second row - 4 columns */}
-          <TabsList className="grid grid-cols-4 mb-4 bg-asklegal-card-bg text-asklegal-text h-auto">
-            <TabsTrigger value="civil" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">देवानी</TabsTrigger>
-            <TabsTrigger value="criminal" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">फौजदारी</TabsTrigger>
-            <TabsTrigger value="medical-education" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">चिकित्सा शिक्षा</TabsTrigger>
-            <TabsTrigger value="human-rights" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">मानव अधिकार</TabsTrigger>
-          </TabsList>
-          
-          {/* Third row - 4 columns */}
-          <TabsList className="grid grid-cols-4 mb-4 bg-asklegal-card-bg text-asklegal-text h-auto">
-            <TabsTrigger value="drug-regulation" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">लागू औषध</TabsTrigger>
-            <TabsTrigger value="electronic-transaction" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">इलेक्ट्रोनिक ट्रान्जेक्सन</TabsTrigger>
-            <TabsTrigger value="disaster-risk" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">विपद जोखिम</TabsTrigger>
-            <TabsTrigger value="disability-rights" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">अपाङ्गता अधिकार</TabsTrigger>
-          </TabsList>
-          
-          {/* Fourth row - 4 columns */}
-          <TabsList className="grid grid-cols-4 mb-4 bg-asklegal-card-bg text-asklegal-text h-auto">
-            <TabsTrigger value="personal-privacy" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">व्यक्तिगत गोपनीयता</TabsTrigger>
-            <TabsTrigger value="education" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">शिक्षा</TabsTrigger>
-            <TabsTrigger value="labor" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">श्रम</TabsTrigger>
-            <TabsTrigger value="communicable-diseases" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">सङ्क्रामक रोग</TabsTrigger>
-          </TabsList>
-          
-          {/* Fifth row - 4 columns */}
-          <TabsList className="grid grid-cols-4 mb-4 bg-asklegal-card-bg text-asklegal-text h-auto">
-            <TabsTrigger value="transportation" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">सवारी तथा यातायात</TabsTrigger>
-            <TabsTrigger value="cooperatives" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">सहकारी</TabsTrigger>
-            <TabsTrigger value="public-procurement" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">सार्वजनिक खरिद</TabsTrigger>
-            <TabsTrigger value="good-governance" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">सुशासन</TabsTrigger>
-          </TabsList>
-          
-          {/* Sixth row - 1 column */}
-          <TabsList className="grid grid-cols-1 mb-4 bg-asklegal-card-bg text-asklegal-text h-auto w-1/4">
-            <TabsTrigger value="right-to-information" className="data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-xs p-2">सूचना को हक</TabsTrigger>
-          </TabsList>
+          <div className="space-y-2 mb-4">
+            {categories.map((category) => (
+              <TabsList key={category.value} className="w-full bg-asklegal-card-bg text-asklegal-text h-auto">
+                <TabsTrigger 
+                  value={category.value} 
+                  className="w-full data-[state=active]:text-asklegal-heading data-[state=active]:bg-asklegal-purple/10 text-sm p-3 text-left justify-start"
+                >
+                  {category.label}
+                </TabsTrigger>
+              </TabsList>
+            ))}
+          </div>
           
           <div className="space-y-1 max-h-96 overflow-y-auto">
-            <TabsContent value="abuse-of-authority" className="space-y-1 mt-0">
-              {categorizeDocuments('abuse-of-authority').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="corruption" className="space-y-1 mt-0">
-              {categorizeDocuments('corruption').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="crime" className="space-y-1 mt-0">
-              {categorizeDocuments('crime').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="judicial-procedure" className="space-y-1 mt-0">
-              {categorizeDocuments('judicial-procedure').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="civil" className="space-y-1 mt-0">
-              {categorizeDocuments('civil').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="criminal" className="space-y-1 mt-0">
-              {categorizeDocuments('criminal').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="medical-education" className="space-y-1 mt-0">
-              {categorizeDocuments('medical-education').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="human-rights" className="space-y-1 mt-0">
-              {categorizeDocuments('human-rights').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="drug-regulation" className="space-y-1 mt-0">
-              {categorizeDocuments('drug-regulation').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="electronic-transaction" className="space-y-1 mt-0">
-              {categorizeDocuments('electronic-transaction').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="disaster-risk" className="space-y-1 mt-0">
-              {categorizeDocuments('disaster-risk').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="disability-rights" className="space-y-1 mt-0">
-              {categorizeDocuments('disability-rights').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="personal-privacy" className="space-y-1 mt-0">
-              {categorizeDocuments('personal-privacy').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="education" className="space-y-1 mt-0">
-              {categorizeDocuments('education').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="labor" className="space-y-1 mt-0">
-              {categorizeDocuments('labor').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="communicable-diseases" className="space-y-1 mt-0">
-              {categorizeDocuments('communicable-diseases').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="transportation" className="space-y-1 mt-0">
-              {categorizeDocuments('transportation').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="cooperatives" className="space-y-1 mt-0">
-              {categorizeDocuments('cooperatives').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="public-procurement" className="space-y-1 mt-0">
-              {categorizeDocuments('public-procurement').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="good-governance" className="space-y-1 mt-0">
-              {categorizeDocuments('good-governance').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
-            
-            <TabsContent value="right-to-information" className="space-y-1 mt-0">
-              {categorizeDocuments('right-to-information').map((doc) => (
-                <DocumentItem key={doc.id} doc={doc} />
-              ))}
-            </TabsContent>
+            {categories.map((category) => (
+              <TabsContent key={category.value} value={category.value} className="space-y-1 mt-0">
+                {categorizeDocuments(category.value).map((doc) => (
+                  <DocumentItem key={doc.id} doc={doc} />
+                ))}
+              </TabsContent>
+            ))}
           </div>
         </Tabs>
       </div>
