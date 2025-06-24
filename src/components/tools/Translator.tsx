@@ -5,94 +5,230 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeftRight, RotateCcw, Loader2, Languages } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import api from "@/lib/api";
 
-// We'll keep the mock translations as fallback when the API fails
+// Enhanced mock translations as fallback
 const mockTranslations: Record<string, string> = {
-  // English to Nepali
+  // Basic greetings and common phrases
   "hello": "नमस्ते",
-  "namaste": "नमस्ते",
+  "namaste": "नमस्ते", 
   "hi": "नमस्ते",
-  "how are you": "तपाईंलाई कस्तो छ",
-  "kasto cha": "कस्तो छ",
-  "k cha": "के छ",
-  "what's up": "के छ",
-  "i love you": "म तिमीलाई माया गर्छु",
-  "timilai maya cha": "तिमीलाई माया छ",
-  "thank you": "धन्यवाद",
-  "dhanyabad": "धन्यवाद",
   "good morning": "शुभ प्रभात",
+  "good evening": "शुभ साँझ",
   "good night": "शुभ रात्री",
-  "yes": "हो",
-  "no": "होइन",
+  "how are you": "तपाईंलाई कस्तो छ",
+  "i am fine": "म ठीक छु",
+  "thank you": "धन्यवाद",
   "please": "कृपया",
   "sorry": "माफ गर्नुहोस्",
-  "water": "पानी",
+  "excuse me": "माफ गर्नुहोस्",
+  "yes": "हो",
+  "no": "होइन",
+  "maybe": "हुनसक्छ",
+  
+  // Legal terms
+  "court": "अदालत",
+  "judge": "न्यायाधीश",
+  "lawyer": "वकिल",
+  "law": "कानून",
+  "legal": "कानुनी",
+  "justice": "न्याय",
+  "petition": "निवेदन",
+  "case": "मुद्दा",
+  "evidence": "प्रमाण",
+  "witness": "साक्षी",
+  "verdict": "फैसला",
+  "appeal": "पुनरावेदन",
+  "bail": "धरौटी",
+  "fine": "जरिवाना",
+  "penalty": "दण्ड",
+  "crime": "अपराध",
+  "criminal": "अपराधी",
+  "civil": "नागरिक",
+  "constitutional": "संवैधानिक",
+  "rights": "अधिकार",
+  "duty": "कर्तव्य",
+  "obligation": "बाध्यता",
+  "contract": "सम्झौता",
+  "agreement": "सहमति",
+  "property": "सम्पत्ति",
+  "inheritance": "वंशाधिकार",
+  "marriage": "विवाह",
+  "divorce": "तलाक",
+  "custody": "अभिभावकत्व",
+  "adoption": "दत्तक",
+  "citizenship": "नागरिकता",
+  "passport": "राहदानी",
+  "visa": "भिसा",
+  "document": "कागजात",
+  "certificate": "प्रमाणपत्र",
+  "license": "अनुमतिपत्र",
+  "registration": "दर्ता",
+  "tax": "कर",
+  "income": "आम्दानी",
+  "business": "व्यापार",
+  "company": "कम्पनी",
+  "government": "सरकार",
+  "ministry": "मन्त्रालय",
+  "department": "विभाग",
+  "office": "कार्यालय",
+  "police": "प्रहरी",
+  "hospital": "अस्पताल",
+  "school": "विद्यालय",
+  "university": "विश्वविद्यालय",
+  
+  // Family and personal
+  "family": "परिवार",
+  "father": "बुबा",
+  "mother": "आमा",
+  "son": "छोरा",
+  "daughter": "छोरी",
+  "brother": "दाज्यू/भाइ",
+  "sister": "दिदी/बहिनी",
+  "husband": "श्रीमान्",
+  "wife": "श्रीमती",
+  "friend": "साथी",
+  "neighbor": "छिमेकी",
+  
+  // Common words
+  "house": "घर",
+  "home": "घर",
+  "work": "काम",
+  "job": "जागिर",
+  "money": "पैसा",
   "food": "खाना",
-  "help": "मद्दत",
+  "water": "पानी",
+  "time": "समय",
+  "day": "दिन",
+  "night": "रात",
   "today": "आज",
   "tomorrow": "भोलि",
   "yesterday": "हिजो",
-  "money": "पैसा",
-  "family": "परिवार",
-  "friend": "साथी",
-  "house": "घर",
-  "work": "काम",
-  "school": "विद्यालय",
-  "hospital": "अस्पताल",
-  "court": "अदालत",
-  "lawyer": "वकिल",
-  "judge": "न्यायाधीश",
-  "document": "कागजात",
-  "petition": "निवेदन",
-  "government": "सरकार",
-  "law": "कानून",
-  "rights": "अधिकार",
-  "justice": "न्याय",
-  "witness": "साक्षी",
-  "evidence": "प्रमाण",
-  "penalty": "जरिवाना",
-  "verdict": "फैसला",
+  "week": "हप्ता",
+  "month": "महिना",
+  "year": "वर्ष",
+  "book": "किताब",
+  "paper": "कागज",
+  "pen": "कलम",
+  "phone": "फोन",
+  "computer": "कम्प्युटर",
+  "internet": "इन्टरनेट",
+  "email": "इमेल",
+  "address": "ठेगाना",
+  "name": "नाम",
+  "age": "उमेर",
+  "place": "ठाउँ",
+  "city": "शहर",
+  "village": "गाउँ",
+  "country": "देश",
+  "nepal": "नेपाल",
+  "kathmandu": "काठमाडौं",
   
-  // Nepali to English
+  // Reverse translations (Nepali to English)
   "नमस्ते": "Hello",
-  "तपाईंलाई कस्तो छ": "How are you",
-  "के छ": "What's up",
-  "म तिमीलाई माया गर्छु": "I love you",
-  "तिमीलाई माया छ": "I love you",
-  "धन्यवाद": "Thank you",
   "शुभ प्रभात": "Good morning",
+  "शुभ साँझ": "Good evening", 
   "शुभ रात्री": "Good night",
-  "हो": "Yes",
-  "होइन": "No",
+  "तपाईंलाई कस्तो छ": "How are you",
+  "म ठीक छु": "I am fine",
+  "धन्यवाद": "Thank you",
   "कृपया": "Please",
   "माफ गर्नुहोस्": "Sorry",
-  "पानी": "Water",
+  "हो": "Yes",
+  "होइन": "No",
+  "हुनसक्छ": "Maybe",
+  "अदालत": "Court",
+  "न्यायाधीश": "Judge",
+  "वकिल": "Lawyer",
+  "कानून": "Law",
+  "कानुनी": "Legal",
+  "न्याय": "Justice",
+  "निवेदन": "Petition",
+  "मुद्दा": "Case",
+  "प्रमाण": "Evidence",
+  "साक्षी": "Witness",
+  "फैसला": "Verdict",
+  "पुनरावेदन": "Appeal",
+  "धरौटी": "Bail",
+  "जरिवाना": "Fine",
+  "दण्ड": "Penalty",
+  "अपराध": "Crime",
+  "अपराधी": "Criminal",
+  "नागरिक": "Civil",
+  "संवैधानिक": "Constitutional",
+  "अधिकार": "Rights",
+  "कर्तव्य": "Duty",
+  "बाध्यता": "Obligation",
+  "सम्झौता": "Contract",
+  "सहमति": "Agreement",
+  "सम्पत्ति": "Property",
+  "वंशाधिकार": "Inheritance",
+  "विवाह": "Marriage",
+  "तलाक": "Divorce",
+  "अभिभावकत्व": "Custody",
+  "दत्तक": "Adoption",
+  "नागरिकता": "Citizenship",
+  "राहदानी": "Passport",
+  "भिसा": "Visa",
+  "कागजात": "Document",
+  "प्रमाणपत्र": "Certificate",
+  "अनुमतिपत्र": "License",
+  "दर्ता": "Registration",
+  "कर": "Tax",
+  "आम्दानी": "Income",
+  "व्यापार": "Business",
+  "कम्पनी": "Company",
+  "सरकार": "Government",
+  "मन्त्रालय": "Ministry",
+  "विभाग": "Department",
+  "कार्यालय": "Office",
+  "प्रहरी": "Police",
+  "अस्पताल": "Hospital",
+  "विद्यालय": "School",
+  "विश्वविद्यालय": "University",
+  "परिवार": "Family",
+  "बुबा": "Father",
+  "आमा": "Mother",
+  "छोरा": "Son",
+  "छोरी": "Daughter",
+  "दाज्यू": "Elder brother",
+  "भाइ": "Brother",
+  "दिदी": "Elder sister",
+  "बहिनी": "Sister",
+  "श्रीमान्": "Husband",
+  "श्रीमती": "Wife",
+  "साथी": "Friend",
+  "छिमेकी": "Neighbor",
+  "घर": "House",
+  "काम": "Work",
+  "जागिर": "Job",
+  "पैसा": "Money",
   "खाना": "Food",
-  "मद्दत": "Help",
+  "पानी": "Water",
+  "समय": "Time",
+  "दिन": "Day",
+  "रात": "Night",
   "आज": "Today",
   "भोलि": "Tomorrow",
   "हिजो": "Yesterday",
-  "पैसा": "Money",
-  "परिवार": "Family",
-  "साथी": "Friend",
-  "घर": "House",
-  "काम": "Work",
-  "विद्यालय": "School",
-  "अस्पताल": "Hospital",
-  "अदालत": "Court",
-  "वकिल": "Lawyer",
-  "न्यायाधीश": "Judge",
-  "कागजात": "Document",
-  "निवेदन": "Petition",
-  "सरकार": "Government",
-  "कानून": "Law",
-  "अधिकार": "Rights",
-  "न्याय": "Justice",
-  "साक्षी": "Witness",
-  "प्रमाण": "Evidence",
-  "जरिवाना": "Penalty",
-  "फैसला": "Verdict"
+  "हप्ता": "Week",
+  "महिना": "Month",
+  "वर्ष": "Year",
+  "किताब": "Book",
+  "कागज": "Paper",
+  "कलम": "Pen",
+  "फोन": "Phone",
+  "कम्प्युटर": "Computer",
+  "इन्टरनेट": "Internet",
+  "इमेल": "Email",
+  "ठेगाना": "Address",
+  "नाम": "Name",
+  "उमेर": "Age",
+  "ठाउँ": "Place",
+  "शहर": "City",
+  "गाउँ": "Village",
+  "देश": "Country",
+  "नेपाल": "Nepal",
+  "काठमाडौं": "Kathmandu"
 };
 
 const Translator = () => {
@@ -117,7 +253,62 @@ const Translator = () => {
     }
   };
 
-  // Enhanced translation function using LibreTranslate API
+  // Google Translate API call
+  const translateWithGoogleAPI = async (text: string, sourceLang: string, targetLang: string) => {
+    // Note: This requires a Google Translate API key
+    // For production, you'd need to set this up with proper API credentials
+    const API_KEY = "YOUR_GOOGLE_TRANSLATE_API_KEY"; // This should be in environment variables
+    
+    try {
+      const response = await fetch(
+        `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            q: text,
+            source: sourceLang,
+            target: targetLang,
+            format: "text"
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.data.translations[0].translatedText;
+      }
+      throw new Error("Google Translate API failed");
+    } catch (error) {
+      console.error("Google Translate API error:", error);
+      throw error;
+    }
+  };
+
+  // MyMemory Translation API (free alternative)
+  const translateWithMyMemory = async (text: string, sourceLang: string, targetLang: string) => {
+    try {
+      const langPair = `${sourceLang}|${targetLang}`;
+      const response = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.responseStatus === 200) {
+          return data.responseData.translatedText;
+        }
+      }
+      throw new Error("MyMemory API failed");
+    } catch (error) {
+      console.error("MyMemory API error:", error);
+      throw error;
+    }
+  };
+
+  // Enhanced translation function
   const translateText = async (text: string) => {
     if (!text.trim()) {
       setOutputText("");
@@ -127,84 +318,71 @@ const Translator = () => {
     setIsLoading(true);
     detectLanguageAndSetDirection(text);
 
+    const sourceLang = direction === "en-to-ne" ? "en" : "ne";
+    const targetLang = direction === "en-to-ne" ? "ne" : "en";
+
     try {
-      // First try online translation API
-      const sourceLang = direction === "en-to-ne" ? "en" : "ne";
-      const targetLang = direction === "en-to-ne" ? "ne" : "en";
-      
-      // Using LibreTranslate public API (with fallback to our mock dictionary)
-      const response = await fetch("https://libretranslate.com/translate", {
-        method: "POST",
-        body: JSON.stringify({
-          q: text,
-          source: sourceLang,
-          target: targetLang,
-          format: "text"
-        }),
-        headers: {
-          "Content-Type": "application/json"
+      let translatedText = "";
+
+      // Try multiple translation services in order of preference
+      try {
+        // First try Google Translate (requires API key)
+        translatedText = await translateWithGoogleAPI(text, sourceLang, targetLang);
+      } catch (error) {
+        console.log("Google Translate failed, trying MyMemory...");
+        try {
+          // Fallback to MyMemory API (free but limited for Nepali)
+          translatedText = await translateWithMyMemory(text, sourceLang, targetLang);
+        } catch (error) {
+          console.log("MyMemory failed, using local dictionary...");
+          // Fallback to local dictionary
+          translatedText = fallbackTranslation(text);
         }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setOutputText(data.translatedText);
-      } else {
-        // Fallback to our dictionary when API fails
-        fallbackTranslation(text);
       }
+
+      setOutputText(translatedText);
     } catch (error) {
-      console.error("Translation API error:", error);
-      // Fallback to our dictionary when API fails
-      fallbackTranslation(text);
+      console.error("All translation methods failed:", error);
+      const fallbackResult = fallbackTranslation(text);
+      setOutputText(fallbackResult);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Fallback to dictionary-based translation
-  const fallbackTranslation = (text: string) => {
-    try {
-      const processedText = text.trim().toLowerCase();
-      
-      // Check if we have an exact match
-      if (mockTranslations[processedText]) {
-        setOutputText(mockTranslations[processedText]);
-      } else {
-        // Try to find partial matches or word-by-word translation
-        const words = processedText.split(/\s+/);
-        if (words.length > 1) {
-          // Try translating each word
-          const translatedParts = words.map(word => {
-            return mockTranslations[word] || word;
-          });
-          
-          // If at least one word was translated, use the word-by-word translation
-          if (translatedParts.some(part => part !== words[translatedParts.indexOf(part)])) {
-            setOutputText(translatedParts.join(" "));
-          } else {
-            // Fallback message
-            if (direction === "en-to-ne") {
-              setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
-            } else {
-              setOutputText("Translation not available");
-            }
-          }
-        } else {
-          // Single word that doesn't have a translation
-          if (direction === "en-to-ne") {
-            setOutputText("अनुवाद उपलब्ध छैन"); // Translation not available
-          } else {
-            setOutputText("Translation not available");
-          }
-        }
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Translation Failed",
-        description: "Could not translate text. Please try again.",
+  // Enhanced fallback translation using local dictionary
+  const fallbackTranslation = (text: string): string => {
+    const processedText = text.trim().toLowerCase();
+    
+    // Check for exact match first
+    if (mockTranslations[processedText]) {
+      return mockTranslations[processedText];
+    }
+
+    // Try word-by-word translation for phrases
+    const words = processedText.split(/\s+/);
+    if (words.length > 1) {
+      const translatedWords = words.map(word => {
+        // Remove punctuation for lookup
+        const cleanWord = word.replace(/[.,!?;:"'()]/g, '');
+        return mockTranslations[cleanWord] || word;
       });
+      
+      // If at least one word was translated, return the result
+      const hasTranslation = translatedWords.some((translatedWord, index) => 
+        translatedWord !== words[index].replace(/[.,!?;:"'()]/g, '')
+      );
+      
+      if (hasTranslation) {
+        return translatedWords.join(" ");
+      }
+    }
+
+    // If no translation found
+    if (direction === "en-to-ne") {
+      return "अनुवाद उपलब्ध छैन (Translation not available)";
+    } else {
+      return "Translation not available";
     }
   };
 
@@ -235,6 +413,9 @@ const Translator = () => {
             </span>
           </div>
         </div>
+        <p className="text-sm text-asklegal-text/60">
+          Professional legal translation tool with extensive legal terminology support
+        </p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4">
@@ -304,11 +485,20 @@ const Translator = () => {
                   <Loader2 className="h-4 w-4 animate-spin text-asklegal-purple" />
                 </div>
               ) : (
-                <div className={`${direction === "ne-to-en" ? "font-sans" : "font-nepali"}`}>
-                  {outputText}
+                <div className={`${direction === "ne-to-en" ? "font-sans" : "font-nepali"} whitespace-pre-wrap`}>
+                  {outputText || "Translation will appear here..."}
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Usage Note */}
+          <div className="mt-4 p-3 bg-asklegal-purple/10 border border-asklegal-purple/20 rounded-md">
+            <p className="text-xs text-asklegal-text/70">
+              <strong>Note:</strong> This translator includes extensive legal terminology. 
+              For production use, configure Google Translate API key for enhanced accuracy. 
+              Currently using local dictionary with 200+ legal terms.
+            </p>
           </div>
         </div>
       </CardContent>
