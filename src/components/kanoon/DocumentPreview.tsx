@@ -16,12 +16,12 @@ const DocumentPreview = ({ document, handleDownload }: DocumentPreviewProps) => 
   const handleDirectDownload = () => {
     if (!document) return;
     
-    const link = document.createElement('a');
+    const link = window.document.createElement('a');
     link.href = document.pdfUrl;
     link.download = `${document.titleEn.replace(/\s+/g, '_')}.pdf`;
-    document.body.appendChild(link);
+    window.document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    window.document.body.removeChild(link);
     
     toast({
       title: "Download Started",
