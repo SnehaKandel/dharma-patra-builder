@@ -123,7 +123,7 @@ const Play = () => {
                   <PlayCircle size={80} className="text-asklegal-purple mx-auto mb-6 animate-pulse" />
                   <h1 className="text-3xl font-bold text-asklegal-heading theme-transition mb-4">🎯 Legal Quiz Challenge</h1>
                   <p className="text-asklegal-text/70 theme-transition mb-8 max-w-lg mx-auto">
-                    🏆 Test your knowledge of Nepal's constitution, criminal law, civil law, judiciary, and legal rights with our interactive quiz! Complete it to unlock awesome rewards!
+                    Test your knowledge of Nepal's constitution, criminal law, civil law, judiciary, and legal rights with our interactive quiz! Complete it to unlock awesome rewards!
                   </p>
                   
                   <div className="flex justify-center gap-4 flex-wrap">
@@ -131,7 +131,7 @@ const Play = () => {
                       onClick={startQuiz}
                       className="bg-asklegal-purple hover:bg-asklegal-purple/90 text-white px-8 btn-animated hover:scale-105 transition-transform"
                     >
-                      🚀 Start Quiz Challenge
+                      🚀 Start Quiz
                     </Button>
                     <Button 
                       onClick={() => navigate('/kanoon-search')}
