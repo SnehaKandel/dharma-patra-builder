@@ -12,6 +12,7 @@ export interface LegalDocument {
   mudda?: string;
   fileSize?: string;
   pages?: number;
+  content?: string;
 }
 
 export interface PetitionFormData {
