@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LegalDocument } from "@/types/forms";
-import { FileText, Search, Font, Palette, Minus, Plus } from "lucide-react";
+import { FileText, Search, Type, Palette, Minus, Plus } from "lucide-react";
 import {
   Popover,
   PopoverContent,
