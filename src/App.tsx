@@ -10,12 +10,10 @@ import Play from "./pages/Play";
 import Learn from "./pages/Learn";
 import Settings from "./pages/Settings";
 import Login from "./pages/Auth/Login";
-import Register from "./pages/Auth/Register";
 import Admin from "./pages/Admin";
 import Forms from "./pages/Forms";
+import RAGAdmin from "./pages/RAGAdmin";
 import NotFound from "./pages/NotFound";
-import KanoonSearch from "./pages/KanoonSearch";
-import Tools from "./pages/Tools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,11 +37,9 @@ const App = () => (
           <Route path="/learn" element={<Learn />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/rag" element={<RAGAdmin />} />
           <Route path="/forms" element={<Forms />} />
-          <Route path="/kanoon-search" element={<KanoonSearch />} />
-          <Route path="/tools" element={<Tools />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -9,16 +9,24 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
+const fs = require('fs');
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const newsRoutes = require('./routes/newsRoutes');
-const petitionRoutes = require('./routes/petitionRoutes');  // Add this line
+const petitionRoutes = require('./routes/petitionRoutes');
+const ragRoutes = require('./routes/ragRoutes');  // Add RAG routes
 const { errorHandler } = require('./middlewares/errorHandler');
 const logger = require('./utils/logger');
 
 const app = express();
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads/pdfs');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Enable CORS
 app.use(cors({
@@ -52,14 +60,15 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));  // Add this line
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/news', newsRoutes);
-app.use('/api/petitions', petitionRoutes);  // Add this line
+app.use('/api/petitions', petitionRoutes);
+app.use('/api/rag', ragRoutes);  // Add RAG routes
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
