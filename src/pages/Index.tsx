@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -5,9 +6,16 @@ import { FileText, Search, BookOpen, Send, Bot, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ragService } from "@/services/rag";
 
+interface ChatMessage {
+  type: 'bot' | 'user';
+  content: string;
+  timestamp: Date;
+  sources?: string[];
+}
+
 const Index = () => {
   const [chatInput, setChatInput] = useState("");
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       type: 'bot',
       content: "Hello! Welcome to AskLegal. I'm AskLegal, your interactive legal assistant. How can I help you today?",
@@ -34,7 +42,7 @@ const Index = () => {
   const handleSendMessage = async () => {
     if (!chatInput.trim()) return;
     
-    const userMessage = {
+    const userMessage: ChatMessage = {
       type: 'user',
       content: chatInput,
       timestamp: new Date()
@@ -49,7 +57,7 @@ const Index = () => {
         // Use RAG system
         const response = await ragService.queryRAG(chatInput);
         
-        const botMessage = {
+        const botMessage: ChatMessage = {
           type: 'bot',
           content: response.answer,
           sources: response.sources,
@@ -59,7 +67,7 @@ const Index = () => {
         setMessages(prev => [...prev, botMessage]);
       } else {
         // Fallback message when no documents are uploaded
-        const botMessage = {
+        const botMessage: ChatMessage = {
           type: 'bot',
           content: "I don't have access to the Constitution documents yet. Please ask an administrator to upload the necessary PDF files to enable this feature.",
           timestamp: new Date()
@@ -68,7 +76,7 @@ const Index = () => {
         setMessages(prev => [...prev, botMessage]);
       }
     } catch (error) {
-      const errorMessage = {
+      const errorMessage: ChatMessage = {
         type: 'bot',
         content: "Sorry, I encountered an error while processing your question. Please try again.",
         timestamp: new Date()
