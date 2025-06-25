@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,9 @@ import Admin from "./pages/Admin";
 import Forms from "./pages/Forms";
 import RAGAdmin from "./pages/RAGAdmin";
 import Analytics from "./pages/Analytics";
+import Discussion from "./pages/Discussion";
+import DiscussionPost from "./pages/DiscussionPost";
+import CreateDiscussion from "./pages/CreateDiscussion";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -41,6 +45,9 @@ const App = () => (
           <Route path="/admin/rag" element={<RAGAdmin />} />
           <Route path="/forms" element={<Forms />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/discussion" element={<Discussion />} />
+          <Route path="/discussion/post/:postId" element={<DiscussionPost />} />
+          <Route path="/discussion/create" element={<CreateDiscussion />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
