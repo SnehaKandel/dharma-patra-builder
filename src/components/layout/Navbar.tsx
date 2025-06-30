@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio, Languages, CalendarClock, ChevronDown } from 'lucide-react';
+import { FileText, BookOpen, Settings, User, LogIn, LogOut, Moon, Sun, Search, BookAudio, Languages, CalendarClock, ChevronDown, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
@@ -99,6 +98,11 @@ const Navbar = () => {
           <Link to="/forms" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
             <BookOpen size={18} />
             <span className="hidden md:inline">Forms</span>
+          </Link>
+          
+          <Link to="/analytics" className="flex items-center text-asklegal-heading hover:text-asklegal-purple gap-2 theme-transition">
+            <BarChart3 size={18} />
+            <span className="hidden md:inline">Analytics</span>
           </Link>
           
           <DropdownMenu>
