@@ -5,66 +5,123 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
-import { TrendingUp, Users, FileText, MessageSquare, Scale, BookOpen } from "lucide-react";
+import { TrendingUp, Users, FileText, MessageSquare, Scale, BookOpen, Calendar, Download, Filter } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Mock data for legal analytics
+// More accurate Nepali legal context data
 const constitutionUsageData = [
-  { month: "Jan", queries: 120, articles: 45 },
-  { month: "Feb", queries: 180, articles: 62 },
-  { month: "Mar", queries: 240, articles: 78 },
-  { month: "Apr", queries: 190, articles: 55 },
-  { month: "May", queries: 320, articles: 89 },
-  { month: "Jun", queries: 410, articles: 102 }
+  { month: "Baisakh", queries: 450, articles: 89, nepaliMonth: "बैशाख" },
+  { month: "Jestha", queries: 520, articles: 112, nepaliMonth: "जेठ" },
+  { month: "Ashadh", queries: 380, articles: 95, nepaliMonth: "आषाढ" },
+  { month: "Shrawan", queries: 610, articles: 145, nepaliMonth: "श्रावण" },
+  { month: "Bhadra", queries: 720, articles: 168, nepaliMonth: "भद्र" },
+  { month: "Ashwin", queries: 890, articles: 203, nepaliMonth: "आश्विन" }
 ];
 
 const legalCategoriesData = [
-  { name: "Constitutional Law", value: 35, color: "#8B5CF6" },
-  { name: "Civil Rights", value: 25, color: "#06B6D4" },
-  { name: "Criminal Law", value: 20, color: "#10B981" },
-  { name: "Administrative Law", value: 12, color: "#F59E0B" },
-  { name: "Others", value: 8, color: "#EF4444" }
+  { 
+    name: "संवैधानिक कानून", 
+    nameEn: "Constitutional Law",
+    value: 28, 
+    color: "#8B5CF6",
+    queries: 1230,
+    description: "नेपालको संविधान सम्बन्धी प्रश्नहरू"
+  },
+  { 
+    name: "नागरिक अधिकार", 
+    nameEn: "Civil Rights",
+    value: 22, 
+    color: "#06B6D4",
+    queries: 967,
+    description: "मौलिक अधिकार र स्वतन्त्रता"
+  },
+  { 
+    name: "फौजदारी कानून", 
+    nameEn: "Criminal Law",
+    value: 18, 
+    color: "#10B981",
+    queries: 792,
+    description: "अपराध र सजाय सम्बन्धी कानून"
+  },
+  { 
+    name: "सम्पत्ति कानून", 
+    nameEn: "Property Law",
+    value: 15, 
+    color: "#F59E0B",
+    queries: 660,
+    description: "घर जग्गा र सम्पत्ति अधिकार"
+  },
+  { 
+    name: "पारिवारिक कानून", 
+    nameEn: "Family Law",
+    value: 12, 
+    color: "#EF4444",
+    queries: 528,
+    description: "विवाह, सम्बन्धविच्छेद र सन्तान"
+  },
+  { 
+    name: "अन्य", 
+    nameEn: "Others",
+    value: 5, 
+    color: "#8E44AD",
+    queries: 220,
+    description: "अन्य कानूनी विषयहरू"
+  }
 ];
 
 const documentAccessData = [
-  { day: "Mon", uploads: 12, downloads: 45, views: 234 },
-  { day: "Tue", uploads: 8, downloads: 52, views: 187 },
-  { day: "Wed", uploads: 15, downloads: 38, views: 298 },
-  { day: "Thu", uploads: 11, downloads: 47, views: 267 },
-  { day: "Fri", uploads: 19, downloads: 63, views: 345 },
-  { day: "Sat", uploads: 6, downloads: 29, views: 156 },
-  { day: "Sun", uploads: 4, downloads: 21, views: 123 }
+  { day: "आइतवार", dayEn: "Sunday", uploads: 8, downloads: 34, views: 156, activeUsers: 45 },
+  { day: "सोमवार", dayEn: "Monday", uploads: 22, downloads: 67, views: 298, activeUsers: 89 },
+  { day: "मंगलवार", dayEn: "Tuesday", uploads: 18, downloads: 55, views: 234, activeUsers: 76 },
+  { day: "बुधवार", dayEn: "Wednesday", uploads: 25, downloads: 72, views: 345, activeUsers: 102 },
+  { day: "बिहिवार", dayEn: "Thursday", uploads: 20, downloads: 58, views: 267, activeUsers: 83 },
+  { day: "शुक्रवार", dayEn: "Friday", uploads: 35, downloads: 89, views: 412, activeUsers: 134 },
+  { day: "शनिवार", dayEn: "Saturday", uploads: 12, downloads: 41, views: 189, activeUsers: 62 }
 ];
 
 const userEngagementData = [
-  { time: "00:00", users: 12 },
-  { time: "04:00", users: 8 },
-  { time: "08:00", users: 45 },
-  { time: "12:00", users: 78 },
-  { time: "16:00", users: 92 },
-  { time: "20:00", users: 56 },
-  { time: "23:59", users: 23 }
+  { time: "06:00", users: 23, timeNepali: "बिहान ६" },
+  { time: "09:00", users: 67, timeNepali: "बिहान ९" },
+  { time: "12:00", users: 134, timeNepali: "दिउँसो १२" },
+  { time: "15:00", users: 156, timeNepali: "दिउँसो ३" },
+  { time: "18:00", users: 189, timeNepali: "साँझ ६" },
+  { time: "21:00", users: 98, timeNepali: "बेलुकी ९" },
+  { time: "00:00", users: 45, timeNepali: "मध्यरात" }
+];
+
+const topDocumentsData = [
+  { name: "नेपालको संविधान २०७२", type: "संविधान", downloads: 2340, views: 12500 },
+  { name: "नागरिकता ऐन २०६३", type: "ऐन", downloads: 1890, views: 9800 },
+  { name: "मुलुकी अपराध संहिता २०७४", type: "संहिता", downloads: 1650, views: 8900 },
+  { name: "स्थानीय सरकार सञ्चालन ऐन २०७४", type: "ऐन", downloads: 1420, views: 7600 },
+  { name: "श्रम ऐन २०७४", type: "ऐन", downloads: 1280, views: 6800 }
 ];
 
 const chartConfig = {
-  queries: { label: "Queries", color: "#8B5CF6" },
-  articles: { label: "Articles", color: "#06B6D4" },
-  uploads: { label: "Uploads", color: "#10B981" },
-  downloads: { label: "Downloads", color: "#F59E0B" },
-  views: { label: "Views", color: "#EF4444" },
-  users: { label: "Active Users", color: "#8B5CF6" }
+  queries: { label: "प्रश्नहरू", color: "#8B5CF6" },
+  articles: { label: "धाराहरू", color: "#06B6D4" },
+  uploads: { label: "अपलोड", color: "#10B981" },
+  downloads: { label: "डाउनलोड", color: "#F59E0B" },
+  views: { label: "हेराइ", color: "#EF4444" },
+  users: { label: "सक्रिय प्रयोगकर्ता", color: "#8B5CF6" }
 };
 
 const Analytics = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [timeRange, setTimeRange] = useState("6months");
+  const [showNepali, setShowNepali] = useState(true);
 
-  const StatCard = ({ title, value, change, icon: Icon, description }: any) => (
-    <Card className="card-glassmorphism">
+  const StatCard = ({ title, value, change, icon: Icon, description, subtitle }: any) => (
+    <Card className="card-glassmorphism hover:shadow-lg transition-all duration-300 cursor-pointer group">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-asklegal-text/80">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-asklegal-purple" />
+        <Icon className="h-4 w-4 text-asklegal-purple group-hover:scale-110 transition-transform" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold text-asklegal-heading">{value}</div>
+        {subtitle && <div className="text-sm text-asklegal-text/60 mb-1">{subtitle}</div>}
         <p className="text-xs text-asklegal-text/60">
           <span className={`${change > 0 ? 'text-green-500' : 'text-red-500'}`}>
             {change > 0 ? '+' : ''}{change}%
@@ -75,68 +132,157 @@ const Analytics = () => {
     </Card>
   );
 
+  const handleCategoryClick = (data: any) => {
+    setSelectedCategory(data.name);
+  };
+
+  const resetCategorySelection = () => {
+    setSelectedCategory(null);
+  };
+
+  const handleExportData = () => {
+    console.log("Exporting analytics data...");
+    // Simulate export functionality
+    const data = {
+      constitution_usage: constitutionUsageData,
+      categories: legalCategoriesData,
+      documents: documentAccessData,
+      engagement: userEngagementData
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'legal-analytics-data.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-lg">
+          <p className="font-medium text-asklegal-heading">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.name}: {entry.value}
+              {entry.dataKey === 'queries' && ' प्रश्नहरू'}
+              {entry.dataKey === 'articles' && ' धाराहरू'}
+              {entry.dataKey === 'downloads' && ' डाउनलोड'}
+              {entry.dataKey === 'views' && ' हेराइ'}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4 relative z-10">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-asklegal-heading mb-2">Legal Analytics Dashboard</h1>
-          <p className="text-asklegal-text/70">Comprehensive insights into legal document usage and user engagement</p>
+        <div className="mb-8 animate-fade-in flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold text-asklegal-heading mb-2">
+              कानूनी विश्लेषण ड्यासबोर्ड
+            </h1>
+            <p className="text-asklegal-text/70">
+              कानूनी कागजातको प्रयोग र प्रयोगकर्ता सहभागिताको विस्तृत जानकारी
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Select value={timeRange} onValueChange={setTimeRange}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1month">१ महिना</SelectItem>
+                <SelectItem value="3months">३ महिना</SelectItem>
+                <SelectItem value="6months">६ महिना</SelectItem>
+                <SelectItem value="1year">१ वर्ष</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" size="sm" onClick={handleExportData}>
+              <Download className="h-4 w-4 mr-2" />
+              निर्यात
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setShowNepali(!showNepali)}
+            >
+              {showNepali ? 'English' : 'नेपाली'}
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in" style={{animationDelay: "0.1s"}}>
           <StatCard
-            title="Total Queries"
-            value="1,462"
-            change={12.5}
+            title="कुल प्रश्नहरू"
+            value="४,३९७"
+            subtitle="Total Queries"
+            change={18.5}
             icon={MessageSquare}
-            description="from last month"
+            description="गत महिनादेखि"
           />
           <StatCard
-            title="Active Users"
-            value="324"
-            change={8.2}
+            title="सक्रिय प्रयोगकर्ता"
+            value="७८९"
+            subtitle="Active Users"
+            change={12.3}
             icon={Users}
-            description="from last week"
+            description="गत हप्तादेखि"
           />
           <StatCard
-            title="Documents"
-            value="89"
-            change={-2.1}
+            title="कानूनी कागजातहरू"
+            value="२३४"
+            subtitle="Legal Documents"
+            change={8.7}
             icon={FileText}
-            description="from last month"
+            description="गत महिनादेखि"
           />
           <StatCard
-            title="Constitution Articles"
-            value="431"
-            change={15.3}
+            title="संविधानका धाराहरू"
+            value="८१२"
+            subtitle="Constitution Articles"
+            change={25.4}
             icon={Scale}
-            description="accessed this month"
+            description="यस महिना पहुँच"
           />
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="animate-fade-in" style={{animationDelay: "0.2s"}}>
-          <TabsList className="grid w-full grid-cols-4 mb-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="documents">Documents</TabsTrigger>
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="categories">Categories</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5 mb-8">
+            <TabsTrigger value="overview">सिंहावलोकन</TabsTrigger>
+            <TabsTrigger value="documents">कागजातहरू</TabsTrigger>
+            <TabsTrigger value="users">प्रयोगकर्ता</TabsTrigger>
+            <TabsTrigger value="categories">श्रेणीहरू</TabsTrigger>
+            <TabsTrigger value="popular">लोकप्रिय</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="card-glassmorphism">
                 <CardHeader>
-                  <CardTitle className="text-asklegal-heading">Constitution Usage Trends</CardTitle>
-                  <CardDescription className="text-asklegal-text/70">Monthly queries and articles accessed</CardDescription>
+                  <CardTitle className="text-asklegal-heading">संविधान प्रयोगको प्रवृत्ति</CardTitle>
+                  <CardDescription className="text-asklegal-text/70">
+                    मासिक प्रश्न र धाराहरूको पहुँच ({timeRange === '6months' ? 'छ महिना' : timeRange})
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ChartContainer config={chartConfig} className="h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={constitutionUsageData}>
                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis dataKey="month" />
+                        <XAxis 
+                          dataKey={showNepali ? "nepaliMonth" : "month"} 
+                          tick={{ fontSize: 12 }}
+                        />
                         <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <ChartTooltip content={<CustomTooltip />} />
                         <Area
                           type="monotone"
                           dataKey="queries"
@@ -144,6 +290,7 @@ const Analytics = () => {
                           stroke="#8B5CF6"
                           fill="#8B5CF6"
                           fillOpacity={0.6}
+                          strokeWidth={2}
                         />
                         <Area
                           type="monotone"
@@ -152,6 +299,7 @@ const Analytics = () => {
                           stroke="#06B6D4"
                           fill="#06B6D4"
                           fillOpacity={0.6}
+                          strokeWidth={2}
                         />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -161,8 +309,22 @@ const Analytics = () => {
 
               <Card className="card-glassmorphism">
                 <CardHeader>
-                  <CardTitle className="text-asklegal-heading">Legal Categories Distribution</CardTitle>
-                  <CardDescription className="text-asklegal-text/70">Query distribution by legal category</CardDescription>
+                  <CardTitle className="text-asklegal-heading flex items-center justify-between">
+                    कानूनी श्रेणी वितरण
+                    {selectedCategory && (
+                      <Button variant="outline" size="sm" onClick={resetCategorySelection}>
+                        सबै देखाउनुहोस्
+                      </Button>
+                    )}
+                  </CardTitle>
+                  <CardDescription className="text-asklegal-text/70">
+                    प्रश्नहरूको कानूनी श्रेणी अनुसार वितरण
+                    {selectedCategory && (
+                      <div className="mt-2 p-2 bg-asklegal-purple/10 rounded text-sm">
+                        चयनित: {selectedCategory}
+                      </div>
+                    )}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ChartContainer config={chartConfig} className="h-[300px]">
@@ -175,13 +337,35 @@ const Analytics = () => {
                           outerRadius={80}
                           fill="#8884d8"
                           dataKey="value"
-                          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                          onClick={handleCategoryClick}
+                          label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
+                          className="cursor-pointer"
                         >
                           {legalCategoriesData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={entry.color}
+                              stroke={selectedCategory === entry.name ? "#000" : "none"}
+                              strokeWidth={selectedCategory === entry.name ? 2 : 0}
+                            />
                           ))}
                         </Pie>
-                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <ChartTooltip 
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              const data = payload[0].payload;
+                              return (
+                                <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-lg">
+                                  <p className="font-medium text-asklegal-heading">{data.name}</p>
+                                  <p className="text-sm text-asklegal-text/70">{data.nameEn}</p>
+                                  <p className="text-sm">{data.queries} प्रश्नहरू ({data.value}%)</p>
+                                  <p className="text-xs text-asklegal-text/60 mt-1">{data.description}</p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                   </ChartContainer>
@@ -193,20 +377,22 @@ const Analytics = () => {
           <TabsContent value="documents" className="space-y-6">
             <Card className="card-glassmorphism">
               <CardHeader>
-                <CardTitle className="text-asklegal-heading">Document Activity</CardTitle>
-                <CardDescription className="text-asklegal-text/70">Weekly document uploads, downloads, and views</CardDescription>
+                <CardTitle className="text-asklegal-heading">कागजात गतिविधि</CardTitle>
+                <CardDescription className="text-asklegal-text/70">
+                  साप्ताहिक कागजात अपलोड, डाउनलोड र हेराइ
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <ChartContainer config={chartConfig} className="h-[400px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={documentAccessData}>
                       <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                      <XAxis dataKey="day" />
+                      <XAxis dataKey={showNepali ? "day" : "dayEn"} />
                       <YAxis />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Bar dataKey="uploads" fill="#10B981" />
-                      <Bar dataKey="downloads" fill="#F59E0B" />
-                      <Bar dataKey="views" fill="#EF4444" />
+                      <ChartTooltip content={<CustomTooltip />} />
+                      <Bar dataKey="uploads" fill="#10B981" radius={[2, 2, 0, 0]} />
+                      <Bar dataKey="downloads" fill="#F59E0B" radius={[2, 2, 0, 0]} />
+                      <Bar dataKey="views" fill="#EF4444" radius={[2, 2, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </ChartContainer>
@@ -217,23 +403,26 @@ const Analytics = () => {
           <TabsContent value="users" className="space-y-6">
             <Card className="card-glassmorphism">
               <CardHeader>
-                <CardTitle className="text-asklegal-heading">User Engagement</CardTitle>
-                <CardDescription className="text-asklegal-text/70">Active users throughout the day</CardDescription>
+                <CardTitle className="text-asklegal-heading">प्रयोगकर्ता सहभागिता</CardTitle>
+                <CardDescription className="text-asklegal-text/70">
+                  दिनभरको सक्रिय प्रयोगकर्ताहरू
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <ChartContainer config={chartConfig} className="h-[400px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={userEngagementData}>
                       <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                      <XAxis dataKey="time" />
+                      <XAxis dataKey={showNepali ? "timeNepali" : "time"} />
                       <YAxis />
-                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <ChartTooltip content={<CustomTooltip />} />
                       <Line
                         type="monotone"
                         dataKey="users"
                         stroke="#8B5CF6"
                         strokeWidth={3}
-                        dot={{ fill: '#8B5CF6', strokeWidth: 2, r: 4 }}
+                        dot={{ fill: '#8B5CF6', strokeWidth: 2, r: 6 }}
+                        activeDot={{ r: 8, stroke: '#8B5CF6', strokeWidth: 2 }}
                       />
                     </LineChart>
                   </ResponsiveContainer>
@@ -245,16 +434,19 @@ const Analytics = () => {
           <TabsContent value="categories" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {legalCategoriesData.map((category, index) => (
-                <Card key={category.name} className="card-glassmorphism">
+                <Card key={category.name} className="card-glassmorphism hover:shadow-lg transition-all duration-300">
                   <CardHeader>
                     <CardTitle className="text-asklegal-heading flex items-center gap-2">
                       <BookOpen className="h-5 w-5" style={{ color: category.color }} />
-                      {category.name}
+                      <div>
+                        <div>{category.name}</div>
+                        <div className="text-sm font-normal text-asklegal-text/60">{category.nameEn}</div>
+                      </div>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-asklegal-heading mb-2">{category.value}%</div>
-                    <div className="w-full bg-asklegal-form-border/20 rounded-full h-2">
+                    <div className="w-full bg-asklegal-form-border/20 rounded-full h-2 mb-3">
                       <div
                         className="h-2 rounded-full transition-all duration-500"
                         style={{
@@ -263,13 +455,48 @@ const Analytics = () => {
                         }}
                       />
                     </div>
-                    <p className="text-sm text-asklegal-text/70 mt-2">
-                      {Math.round((category.value / 100) * 1462)} queries this month
+                    <p className="text-sm text-asklegal-text/70 mb-2">
+                      {category.queries} प्रश्नहरू यस महिना
+                    </p>
+                    <p className="text-xs text-asklegal-text/60">
+                      {category.description}
                     </p>
                   </CardContent>
                 </Card>
               ))}
             </div>
+          </TabsContent>
+
+          <TabsContent value="popular" className="space-y-6">
+            <Card className="card-glassmorphism">
+              <CardHeader>
+                <CardTitle className="text-asklegal-heading">लोकप्रिय कागजातहरू</CardTitle>
+                <CardDescription className="text-asklegal-text/70">
+                  सबैभन्दा बढी हेरिएका र डाउनलोड गरिएका कानूनी कागजातहरू
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {topDocumentsData.map((doc, index) => (
+                    <div key={doc.name} className="flex items-center justify-between p-4 bg-asklegal-form-bg/50 rounded-lg hover:bg-asklegal-form-bg/70 transition-colors">
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 bg-asklegal-purple/20 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-bold text-asklegal-purple">{index + 1}</span>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-asklegal-heading">{doc.name}</h4>
+                          <p className="text-sm text-asklegal-text/60">{doc.type}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-medium text-asklegal-heading">{doc.downloads.toLocaleString()} डाउनलोड</div>
+                        <div className="text-xs text-asklegal-text/60">{doc.views.toLocaleString()} हेराइ</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>
