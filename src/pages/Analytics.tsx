@@ -11,107 +11,107 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 // More accurate Nepali legal context data
 const constitutionUsageData = [
-  { month: "Baisakh", queries: 450, articles: 89, nepaliMonth: "बैशाख" },
-  { month: "Jestha", queries: 520, articles: 112, nepaliMonth: "जेठ" },
-  { month: "Ashadh", queries: 380, articles: 95, nepaliMonth: "आषाढ" },
-  { month: "Shrawan", queries: 610, articles: 145, nepaliMonth: "श्रावण" },
-  { month: "Bhadra", queries: 720, articles: 168, nepaliMonth: "भद्र" },
-  { month: "Ashwin", queries: 890, articles: 203, nepaliMonth: "आश्विन" }
+  { month: "Baisakh", queries: 450, articles: 89, nepaliMonth: "April-May" },
+  { month: "Jestha", queries: 520, articles: 112, nepaliMonth: "May-June" },
+  { month: "Ashadh", queries: 380, articles: 95, nepaliMonth: "June-July" },
+  { month: "Shrawan", queries: 610, articles: 145, nepaliMonth: "July-August" },
+  { month: "Bhadra", queries: 720, articles: 168, nepaliMonth: "August-September" },
+  { month: "Ashwin", queries: 890, articles: 203, nepaliMonth: "September-October" }
 ];
 
 const legalCategoriesData = [
   { 
-    name: "संवैधानिक कानून", 
-    nameEn: "Constitutional Law",
+    name: "Constitutional Law", 
+    nameNepali: "संवैधानिक कानून",
     value: 28, 
     color: "#8B5CF6",
     queries: 1230,
-    description: "नेपालको संविधान सम्बन्धी प्रश्नहरू"
+    description: "Questions related to Nepal's Constitution"
   },
   { 
-    name: "नागरिक अधिकार", 
-    nameEn: "Civil Rights",
+    name: "Civil Rights", 
+    nameNepali: "नागरिक अधिकार",
     value: 22, 
     color: "#06B6D4",
     queries: 967,
-    description: "मौलिक अधिकार र स्वतन्त्रता"
+    description: "Fundamental rights and freedoms"
   },
   { 
-    name: "फौजदारी कानून", 
-    nameEn: "Criminal Law",
+    name: "Criminal Law", 
+    nameNepali: "फौजदारी कानून",
     value: 18, 
     color: "#10B981",
     queries: 792,
-    description: "अपराध र सजाय सम्बन्धी कानून"
+    description: "Crime and punishment related laws"
   },
   { 
-    name: "सम्पत्ति कानून", 
-    nameEn: "Property Law",
+    name: "Property Law", 
+    nameNepali: "सम्पत्ति कानून",
     value: 15, 
     color: "#F59E0B",
     queries: 660,
-    description: "घर जग्गा र सम्पत्ति अधिकार"
+    description: "Land and property rights"
   },
   { 
-    name: "पारिवारिक कानून", 
-    nameEn: "Family Law",
+    name: "Family Law", 
+    nameNepali: "पारिवारिक कानून",
     value: 12, 
     color: "#EF4444",
     queries: 528,
-    description: "विवाह, सम्बन्धविच्छेद र सन्तान"
+    description: "Marriage, divorce and children"
   },
   { 
-    name: "अन्य", 
-    nameEn: "Others",
+    name: "Others", 
+    nameNepali: "अन्य",
     value: 5, 
     color: "#8E44AD",
     queries: 220,
-    description: "अन्य कानूनी विषयहरू"
+    description: "Other legal topics"
   }
 ];
 
 const documentAccessData = [
-  { day: "आइतवार", dayEn: "Sunday", uploads: 8, downloads: 34, views: 156, activeUsers: 45 },
-  { day: "सोमवार", dayEn: "Monday", uploads: 22, downloads: 67, views: 298, activeUsers: 89 },
-  { day: "मंगलवार", dayEn: "Tuesday", uploads: 18, downloads: 55, views: 234, activeUsers: 76 },
-  { day: "बुधवार", dayEn: "Wednesday", uploads: 25, downloads: 72, views: 345, activeUsers: 102 },
-  { day: "बिहिवार", dayEn: "Thursday", uploads: 20, downloads: 58, views: 267, activeUsers: 83 },
-  { day: "शुक्रवार", dayEn: "Friday", uploads: 35, downloads: 89, views: 412, activeUsers: 134 },
-  { day: "शनिवार", dayEn: "Saturday", uploads: 12, downloads: 41, views: 189, activeUsers: 62 }
+  { day: "Sunday", dayNepali: "आइतवार", uploads: 8, downloads: 34, views: 156, activeUsers: 45 },
+  { day: "Monday", dayNepali: "सोमवार", uploads: 22, downloads: 67, views: 298, activeUsers: 89 },
+  { day: "Tuesday", dayNepali: "मंगलवार", uploads: 18, downloads: 55, views: 234, activeUsers: 76 },
+  { day: "Wednesday", dayNepali: "बुधवार", uploads: 25, downloads: 72, views: 345, activeUsers: 102 },
+  { day: "Thursday", dayNepali: "बिहिवार", uploads: 20, downloads: 58, views: 267, activeUsers: 83 },
+  { day: "Friday", dayNepali: "शुक्रवार", uploads: 35, downloads: 89, views: 412, activeUsers: 134 },
+  { day: "Saturday", dayNepali: "शनिवार", uploads: 12, downloads: 41, views: 189, activeUsers: 62 }
 ];
 
 const userEngagementData = [
-  { time: "06:00", users: 23, timeNepali: "बिहान ६" },
-  { time: "09:00", users: 67, timeNepali: "बिहान ९" },
-  { time: "12:00", users: 134, timeNepali: "दिउँसो १२" },
-  { time: "15:00", users: 156, timeNepali: "दिउँसो ३" },
-  { time: "18:00", users: 189, timeNepali: "साँझ ६" },
-  { time: "21:00", users: 98, timeNepali: "बेलुकी ९" },
-  { time: "00:00", users: 45, timeNepali: "मध्यरात" }
+  { time: "06:00", users: 23, timeNepali: "6 AM" },
+  { time: "09:00", users: 67, timeNepali: "9 AM" },
+  { time: "12:00", users: 134, timeNepali: "12 PM" },
+  { time: "15:00", users: 156, timeNepali: "3 PM" },
+  { time: "18:00", users: 189, timeNepali: "6 PM" },
+  { time: "21:00", users: 98, timeNepali: "9 PM" },
+  { time: "00:00", users: 45, timeNepali: "Midnight" }
 ];
 
 const topDocumentsData = [
-  { name: "नेपालको संविधान २०७२", type: "संविधान", downloads: 2340, views: 12500 },
-  { name: "नागरिकता ऐन २०६३", type: "ऐन", downloads: 1890, views: 9800 },
-  { name: "मुलुकी अपराध संहिता २०७४", type: "संहिता", downloads: 1650, views: 8900 },
-  { name: "स्थानीय सरकार सञ्चालन ऐन २०७४", type: "ऐन", downloads: 1420, views: 7600 },
-  { name: "श्रम ऐन २०७४", type: "ऐन", downloads: 1280, views: 6800 }
+  { name: "Constitution of Nepal 2072", type: "Constitution", downloads: 2340, views: 12500 },
+  { name: "Citizenship Act 2063", type: "Act", downloads: 1890, views: 9800 },
+  { name: "Muluki Criminal Code 2074", type: "Code", downloads: 1650, views: 8900 },
+  { name: "Local Government Operation Act 2074", type: "Act", downloads: 1420, views: 7600 },
+  { name: "Labor Act 2074", type: "Act", downloads: 1280, views: 6800 }
 ];
 
 const chartConfig = {
-  queries: { label: "प्रश्नहरू", color: "#8B5CF6" },
-  articles: { label: "धाराहरू", color: "#06B6D4" },
-  uploads: { label: "अपलोड", color: "#10B981" },
-  downloads: { label: "डाउनलोड", color: "#F59E0B" },
-  views: { label: "हेराइ", color: "#EF4444" },
-  users: { label: "सक्रिय प्रयोगकर्ता", color: "#8B5CF6" }
+  queries: { label: "Queries", color: "#8B5CF6" },
+  articles: { label: "Articles", color: "#06B6D4" },
+  uploads: { label: "Uploads", color: "#10B981" },
+  downloads: { label: "Downloads", color: "#F59E0B" },
+  views: { label: "Views", color: "#EF4444" },
+  users: { label: "Active Users", color: "#8B5CF6" }
 };
 
 const Analytics = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState("6months");
-  const [showNepali, setShowNepali] = useState(true);
+  const [showNepali, setShowNepali] = useState(false);
 
   const StatCard = ({ title, value, change, icon: Icon, description, subtitle }: any) => (
     <Card className="card-glassmorphism hover:shadow-lg transition-all duration-300 cursor-pointer group">
@@ -169,10 +169,10 @@ const Analytics = () => {
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}: {entry.value}
-              {entry.dataKey === 'queries' && ' प्रश्नहरू'}
-              {entry.dataKey === 'articles' && ' धाराहरू'}
-              {entry.dataKey === 'downloads' && ' डाउनलोड'}
-              {entry.dataKey === 'views' && ' हेराइ'}
+              {entry.dataKey === 'queries' && ' queries'}
+              {entry.dataKey === 'articles' && ' articles'}
+              {entry.dataKey === 'downloads' && ' downloads'}
+              {entry.dataKey === 'views' && ' views'}
             </p>
           ))}
         </div>
@@ -187,10 +187,10 @@ const Analytics = () => {
         <div className="mb-8 animate-fade-in flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold text-asklegal-heading mb-2">
-              कानूनी विश्लेषण ड्यासबोर्ड
+              Legal Analytics Dashboard
             </h1>
             <p className="text-asklegal-text/70">
-              कानूनी कागजातको प्रयोग र प्रयोगकर्ता सहभागिताको विस्तृत जानकारी
+              Comprehensive insights into legal document usage and user engagement
             </p>
           </div>
           <div className="flex gap-2">
@@ -199,15 +199,15 @@ const Analytics = () => {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1month">१ महिना</SelectItem>
-                <SelectItem value="3months">३ महिना</SelectItem>
-                <SelectItem value="6months">६ महिना</SelectItem>
-                <SelectItem value="1year">१ वर्ष</SelectItem>
+                <SelectItem value="1month">1 Month</SelectItem>
+                <SelectItem value="3months">3 Months</SelectItem>
+                <SelectItem value="6months">6 Months</SelectItem>
+                <SelectItem value="1year">1 Year</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" size="sm" onClick={handleExportData}>
               <Download className="h-4 w-4 mr-2" />
-              निर्यात
+              Export
             </Button>
             <Button 
               variant="outline" 
@@ -221,55 +221,55 @@ const Analytics = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in" style={{animationDelay: "0.1s"}}>
           <StatCard
-            title="कुल प्रश्नहरू"
-            value="४,३९७"
-            subtitle="Total Queries"
+            title="Total Queries"
+            value="4,397"
+            subtitle="Legal Questions Asked"
             change={18.5}
             icon={MessageSquare}
-            description="गत महिनादेखि"
+            description="from last month"
           />
           <StatCard
-            title="सक्रिय प्रयोगकर्ता"
-            value="७८९"
-            subtitle="Active Users"
+            title="Active Users"
+            value="789"
+            subtitle="Monthly Active Users"
             change={12.3}
             icon={Users}
-            description="गत हप्तादेखि"
+            description="from last week"
           />
           <StatCard
-            title="कानूनी कागजातहरू"
-            value="२३४"
-            subtitle="Legal Documents"
+            title="Legal Documents"
+            value="234"
+            subtitle="Available Documents"
             change={8.7}
             icon={FileText}
-            description="गत महिनादेखि"
+            description="from last month"
           />
           <StatCard
-            title="संविधानका धाराहरू"
-            value="८१२"
-            subtitle="Constitution Articles"
+            title="Constitution Articles"
+            value="812"
+            subtitle="Articles Accessed"
             change={25.4}
             icon={Scale}
-            description="यस महिना पहुँच"
+            description="this month"
           />
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="animate-fade-in" style={{animationDelay: "0.2s"}}>
           <TabsList className="grid w-full grid-cols-5 mb-8">
-            <TabsTrigger value="overview">सिंहावलोकन</TabsTrigger>
-            <TabsTrigger value="documents">कागजातहरू</TabsTrigger>
-            <TabsTrigger value="users">प्रयोगकर्ता</TabsTrigger>
-            <TabsTrigger value="categories">श्रेणीहरू</TabsTrigger>
-            <TabsTrigger value="popular">लोकप्रिय</TabsTrigger>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="documents">Documents</TabsTrigger>
+            <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="categories">Categories</TabsTrigger>
+            <TabsTrigger value="popular">Popular</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="card-glassmorphism">
                 <CardHeader>
-                  <CardTitle className="text-asklegal-heading">संविधान प्रयोगको प्रवृत्ति</CardTitle>
+                  <CardTitle className="text-asklegal-heading">Constitution Usage Trends</CardTitle>
                   <CardDescription className="text-asklegal-text/70">
-                    मासिक प्रश्न र धाराहरूको पहुँच ({timeRange === '6months' ? 'छ महिना' : timeRange})
+                    Monthly queries and articles accessed ({timeRange === '6months' ? '6 months' : timeRange})
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -310,18 +310,18 @@ const Analytics = () => {
               <Card className="card-glassmorphism">
                 <CardHeader>
                   <CardTitle className="text-asklegal-heading flex items-center justify-between">
-                    कानूनी श्रेणी वितरण
+                    Legal Category Distribution
                     {selectedCategory && (
                       <Button variant="outline" size="sm" onClick={resetCategorySelection}>
-                        सबै देखाउनुहोस्
+                        Show All
                       </Button>
                     )}
                   </CardTitle>
                   <CardDescription className="text-asklegal-text/70">
-                    प्रश्नहरूको कानूनी श्रेणी अनुसार वितरण
+                    Distribution of queries by legal category
                     {selectedCategory && (
                       <div className="mt-2 p-2 bg-asklegal-purple/10 rounded text-sm">
-                        चयनित: {selectedCategory}
+                        Selected: {selectedCategory}
                       </div>
                     )}
                   </CardDescription>
@@ -357,8 +357,8 @@ const Analytics = () => {
                               return (
                                 <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-lg">
                                   <p className="font-medium text-asklegal-heading">{data.name}</p>
-                                  <p className="text-sm text-asklegal-text/70">{data.nameEn}</p>
-                                  <p className="text-sm">{data.queries} प्रश्नहरू ({data.value}%)</p>
+                                  <p className="text-sm text-asklegal-text/70">{showNepali ? data.nameNepali : data.name}</p>
+                                  <p className="text-sm">{data.queries} queries ({data.value}%)</p>
                                   <p className="text-xs text-asklegal-text/60 mt-1">{data.description}</p>
                                 </div>
                               );
@@ -377,9 +377,9 @@ const Analytics = () => {
           <TabsContent value="documents" className="space-y-6">
             <Card className="card-glassmorphism">
               <CardHeader>
-                <CardTitle className="text-asklegal-heading">कागजात गतिविधि</CardTitle>
+                <CardTitle className="text-asklegal-heading">Document Activity</CardTitle>
                 <CardDescription className="text-asklegal-text/70">
-                  साप्ताहिक कागजात अपलोड, डाउनलोड र हेराइ
+                  Weekly document uploads, downloads and views
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -387,7 +387,7 @@ const Analytics = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={documentAccessData}>
                       <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                      <XAxis dataKey={showNepali ? "day" : "dayEn"} />
+                      <XAxis dataKey={showNepali ? "dayNepali" : "day"} />
                       <YAxis />
                       <ChartTooltip content={<CustomTooltip />} />
                       <Bar dataKey="uploads" fill="#10B981" radius={[2, 2, 0, 0]} />
@@ -403,9 +403,9 @@ const Analytics = () => {
           <TabsContent value="users" className="space-y-6">
             <Card className="card-glassmorphism">
               <CardHeader>
-                <CardTitle className="text-asklegal-heading">प्रयोगकर्ता सहभागिता</CardTitle>
+                <CardTitle className="text-asklegal-heading">User Engagement</CardTitle>
                 <CardDescription className="text-asklegal-text/70">
-                  दिनभरको सक्रिय प्रयोगकर्ताहरू
+                  Active users throughout the day
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -440,7 +440,7 @@ const Analytics = () => {
                       <BookOpen className="h-5 w-5" style={{ color: category.color }} />
                       <div>
                         <div>{category.name}</div>
-                        <div className="text-sm font-normal text-asklegal-text/60">{category.nameEn}</div>
+                        <div className="text-sm font-normal text-asklegal-text/60">{showNepali ? category.nameNepali : category.name}</div>
                       </div>
                     </CardTitle>
                   </CardHeader>
@@ -456,7 +456,7 @@ const Analytics = () => {
                       />
                     </div>
                     <p className="text-sm text-asklegal-text/70 mb-2">
-                      {category.queries} प्रश्नहरू यस महिना
+                      {category.queries} queries this month
                     </p>
                     <p className="text-xs text-asklegal-text/60">
                       {category.description}
@@ -470,9 +470,9 @@ const Analytics = () => {
           <TabsContent value="popular" className="space-y-6">
             <Card className="card-glassmorphism">
               <CardHeader>
-                <CardTitle className="text-asklegal-heading">लोकप्रिय कागजातहरू</CardTitle>
+                <CardTitle className="text-asklegal-heading">Popular Documents</CardTitle>
                 <CardDescription className="text-asklegal-text/70">
-                  सबैभन्दा बढी हेरिएका र डाउनलोड गरिएका कानूनी कागजातहरू
+                  Most viewed and downloaded legal documents
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -489,8 +489,8 @@ const Analytics = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm font-medium text-asklegal-heading">{doc.downloads.toLocaleString()} डाउनलोड</div>
-                        <div className="text-xs text-asklegal-text/60">{doc.views.toLocaleString()} हेराइ</div>
+                        <div className="text-sm font-medium text-asklegal-heading">{doc.downloads.toLocaleString()} downloads</div>
+                        <div className="text-xs text-asklegal-text/60">{doc.views.toLocaleString()} views</div>
                       </div>
                     </div>
                   ))}
