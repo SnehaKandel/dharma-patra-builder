@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
@@ -22,6 +23,7 @@ const News = () => {
   const [loading, setLoading] = useState(false);
   const [lastFetched, setLastFetched] = useState(new Date());
   const [newItemsCount, setNewItemsCount] = useState(0);
+  const [imageLoadErrors, setImageLoadErrors] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   // Function to fetch news from API
@@ -63,6 +65,8 @@ const News = () => {
       
       setNews(mappedNews);
       setLastFetched(new Date());
+      // Reset image load errors when new data is fetched
+      setImageLoadErrors(new Set());
     } catch (error) {
       console.error('Failed to fetch news:', error);
       if (!silent) {
@@ -125,6 +129,50 @@ const News = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  // Handle image load error
+  const handleImageError = (itemId: string) => {
+    setImageLoadErrors(prev => new Set([...prev, itemId]));
+  };
+
+  // Enhanced image loading with quality optimization
+  const ImageWithFallback = ({ item }: { item: NewsItem }) => {
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageError, setImageError] = useState(false);
+    
+    if (!item.imageUrl || imageLoadErrors.has(item.id) || imageError) {
+      return null;
+    }
+
+    return (
+      <div className="h-48 overflow-hidden relative bg-gray-200 dark:bg-gray-800">
+        {!imageLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="animate-pulse bg-gray-300 dark:bg-gray-700 w-full h-full"></div>
+          </div>
+        )}
+        <img 
+          src={item.imageUrl}
+          alt={item.title}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            imageRendering: 'high-quality',
+          }}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setImageLoaded(true)}
+          onError={() => {
+            setImageError(true);
+            handleImageError(item.id);
+          }}
+          // Optimize image quality
+          crossOrigin="anonymous"
+        />
+      </div>
+    );
+  };
+
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
@@ -160,19 +208,7 @@ const News = () => {
             {news.length > 0 ? news.map((item) => (
               <Card key={item.id} className="card-glassmorphism overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
                 <CardContent className="p-0">
-                  {item.imageUrl && (
-                    <div className="h-48 overflow-hidden">
-                      <img 
-                        src={item.imageUrl} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          // Hide the image container if loading fails
-                          (e.target as HTMLImageElement).parentElement!.style.display = 'none';
-                        }} 
-                      />
-                    </div>
-                  )}
+                  <ImageWithFallback item={item} />
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-xl font-medium text-asklegal-heading theme-transition">{item.title}</h3>
