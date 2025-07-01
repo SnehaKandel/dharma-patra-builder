@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
@@ -157,7 +156,7 @@ const News = () => {
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
-            imageRendering: 'high-quality',
+            imageRendering: 'auto',
           }}
           loading="lazy"
           decoding="async"
@@ -166,7 +165,6 @@ const News = () => {
             setImageError(true);
             handleImageError(item.id);
           }}
-          // Optimize image quality
           crossOrigin="anonymous"
         />
       </div>
